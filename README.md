@@ -144,9 +144,20 @@ own domain all refuse the connection. Only `fonts.googleapis.com`,
 
 There are three ways in. They are not equivalent.
 
-**1 · Hosted URLs — the option to prefer.** The current live funnel already
-serves its images from the GoHighLevel CDN. Upload this campaign's media to the
-same media library, then:
+**1 · Hosted URLs — the option to prefer, and the one the existing funnel
+already uses.** The current live page carries no image bytes at all: 130
+`srcset` entries point at `images.leadconnectorhq.com`, and the visitor's
+browser fetches them at view time. That is why this environment's inability to
+download anything is beside the point — the page only ever needs the URL
+string, never the file.
+
+Five slots are already filled this way, read out of the saved copy of the live
+funnel and identified by their position in it (the logo, Dr Shabeeb's portrait,
+and the three condition images that sit under *"Dental Implants can help
+with:"*, which map one-to-one onto the problem cards here). **Those five are
+positional guesses, not sightings** — check them and swap any that are wrong.
+
+For the rest, upload this campaign's media to the same library, then:
 
 ```bash
 node set-media.mjs --init      # writes media.json, one line per slot

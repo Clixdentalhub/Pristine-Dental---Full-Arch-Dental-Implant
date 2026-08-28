@@ -3,12 +3,14 @@ import { PAGES, WIDTHS } from './helpers.mjs';
 
 /* Two classes of network noise are expected and are reported elsewhere
    rather than failed here:
-     · third-party origins the sandbox cannot reach
+     · third-party origins the sandbox cannot reach, including the media CDN
+       the page points at once media.json is filled in - those URLs are
+       fetched by the visitor's browser, never by this environment
      · /assets/ photography the client has not supplied yet, which the
        ::before slot pattern degrades to a labelled placeholder. The
        "every image src resolves" test below inventories those.
    Anything the page itself throws is always a hard failure. */
-const IGNORABLE = /fonts\.googleapis|fonts\.gstatic|google\.com\/maps|maps\.googleapis|\/assets\//;
+const IGNORABLE = /fonts\.googleapis|fonts\.gstatic|google\.com\/maps|maps\.googleapis|\/assets\/|leadconnectorhq\.com|filesafe\.space/;
 
 function watch(page) {
   const consoleErrors = [], pageErrors = [];
@@ -106,8 +108,13 @@ test('index — every image src resolves (missing files leave a labelled slot)',
   await page.goto('/index.html', { waitUntil: 'load' });
   await page.waitForTimeout(400);
 
-  const broken = await page.evaluate(() =>
+  const all = await page.evaluate(() =>
     [...document.images].filter((i) => i.complete && i.naturalWidth === 0).map((i) => i.getAttribute('src')));
+  // A src on a remote host is served to the visitor by that host; this
+  // environment cannot reach it, so its failure here proves nothing.
+  const hosted = all.filter((s) => /^https?:/.test(s));
+  const broken = all.filter((s) => !/^https?:/.test(s));
+  if (hosted.length) console.log(`\n  ${hosted.length} image(s) point at a remote host — not verifiable from CI, served to the visitor by that host.`);
 
   // Photography is not supplied yet. The ::before slot pattern means a missing
   // file degrades to a labelled placeholder rather than a broken-image icon —
@@ -121,6 +128,7 @@ test('index — every image src resolves (missing files leave a labelled slot)',
   // falls back to the inline lockup, which beats a labelled box).
   const undegraded = await page.evaluate(() =>
     [...document.images].filter((i) => i.complete && i.naturalWidth === 0)
+      .filter((i) => !/^https?:/.test(i.getAttribute('src') || ''))
       .filter((i) => !i.dataset.fallback && !(i.closest('.media') || {}).dataset?.slot)
       .map((i) => i.getAttribute('src')));
   expect(undegraded, 'unsupplied images with no declared fallback').toEqual([]);
