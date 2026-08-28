@@ -481,7 +481,9 @@ ul,ol{margin:0;padding:0;list-style:none}
 .hero h1{color:#fff;margin-bottom:var(--s-2)}
 .hero .lede{font-size:1.06rem;margin-bottom:var(--s-3)}
 /* anchor figure */
-.anchor-figure{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:var(--s-2)}
+/* centre, not baseline: the two small lines sit as one block, and the
+   big figure centres on it — baseline left line two hanging underneath */
+.anchor-figure{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:var(--s-2)}
 .anchor-figure b{
   font-family:var(--font-head);font-weight:700;
   font-size:clamp(2.4rem,9vw,3.6rem);line-height:1;
