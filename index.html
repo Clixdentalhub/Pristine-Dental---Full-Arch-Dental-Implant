@@ -709,6 +709,61 @@ ul{margin:0;padding:0;list-style:none}
 .mobile-bar .btn{flex:1 1 auto;padding:13px 14px;min-height:48px;font-size:.94rem}
 @media (min-width:768px){ .mobile-bar{display:none} }
 
+
+/* ============================================================
+   PRACTICE GALLERY — native scroll-snap, no custom drag
+   The scroll container is the only input: it is keyboard
+   scrollable by construction, and the arrow buttons are a
+   progressive enhancement over something that already works.
+   ============================================================ */
+.gallery{
+  overflow-x:auto;overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+  padding-block:4px;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 40px,#000 calc(100% - 40px),transparent 100%);
+          mask-image:linear-gradient(90deg,transparent 0,#000 40px,#000 calc(100% - 40px),transparent 100%);
+}
+.gallery::-webkit-scrollbar{display:none}
+.gallery:focus-visible{outline:3px solid var(--cta-on-dark);outline-offset:4px}
+/* width:max-content so the track grows and scrolls. Centring an
+   overflowing flex track spills out of both sides and the left
+   overflow is unreachable. */
+.gallery-track{
+  display:flex;gap:var(--s-2);
+  width:max-content;min-width:100%;
+  padding-inline:var(--s-2);margin:0;
+}
+@media (min-width:768px){ .gallery-track{padding-inline:var(--s-4)} }
+.gallery-item{
+  flex:0 0 auto;width:min(78vw,400px);
+  scroll-snap-align:center;
+  margin:0;
+}
+.gallery-item .media{
+  border-radius:var(--r-md);border:1px solid #2C2620;
+}
+.gallery-item figcaption{
+  font-size:.82rem;color:var(--color-on-primary-mut);
+  margin-top:10px;
+}
+.gallery-nav{
+  display:flex;gap:10px;justify-content:center;align-items:center;
+  margin-top:var(--s-3);
+}
+.gallery-nav button{
+  width:48px;height:48px;border-radius:50%;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;border:2px solid #4A423A;color:var(--color-on-primary);
+  transition:border-color var(--d-1) var(--ease),color var(--d-1) var(--ease),transform var(--d-1) var(--ease);
+}
+.gallery-nav button:hover{border-color:var(--color-flourish);color:var(--color-flourish);transform:translateY(-2px)}
+.gallery-count{
+  font-family:var(--font-head);font-size:.78rem;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--color-on-primary-mut);min-width:6ch;text-align:center;
+}
+
 /* ============================================================
    P8 · MOTION — one pattern per section, never two
    Every animated element has a defined resting state, so nothing
@@ -901,8 +956,8 @@ ul{margin:0;padding:0;list-style:none}
           <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17h2l1.6-5.2A2 2 0 0 1 8.5 10.4h7a2 2 0 0 1 1.9 1.4L19 17h2"/><circle cx="7.5" cy="18.5" r="1.6"/><circle cx="16.5" cy="18.5" r="1.6"/></svg><span>Concierge&nbsp;<span class="nb">pick-up</span> available</span></span>
         </div>
 
-        <div class="media media-16x9 hero-media" data-slot="hero-full-arch-patient.jpg — 1600×900" style="margin-top:var(--s-3)">
-          <img src="assets/hero-full-arch-patient.jpg" width="1600" height="900" loading="eager"
+        <div class="media media-16x9 hero-media" data-slot="HRD05258.jpg — 1600×900" style="margin-top:var(--s-3)">
+          <img src="assets/practice/HRD05258.jpg" width="1600" height="900" loading="eager"
                alt="A full arch dental implant patient at Pristine Dental Group smiling after treatment">
         </div>
       </div>
@@ -1072,8 +1127,8 @@ ul{margin:0;padding:0;list-style:none}
 
     <div class="grid grid-4" data-anim="cascade">
       <article class="card lift">
-        <div class="media media-4x3" data-slot="problem-loose-dentures.jpg — 800×600">
-          <img src="assets/problem-loose-dentures.jpg" width="800" height="600" loading="lazy"
+        <div class="media media-4x3" data-slot="HRD05259.jpg — 800×600">
+          <img src="assets/practice/HRD05259.jpg" width="800" height="600" loading="lazy"
                alt="A denture wearer covering their mouth while eating at a restaurant table">
         </div>
         <div class="card-body">
@@ -1083,8 +1138,8 @@ ul{margin:0;padding:0;list-style:none}
       </article>
 
       <article class="card lift">
-        <div class="media media-4x3" data-slot="problem-failing-teeth.jpg — 800×600">
-          <img src="assets/problem-failing-teeth.jpg" width="800" height="600" loading="lazy"
+        <div class="media media-4x3" data-slot="HRD05260.jpg — 800×600">
+          <img src="assets/practice/HRD05260.jpg" width="800" height="600" loading="lazy"
                alt="A patient in a dental chair being shown an X-ray of failing teeth">
         </div>
         <div class="card-body">
@@ -1094,8 +1149,8 @@ ul{margin:0;padding:0;list-style:none}
       </article>
 
       <article class="card lift">
-        <div class="media media-4x3" data-slot="problem-full-arch-loss.jpg — 800×600">
-          <img src="assets/problem-full-arch-loss.jpg" width="800" height="600" loading="lazy"
+        <div class="media media-4x3" data-slot="HRD05261.jpg — 800×600">
+          <img src="assets/practice/HRD05261.jpg" width="800" height="600" loading="lazy"
                alt="An older adult looking thoughtfully out of a window">
         </div>
         <div class="card-body">
@@ -1105,8 +1160,8 @@ ul{margin:0;padding:0;list-style:none}
       </article>
 
       <article class="card lift">
-        <div class="media media-4x3" data-slot="problem-declined-elsewhere.jpg — 800×600">
-          <img src="assets/problem-declined-elsewhere.jpg" width="800" height="600" loading="lazy"
+        <div class="media media-4x3" data-slot="HRD05262.jpg — 800×600">
+          <img src="assets/practice/HRD05262.jpg" width="800" height="600" loading="lazy"
                alt="A dentist reviewing a three-dimensional CBCT jaw scan on a monitor">
         </div>
         <div class="card-body">
@@ -1382,8 +1437,8 @@ ul{margin:0;padding:0;list-style:none}
       <h2 id="team-h">Meet the people restoring your&nbsp;smile</h2>
     </div>
 
-    <div class="media media-16x9" data-slot="team-wide.jpg — 1600×900" style="border-radius:var(--r-md);border:1px solid var(--color-border)">
-      <img src="assets/team-wide.jpg" width="1600" height="900" loading="lazy"
+    <div class="media media-16x9" data-slot="HRD05266.jpg — 1600×900" style="border-radius:var(--r-md);border:1px solid var(--color-border)">
+      <img src="assets/practice/HRD05266.jpg" width="1600" height="900" loading="lazy"
            alt="The Pristine Dental Group implant team in their Kingsbury practice">
     </div>
 
@@ -1402,6 +1457,151 @@ ul{margin:0;padding:0;list-style:none}
       restorative dentistry and a particular interest in complex full arch work — including patients declined elsewhere.
       Every case is planned in 3D before treatment begins. GDC number <span class="ph">GDC number</span>.</p>
     </div>
+  </div>
+</section>
+
+<!-- ========================================================
+     PRACTICE GALLERY — the photography set, as a slider.
+     Motion: the scroll-snap track is this section's one pattern.
+     ======================================================== -->
+<section class="section dark has-cut" id="gallery" aria-labelledby="gallery-h">
+  <div class="drift" aria-hidden="true"><b></b><b></b></div>
+  <div class="wrap">
+    <div class="section-head centre">
+      <p class="eyebrow">Inside the practice</p>
+      <h2 id="gallery-h">Where your treatment&nbsp;happens</h2>
+      <p class="lede" style="margin-inline:auto">Every implant is planned and placed here, at 499 Kingsbury Road.
+      <span class="ph">Write a caption for each photograph, and individual alt text — the current alt text is
+      generic because it was written without sight of the images.</span></p>
+    </div>
+  </div>
+
+  <div class="gallery" id="gallery-rail" role="region" aria-label="Photographs of the practice, scrollable" tabindex="0">
+    <div class="gallery-track">
+        <figure class="gallery-item">
+          <div class="media media-4x3" data-slot="practice/HRD05269.jpg">
+            <img src="assets/practice/HRD05269.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3" data-slot="practice/HRD05271.jpg">
+            <img src="assets/practice/HRD05271.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3" data-slot="practice/HRD05272.jpg">
+            <img src="assets/practice/HRD05272.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3" data-slot="practice/HRD05275.jpg">
+            <img src="assets/practice/HRD05275.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3" data-slot="practice/HRD05277.jpg">
+            <img src="assets/practice/HRD05277.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3" data-slot="practice/HRD05278.jpg">
+            <img src="assets/practice/HRD05278.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3" data-slot="practice/HRD05281.jpg">
+            <img src="assets/practice/HRD05281.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3" data-slot="practice/HRD05282.jpg">
+            <img src="assets/practice/HRD05282.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3" data-slot="practice/HRD05283.jpg">
+            <img src="assets/practice/HRD05283.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3" data-slot="practice/HRD05285.jpg">
+            <img src="assets/practice/HRD05285.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3" data-slot="practice/HRD05286.jpg">
+            <img src="assets/practice/HRD05286.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3" data-slot="practice/HRD05287.jpg">
+            <img src="assets/practice/HRD05287.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3" data-slot="practice/HRD05288.jpg">
+            <img src="assets/practice/HRD05288.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3" data-slot="practice/HRD05289.jpg">
+            <img src="assets/practice/HRD05289.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3" data-slot="practice/HRD05290.jpg">
+            <img src="assets/practice/HRD05290.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3" data-slot="practice/HRD05293.jpg">
+            <img src="assets/practice/HRD05293.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3" data-slot="practice/HRD05296.jpg">
+            <img src="assets/practice/HRD05296.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="gallery-nav">
+      <button type="button" data-gal="prev" aria-controls="gallery-rail" aria-label="Previous photograph">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H6M11.5 5.5 5 12l6.5 6.5"/></svg>
+      </button>
+      <span class="gallery-count" id="gallery-count">1 / 17</span>
+      <button type="button" data-gal="next" aria-controls="gallery-rail" aria-label="Next photograph">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12.5 5.5 19 12l-6.5 6.5"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="cut to-bg" aria-hidden="true">
+    <svg viewBox="0 0 1440 120" preserveAspectRatio="none" role="presentation" focusable="false">
+      <path class="l1" d="M0,120 L0,44 L560,44 L620,4 L820,4 L880,44 L1440,44 L1440,120 Z"/>
+      <path class="l2" d="M0,120 L0,64 L570,64 L628,26 L812,26 L870,64 L1440,64 L1440,120 Z"/>
+      <path class="l3" d="M0,120 L0,84 L580,84 L636,50 L804,50 L860,84 L1440,84 L1440,120 Z"/>
+      <path class="l4" d="M0,120 L0,102 L590,102 L644,74 L796,74 L850,102 L1440,102 L1440,120 Z"/>
+    </svg>
   </div>
 </section>
 
@@ -1938,6 +2138,52 @@ ul{margin:0;padding:0;list-style:none}
       paint(pBody, m.body);
     });
   });
+
+  /* ---------------------------------------------------------
+     Practice gallery. The scroll container already works with a
+     trackpad, a touch drag and the arrow keys; these buttons and
+     the counter are enhancement on top of it, never the only way
+     to move.
+     --------------------------------------------------------- */
+  (function () {
+    var rail = document.getElementById('gallery-rail');
+    if (!rail) return;
+    var items = rail.querySelectorAll('.gallery-item');
+    var count = document.getElementById('gallery-count');
+    if (!items.length) return;
+
+    function step() { return items[0].getBoundingClientRect().width + 16; }
+
+    function current() {
+      var mid = rail.scrollLeft + rail.clientWidth / 2;
+      var best = 0, bestD = Infinity;
+      for (var i = 0; i < items.length; i++) {
+        var c = items[i].offsetLeft + items[i].offsetWidth / 2;
+        var d = Math.abs(c - mid);
+        if (d < bestD) { bestD = d; best = i; }
+      }
+      return best;
+    }
+
+    function paint() { count.textContent = (current() + 1) + ' / ' + items.length; }
+
+    document.querySelectorAll('[data-gal]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        rail.scrollBy({
+          left: btn.dataset.gal === 'next' ? step() : -step(),
+          behavior: reduced ? 'auto' : 'smooth'
+        });
+      });
+    });
+
+    var galTick = false;
+    rail.addEventListener('scroll', function () {
+      if (galTick) return;
+      galTick = true;
+      requestAnimationFrame(function () { paint(); galTick = false; });
+    }, { passive: true });
+    paint();
+  })();
 
   document.getElementById('year').textContent = new Date().getFullYear();
 })();

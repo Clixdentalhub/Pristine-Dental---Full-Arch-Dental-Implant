@@ -49,9 +49,12 @@ documents rather than this file, so it cannot go stale.
    `thank-you.html`. The funnel page deliberately fires nothing on submit —
    fire it in one place or every lead counts twice. IDs found on the current
    live page, for reference: GTM `GTM-P5KXR2DS`, Meta Pixel `773289062042919`.
-5. **Photography.** 12 images, listed by `npm test`. Each missing file renders
-   as a labelled slot naming the expected filename and dimensions, so the page
-   is legible without them — but they are placeholders, not a design choice.
+5. **Photography.** 23 images, all wired to the filenames in the shared Drive
+   folder. See *Adding the photographs* below. Each missing file renders as a
+   labelled slot naming the expected filename, so the page is legible without
+   them — but they are placeholders, not a design choice.
+   The six before/after slots are deliberately **not** filled from that set;
+   see the same section for why.
 
 **Commercial — check these against what the practice will actually honour**
 
@@ -79,6 +82,48 @@ documents rather than this file, so it cannot go stale.
     ninth is a bracketed placeholder.
 16. Sedation availability, treatment timeline, and any warranty — three FAQ
     answers carry a bracketed note where the brief was silent.
+
+---
+
+## Adding the photographs
+
+The page expects `assets/practice/HRD052xx.jpg`, matching the filenames in the
+shared Drive folder exactly — so no renaming is needed. Download the folder,
+then:
+
+```bash
+node optimise-images.mjs ~/Downloads/practice-photos
+```
+
+That resizes to 1600px and re-encodes into `assets/practice/`, using the ffmpeg
+that ships with Playwright. **Do not skip it**: the originals are 2–4 MB each
+and 23 of them dropped in raw make an ~80 MB page.
+
+Where each photograph is used:
+
+| Slot | File |
+| --- | --- |
+| Hero | `HRD05258.jpg` |
+| Problem cards, in order | `HRD05259` · `HRD05260` · `HRD05261` · `HRD05262` |
+| Team, wide | `HRD05266.jpg` |
+| Gallery slider | the remaining 17, `HRD05269` → `HRD05296` |
+
+**The assignment above is arbitrary.** These files were never readable from
+this environment — the sandbox proxy blocks every Google Drive host, and the
+Drive tool returns base64, which for 23 files of this size is not a viable
+transfer. So the six named slots were filled in filename order, not by what the
+photographs show. Open them, and swap any `src` that is in the wrong place;
+they all read from the same folder, so it is a one-line change each.
+
+For the same reason the gallery's `alt` text is generic ("Pristine Dental Group
+implant practice in Kingsbury, London") rather than describing each image. That
+is honest but not good accessibility — write real alt text once someone has
+seen them.
+
+**The before/after sliders were left empty on purpose.** They need genuine
+paired clinical photographs of the same patient. Filling them from a general
+practice shoot would misrepresent treatment outcomes, which is both an ASA/CAP
+problem and a GDC one.
 
 ---
 
