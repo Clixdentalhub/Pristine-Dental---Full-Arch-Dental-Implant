@@ -116,10 +116,14 @@ test('index — every image src resolves (missing files leave a labelled slot)',
     console.log(`\n  ${broken.length} image(s) not yet supplied — rendering as labelled slots:`);
     for (const src of broken) console.log(`    · ${src}`);
   }
-  const slotted = await page.evaluate(() =>
+  // Every unsupplied image must degrade to something deliberate: either a
+  // labelled .media slot, or its own declared fallback (the header logo
+  // falls back to the inline lockup, which beats a labelled box).
+  const undegraded = await page.evaluate(() =>
     [...document.images].filter((i) => i.complete && i.naturalWidth === 0)
-      .every((i) => i.closest('.media') && i.closest('.media').dataset.slot));
-  expect(slotted, 'every unsupplied image must sit in a labelled .media slot').toBe(true);
+      .filter((i) => !i.dataset.fallback && !(i.closest('.media') || {}).dataset?.slot)
+      .map((i) => i.getAttribute('src')));
+  expect(undegraded, 'unsupplied images with no declared fallback').toEqual([]);
 });
 
 test('placeholder inventory — noindex must stay until this list is empty', async ({ page }) => {

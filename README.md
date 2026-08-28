@@ -95,9 +95,15 @@ then:
 node optimise-images.mjs ~/Downloads/practice-photos
 ```
 
-That resizes to 1600px and re-encodes into `assets/practice/`, using the ffmpeg
-that ships with Playwright. **Do not skip it**: the originals are 2–4 MB each
-and 23 of them dropped in raw make an ~80 MB page.
+That resizes to 1600px and re-encodes into `assets/practice/`. **Do not skip
+it**: the originals are 2–4 MB each and 23 of them dropped in raw make an
+~80 MB page.
+
+Both media scripts need a **full ffmpeg on `PATH`** (`brew install ffmpeg`,
+`apt install ffmpeg`, or `FFMPEG=/path/to/ffmpeg`). Playwright ships an ffmpeg
+binary, but it is a stripped build for capturing traces — no lavfi, no libx264,
+no mp4 muxer, no mjpeg encoder — so it cannot do this work. The scripts probe
+for the encoders they need and say what is missing rather than failing midway.
 
 Where each photograph is used:
 
@@ -124,6 +130,53 @@ seen them.
 paired clinical photographs of the same patient. Filling them from a general
 practice shoot would misrepresent treatment outcomes, which is both an ASA/CAP
 problem and a GDC one.
+
+---
+
+## The logo
+
+`assets/brand/pristine-dental-group-logo.png`, from the shared Drive folder.
+
+Until it is present the header shows an inline lockup — the tooth mark plus the
+wordmark — which is real markup, not a placeholder box. The image replaces it
+only once it has actually decoded, so the header is correct with JavaScript
+switched off and correct again if the file is ever missing.
+
+The supplied PNG is **252×62 with a transparent ground**. Whether its artwork is
+light or dark could not be verified here, and the header is near-black: if the
+logo turns out to be dark and disappears, set `--logo-invert: 1` in the `:root`
+block. That is the only change needed.
+
+## The background video
+
+`assets/video/prestine-dental-hero.mp4` plus a poster frame, both produced by:
+
+```bash
+node optimise-video.mjs ~/Downloads/prestine-dental-hero.mp4
+```
+
+It sits on the **trust strip**, not the hero, for two reasons. The hero holds
+the qualifier form, and looping motion does not belong behind a form. The
+closing band was the other candidate, but its map embed is a large opaque
+rectangle covering the half where footage would show, and the copy half needs
+the heaviest scrim — the video would have been paid for and then hidden. The
+trust strip is a short band with four figures and four short labels, so the
+footage actually reads.
+
+**The poster is the resting state.** `autoplay` is deliberately absent from the
+markup: JavaScript starts playback only when the band is on screen, motion is
+allowed, and the visitor has not asked to save data — and pauses it again when
+the band scrolls away. With JS off, under `prefers-reduced-motion`, on a
+metered connection, or if autoplay is refused, the band is a still frame rather
+than a black box.
+
+**The scrim's alpha floor is load-bearing.** Every contrast pair on that band
+is measured against the band colour, which is only honest if the scrim actually
+delivers that colour over the footage. Nobody involved has seen this video, so
+`tests/contrast.spec.mjs` reads the alphas back out of the computed style and
+checks the worst case the footage could present — a full white frame. At `.72`
+the muted label measured 4.17:1; the floor is now `.82`, which holds every
+colour on the band at 4.5:1 even against white.
 
 ---
 

@@ -79,3 +79,54 @@ for (const path of PAGES) {
     console.log(`\n  ${path}: ${pairs.length} text/background pairs measured on dark bands, all pass.`);
   });
 }
+
+/* A background video sits behind text, and the normal contrast pass measures
+   against the band's own colour - which is only honest if the scrim over the
+   footage actually delivers that colour. Nobody here has seen the video, so
+   this checks the worst case the footage could present: a full white frame. */
+test('/index.html — the video scrim holds contrast against white footage', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/index.html', { waitUntil: 'load' });
+  await page.waitForTimeout(300);
+
+  const data = await page.evaluate(() => {
+    const band = document.querySelector('.bg-video');
+    if (!band) return null;
+    // The gradient carries the stops; backgroundColor on ::after computes to
+    // rgba(0,0,0,0) and would otherwise be read as a zero-alpha stop.
+    const after = getComputedStyle(band, '::after');
+    const scrim = after.backgroundImage !== 'none' ? after.backgroundImage : after.backgroundColor;
+    const section = band.closest('section');
+    const texts = [];
+    for (const el of section.querySelectorAll('*')) {
+      const own = [...el.childNodes].filter((n) => n.nodeType === 3 && n.textContent.trim());
+      if (!own.length || el.closest('.sr-only') || el.closest('[aria-hidden="true"]')) continue;
+      const cs = getComputedStyle(el);
+      const size = parseFloat(cs.fontSize), weight = Number(cs.fontWeight) || 400;
+      texts.push({ color: cs.color, large: size >= 24 || (size >= 18.66 && weight >= 700),
+                   text: own.map((n) => n.textContent.trim()).join(' ').slice(0, 40) });
+    }
+    return { scrim, texts };
+  });
+
+  expect(data, 'no .bg-video band found').not.toBeNull();
+
+  // every rgba() alpha declared on the scrim; the weakest one governs
+  const alphas = [...data.scrim.matchAll(/rgba\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*([\d.]+)\s*\)/g)]
+    .map((m) => Number(m[1]));
+  expect(alphas.length, 'scrim declares no rgba stops').toBeGreaterThan(0);
+  const a = Math.min(...alphas);
+  const scrimRGB = (data.scrim.match(/rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/) || []).slice(1).map(Number);
+  const composite = scrimRGB.map((c) => a * c + (1 - a) * 255);   // worst case: white frame
+
+  const failures = [];
+  for (const t of data.texts) {
+    const fg = parseRGB(t.color);
+    if (!fg) continue;
+    const need = t.large ? 3 : 4.5;
+    const r = ratio(fg.rgb, composite);
+    if (r < need) failures.push(`${r.toFixed(2)}:1 (need ${need}) — "${t.text}" ${t.color}`);
+  }
+  expect(failures, `weakest scrim alpha ${a} is too thin for ${failures.length} text colour(s)`).toEqual([]);
+  console.log(`\n  scrim floor ${a} over a white frame → rgb(${composite.map(Math.round).join(',')}); ${data.texts.length} text colour(s) hold.`);
+});

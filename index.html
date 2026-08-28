@@ -252,6 +252,28 @@ ul{margin:0;padding:0;list-style:none}
   z-index:3;
 }
 
+
+/* ============================================================
+   BRAND LOCKUP
+   The supplied PNG is 252x62 with a transparent ground. Whether
+   its artwork is light or dark could not be verified from this
+   environment, so --logo-invert is the one-line switch if it
+   turns out to be dark and vanishes on the near-black header.
+   Until the file is dropped in, the inline mark below stands in:
+   it is real markup, not a placeholder box.
+   ============================================================ */
+:root{ --logo-invert:0; }
+.brand-logo{
+  height:34px;width:auto;display:block;
+  filter:invert(var(--logo-invert));
+}
+@media (min-width:768px){ .brand-logo{height:40px} }
+/* Resting state is the inline lockup. The image is revealed only once
+   it has actually decoded, so the header is right with JS switched off. */
+.brand-logo{display:none}
+.brand.has-logo .brand-logo{display:block}
+.brand.has-logo .brand-fallback{display:none}
+
 /* ============================================================
    BUTTONS
    ============================================================ */
@@ -764,6 +786,43 @@ ul{margin:0;padding:0;list-style:none}
   color:var(--color-on-primary-mut);min-width:6ch;text-align:center;
 }
 
+
+/* ============================================================
+   BACKGROUND VIDEO
+   Placed on the closing band, never the hero: the hero holds the
+   qualifier, and looping motion does not belong behind a form.
+
+   Resting state is the poster frame — `autoplay` is deliberately
+   NOT in the markup, so with JS off, on reduced motion, or on a
+   save-data connection the band is a still image rather than a
+   broken black box. JS only decides when to start.
+   ============================================================ */
+.bg-video{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:-1}
+.bg-video video{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+/* The scrim is what makes the type legible, and it is heavy on
+   purpose: every measured contrast pair on this band resolves
+   against the band colour, so the scrim has to actually deliver
+   that colour rather than merely suggest it. */
+.bg-video::after{
+  content:"";position:absolute;inset:0;
+  /* The alpha floor is load-bearing, not taste. Against the worst case
+     the footage can present - a full white frame - .82 is what keeps the
+     muted label at 4.5:1; at .72 it measured 4.17. Verified by
+     tests/contrast.spec.mjs, which reads these alphas back out of the
+     computed style rather than trusting the comment. */
+  background:linear-gradient(180deg,
+    rgba(18,18,18,.82) 0%,
+    rgba(18,18,18,.88) 45%,
+    rgba(18,18,18,.96) 100%);
+}
+@media (max-width:767px){
+  /* the four figures stack into a column here, so the type covers the whole
+     frame and the scrim has to hold everywhere, not just at the base */
+  .bg-video::after{background:rgba(18,18,18,.93)}
+}
+
 /* ============================================================
    P8 · MOTION — one pattern per section, never two
    Every animated element has a defined resting state, so nothing
@@ -859,12 +918,16 @@ ul{margin:0;padding:0;list-style:none}
 <header class="site-header" id="site-header">
   <div class="wrap">
     <div class="header-row">
-      <a class="brand" href="#main">
-        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#E4C590" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M12 21c-1.3 0-1.8-2-2.3-4.2C9.2 14.6 8.6 13 7.4 13c-1 0-1.6 1-2.1 1-.7 0-1.3-1.4-1.3-3.6C4 6.3 6.2 3.5 9 3.5c1.4 0 2.2.7 3 .7s1.6-.7 3-.7c2.8 0 5 2.8 5 6.9 0 2.2-.6 3.6-1.3 3.6-.5 0-1.1-1-2.1-1-1.2 0-1.8 1.6-2.3 3.8C13.8 19 13.3 21 12 21Z"/>
-        </svg>
-        <span class="brand-name">Pristine Dental Group
-          <span class="brand-sub">Kingsbury, London</span>
+      <a class="brand" href="#main" aria-label="Pristine Dental Group, Kingsbury, London">
+        <img class="brand-logo" src="assets/brand/pristine-dental-group-logo.png"
+             width="252" height="62" alt="Pristine Dental Group" data-fallback="inline-lockup">
+        <span class="brand-fallback" style="display:flex;align-items:center;gap:10px">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#E4C590" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 21c-1.3 0-1.8-2-2.3-4.2C9.2 14.6 8.6 13 7.4 13c-1 0-1.6 1-2.1 1-.7 0-1.3-1.4-1.3-3.6C4 6.3 6.2 3.5 9 3.5c1.4 0 2.2.7 3 .7s1.6-.7 3-.7c2.8 0 5 2.8 5 6.9 0 2.2-.6 3.6-1.3 3.6-.5 0-1.1-1-2.1-1-1.2 0-1.8 1.6-2.3 3.8C13.8 19 13.3 21 12 21Z"/>
+          </svg>
+          <span class="brand-name">Pristine Dental Group
+            <span class="brand-sub">Kingsbury, London</span>
+          </span>
         </span>
       </a>
 
@@ -1092,8 +1155,13 @@ ul{margin:0;padding:0;list-style:none}
 <!-- ========================================================
      3 · TRUST STRIP — dark band. Motion: U1 count up.
      ======================================================== -->
-<section class="section dark has-cut" aria-labelledby="trust-h">
-  <div class="drift" aria-hidden="true"><b></b><b></b></div>
+<section class="section dark has-cut" id="trust" aria-labelledby="trust-h">
+  <div class="bg-video" aria-hidden="true">
+    <video id="trust-video" muted loop playsinline preload="none"
+           poster="assets/video/prestine-dental-hero-poster.jpg">
+      <source src="assets/video/prestine-dental-hero.mp4" type="video/mp4">
+    </video>
+  </div>
   <div class="wrap">
     <h2 id="trust-h" class="sr-only">Why patients choose Pristine Dental Group</h2>
     <ul class="stats" data-anim="count">
@@ -2183,6 +2251,41 @@ ul{margin:0;padding:0;list-style:none}
       requestAnimationFrame(function () { paint(); galTick = false; });
     }, { passive: true });
     paint();
+  })();
+
+  /* Swap the inline lockup for the supplied logo, but only once it has
+     actually decoded — a missing or broken file leaves the lockup. */
+  (function () {
+    var img = document.querySelector('.brand-logo');
+    if (!img) return;
+    var show = function () { if (img.naturalWidth) img.closest('.brand').classList.add('has-logo'); };
+    if (img.complete) show(); else img.addEventListener('load', show, { once: true });
+  })();
+
+  /* ---------------------------------------------------------
+     Background video. It starts only when it is on screen, motion
+     is allowed, and the visitor has not asked to save data — and
+     it stops again when the band scrolls away, so a 4 MB loop is
+     never decoding against a page the reader has left.
+     --------------------------------------------------------- */
+  (function () {
+    var v = document.getElementById('trust-video');
+    if (!v) return;
+    var saveData = navigator.connection && navigator.connection.saveData;
+    if (reduced || saveData || !('IntersectionObserver' in window)) return;  // poster stands
+
+    var vio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          if (v.preload === 'none') v.preload = 'auto';
+          var p = v.play();
+          if (p && p.catch) p.catch(function () { /* autoplay refused: poster stands */ });
+        } else if (!v.paused) {
+          v.pause();
+        }
+      });
+    }, { rootMargin: '200px 0px' });
+    vio.observe(v);
   })();
 
   document.getElementById('year').textContent = new Date().getFullYear();

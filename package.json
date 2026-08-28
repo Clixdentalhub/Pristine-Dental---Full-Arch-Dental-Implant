@@ -6,7 +6,9 @@
   "scripts": {
     "test": "playwright test",
     "build": "node build.mjs",
-    "serve": "node tests/serve.mjs"
+    "serve": "node tests/serve.mjs",
+    "images": "node optimise-images.mjs",
+    "video": "node optimise-video.mjs"
   },
   "repository": {
     "type": "git",
