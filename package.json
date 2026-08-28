@@ -27,5 +27,8 @@
     "@playwright/test": "^1.62.1"
   },
   "private": true,
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "sharp": "^0.35.4"
+  }
 }

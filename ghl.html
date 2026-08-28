@@ -360,11 +360,16 @@ ul,ol{margin:0;padding:0;list-style:none}
 @media (min-width:900px){ .team-grid{grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:var(--s-5)} }
 .team-portrait{margin:0;max-width:300px}
 @media (max-width:899px){ .team-portrait{max-width:230px;margin-inline:auto} }
+.team-roster{
+  display:grid;grid-template-columns:repeat(2,minmax(0,220px));
+  gap:var(--s-4);justify-content:center;margin-top:var(--s-5);
+}
+.team-roster .team-portrait{max-width:none;margin:0}
 .team-portrait figcaption{
   text-align:center;margin-top:var(--s-1);
   font-family:var(--font-head);font-weight:600;font-size:1rem;
 }
-.team-portrait figcaption span{
+.team-portrait figcaption>span:last-child{
   display:block;font-family:var(--font-body);font-weight:400;font-size:.76rem;
   letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent);margin-top:3px;
 }
@@ -1245,7 +1250,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 
     <div class="grid grid-3" data-anim="cascade">
       <article class="card lift">
-        <div class="media media-4x3">
+        <div class="media media-4x3" data-slot="DSC09021.jpg — 800×600">
           <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69f9b8f9d38dd61887ea8fe2.jpg" width="800" height="600" loading="lazy"
                alt="A denture wearer covering their mouth while eating at a restaurant table">
         </div>
@@ -1256,7 +1261,7 @@ ul,ol{margin:0;padding:0;list-style:none}
       </article>
 
       <article class="card lift">
-        <div class="media media-4x3">
+        <div class="media media-4x3" data-slot="DSC09022.jpg — 800×600">
           <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69f9b8f9becb53a735e9b5af.jpg" width="800" height="600" loading="lazy"
                alt="A patient in a dental chair being shown an X-ray of failing teeth">
         </div>
@@ -1267,7 +1272,7 @@ ul,ol{margin:0;padding:0;list-style:none}
       </article>
 
       <article class="card lift">
-        <div class="media media-4x3">
+        <div class="media media-4x3" data-slot="DSC09023.jpg — 800×600">
           <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69f9b8f9becb53a735e9b5b0.jpg" width="800" height="600" loading="lazy"
                alt="An older adult looking thoughtfully out of a window">
         </div>
@@ -1486,8 +1491,8 @@ ul,ol{margin:0;padding:0;list-style:none}
 
     <div class="team-grid">
       <figure class="team-portrait">
-        <div class="media media-1x1 media-bare">
-          <img id="team-photo" src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69fc5161a6982c1655afaa37.png" width="800" height="800" loading="lazy"
+        <div class="media media-1x1 media-bare" data-slot="team-dr-shabeeb.jpg">
+          <img id="team-photo" src="assets/img/team-dr-shabeeb.jpg" width="800" height="800" loading="lazy"
                alt="Dr Shabeeb, principal dentist at Pristine Dental Group">
         </div>
         <figcaption id="team-caption">Dr Shabeeb<span>Principal dentist</span></figcaption>
@@ -1505,6 +1510,25 @@ ul,ol{margin:0;padding:0;list-style:none}
     </div>
       </div>
     </div>
+
+    <div class="team-roster">
+      <figure class="team-portrait">
+        <div class="media media-1x1 media-bare" data-slot="staff-coordinator.jpg">
+          <img src="assets/img/staff-coordinator.jpg" width="800" height="800" loading="lazy"
+               alt="Treatment coordinator at Pristine Dental Group">
+        </div>
+        <figcaption><span class="ph">Name</span><span>Treatment coordinator</span></figcaption>
+      </figure>
+      <figure class="team-portrait">
+        <div class="media media-1x1 media-bare" data-slot="staff-implant-nurse.jpg">
+          <img src="assets/img/staff-implant-nurse.jpg" width="800" height="800" loading="lazy"
+               alt="Implant nurse at Pristine Dental Group">
+        </div>
+        <figcaption><span class="ph">Name</span><span>Implant nurse</span></figcaption>
+      </figure>
+    </div>
+    <p style="text-align:center;margin:var(--s-3) 0 0;font-size:.85rem"><span class="ph">Confirm both names and
+    job titles — the two roles above are read from the uniforms in the photographs, not from a staff list.</span></p>
   </div>
 </section>
 
@@ -1518,73 +1542,81 @@ ul,ol{margin:0;padding:0;list-style:none}
     <div class="section-head centre">
       <p class="eyebrow">Inside the practice</p>
       <h2 id="gallery-h">Where your treatment&nbsp;happens</h2>
-      <p class="lede" style="margin-inline:auto">Every implant is planned and placed here, at 499 Kingsbury Road.
-      <span class="ph">Write a caption for each photograph, and individual alt text — the current alt text is
-      generic because it was written without sight of the images.</span></p>
+      <p class="lede" style="margin-inline:auto">Every implant is planned and placed here, at 499 Kingsbury Road.</p>
     </div>
   </div>
 
   <div class="gallery" id="gallery-rail" role="region" aria-label="Photographs of the practice, scrollable" tabindex="0">
     <div class="gallery-track">
         <figure class="gallery-item">
-          <div class="media media-4x3">
-            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69f48aac07cf68d3e5860587.jpg" width="800" height="600" loading="lazy"
-                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          <div class="media media-4x3" data-slot="g01-implant-plan.jpg">
+            <img src="assets/img/g01-implant-plan.jpg" width="800" height="600" loading="lazy"
+                 alt="Dr Shabeeb explaining a dental implant plan on an X-ray screen">
           </div>
+          <figcaption>Your plan, explained on&nbsp;screen</figcaption>
         </figure>
         <figure class="gallery-item">
-          <div class="media media-4x3">
-            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69f48aacbbacf0a056fd0dd1.jpg" width="800" height="600" loading="lazy"
-                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          <div class="media media-4x3" data-slot="g02-handshake.jpg">
+            <img src="assets/img/g02-handshake.jpg" width="800" height="600" loading="lazy"
+                 alt="Dr Shabeeb welcoming an implant patient with a handshake">
           </div>
+          <figcaption>Welcomed, never&nbsp;processed</figcaption>
         </figure>
         <figure class="gallery-item">
-          <div class="media media-4x3">
-            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69f48aac94b9e824d52ffd49.jpg" width="800" height="600" loading="lazy"
-                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          <div class="media media-4x3" data-slot="g03-mirror-moment.jpg">
+            <img src="assets/img/g03-mirror-moment.jpg" width="800" height="600" loading="lazy"
+                 alt="An implant patient checking his new smile in a hand mirror">
           </div>
+          <figcaption>The first look in the&nbsp;mirror</figcaption>
         </figure>
         <figure class="gallery-item">
-          <div class="media media-4x3">
-            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/6992facc1d5e04733c4a5bbc.webp" width="800" height="600" loading="lazy"
-                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          <div class="media media-4x3" data-slot="g04-implant-surgery.jpg">
+            <img src="assets/img/g04-implant-surgery.jpg" width="800" height="600" loading="lazy"
+                 alt="Dr Shabeeb placing a dental implant in the treatment room">
           </div>
+          <figcaption>Placement day, in our&nbsp;surgery</figcaption>
         </figure>
         <figure class="gallery-item">
-          <div class="media media-4x3">
-            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69f4781ce9694b9664de0fff.jpg" width="800" height="600" loading="lazy"
-                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          <div class="media media-4x3" data-slot="g05-your-visit.jpg">
+            <img src="assets/img/g05-your-visit.jpg" width="800" height="600" loading="lazy"
+                 alt="A patient settled in the chair during a visit to Pristine Dental Group">
           </div>
+          <figcaption>Settled in for your&nbsp;visit</figcaption>
         </figure>
         <figure class="gallery-item">
-          <div class="media media-4x3">
-            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69f852477165b6587e28941b.png" width="800" height="600" loading="lazy"
-                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          <div class="media media-4x3" data-slot="g06-team-patient.jpg">
+            <img src="assets/img/g06-team-patient.jpg" width="800" height="600" loading="lazy"
+                 alt="The Pristine Dental team with a patient after treatment">
           </div>
+          <figcaption>The team around every&nbsp;case</figcaption>
         </figure>
         <figure class="gallery-item">
-          <div class="media media-4x3">
-            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69f8512c7165b6587e2868b2.jpg" width="800" height="600" loading="lazy"
-                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          <div class="media media-4x3" data-slot="g07-mirror-reveal.jpg">
+            <img src="assets/img/g07-mirror-reveal.jpg" width="800" height="600" loading="lazy"
+                 alt="A patient seeing his finished smile in the mirror with the team">
           </div>
+          <figcaption>Seeing the finished&nbsp;result</figcaption>
         </figure>
         <figure class="gallery-item">
-          <div class="media media-4x3">
-            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69f8512c484d69862564d0cc.jpg" width="800" height="600" loading="lazy"
-                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          <div class="media media-4x3" data-slot="g08-aftercare.jpg">
+            <img src="assets/img/g08-aftercare.jpg" width="800" height="600" loading="lazy"
+                 alt="A patient leaving with a Pristine Dental aftercare bag">
           </div>
+          <figcaption>Leaving with your aftercare&nbsp;pack</figcaption>
         </figure>
         <figure class="gallery-item">
-          <div class="media media-4x3">
-            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69f8512c945c4a6aa5193e11.jpg" width="800" height="600" loading="lazy"
-                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          <div class="media media-4x3" data-slot="g09-practice.jpg">
+            <img src="assets/img/g09-practice.jpg" width="800" height="600" loading="lazy"
+                 alt="The corridor and treatment rooms inside Pristine Dental Group">
           </div>
+          <figcaption>Inside 499 Kingsbury&nbsp;Road</figcaption>
         </figure>
         <figure class="gallery-item">
-          <div class="media media-4x3">
-            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69f48a1007cf68d3e585d55f.jpg" width="800" height="600" loading="lazy"
-                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          <div class="media media-4x3" data-slot="g10-storefront.jpg">
+            <img src="assets/img/g10-storefront.jpg" width="800" height="600" loading="lazy"
+                 alt="The Pristine Dental Group practice front in Kingsbury, London">
           </div>
+          <figcaption>Pristine Dental Group,&nbsp;Kingsbury</figcaption>
         </figure>
     </div>
   </div>
@@ -1639,13 +1671,13 @@ ul,ol{margin:0;padding:0;list-style:none}
 
       <div class="grid" style="gap:var(--s-3)">
         <div class="card-plain card-photo">
-          <span class="card-photo-bg" aria-hidden="true" style="background-image:url(https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69f8512c7165b6587e2868ab.jpg)"></span>
+          <span class="card-photo-bg" aria-hidden="true" style="background-image:url(assets/img/callout-concierge.jpg)"></span>
           <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px;margin-right:6px"><path d="M3 17h2l1.6-5.2A2 2 0 0 1 8.5 10.4h7a2 2 0 0 1 1.9 1.4L19 17h2"/><circle cx="7.5" cy="18.5" r="1.6"/><circle cx="16.5" cy="18.5" r="1.6"/></svg>Concierge <span class="nb">pick-up</span></h3>
           <p style="margin:0">Getting to us shouldn&rsquo;t be the reason you put this off. A complimentary <span class="nb">pick-up</span>
           and drop-off service is available on request for consultation and treatment days.</p>
         </div>
         <div class="card-plain card-photo">
-          <span class="card-photo-bg" aria-hidden="true" style="background-image:url(https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69f8512c945c4a6aa5193e0b.jpg)"></span>
+          <span class="card-photo-bg" aria-hidden="true" style="background-image:url(assets/img/callout-complex.jpg)"></span>
           <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px;margin-right:6px"><path d="M12 3 4 6.5v5.2c0 5 3.4 8.6 8 9.8 4.6-1.2 8-4.8 8-9.8V6.5Z"/><path d="M9 12.2l2.1 2.1L15.4 10"/></svg>Complex cases welcome</h3>
           <p style="margin:0">Previously declined, existing bone loss, or a failed implant from another practice —
           these are the cases we plan for most often. Bring any scans or notes you already have.</p>

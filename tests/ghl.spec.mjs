@@ -18,17 +18,28 @@ FRAGMENT
 
 test.beforeAll(async () => {
   await run('node', ['build-ghl.mjs']);
-  const frag = await readFile('ghl.html', 'utf8');
+  await run('python3', ['embed-images.py', 'ghl.html', 'ghl-embedded.html']);
+  // the host page carries the EMBEDDED fragment — that is what gets pasted
+  const frag = await readFile('ghl-embedded.html', 'utf8');
   await writeFile('test-results/ghl-host.html', HOST.replace('FRAGMENT', frag));
 });
 
-test('the fragment carries no document wrapper and no local asset paths', async () => {
+test('the fragment carries no document wrapper, and every local path survives the embed', async () => {
   const raw = await readFile('ghl.html', 'utf8');
   // The header comment names those tags in prose; a comment is not markup.
   const frag = raw.replace(/<!--[\s\S]*?-->/g, '');
   expect(frag).not.toMatch(/<!doctype|<html[\s>]|<head[\s>]|<body[\s>]/i);
-  const local = [...new Set([...raw.matchAll(/(?:src|poster)="(assets\/[^"]+)"/g)].map((m) => m[1]))];
-  expect(local, 'local asset paths would be broken links inside GHL').toEqual([]);
+  // a local path in the intermediate fragment must be backed by a real file,
+  // because embed-images.py can only inline what exists
+  const { existsSync } = await import('node:fs');
+  const local = [...new Set(
+    [...raw.matchAll(/(?:src|poster)="(assets\/[^"]+)"|url\((assets\/[^)]+)\)/g)].map((m) => m[1] || m[2]),
+  )];
+  for (const p of local) expect(existsSync(p), `${p} referenced but not on disk`).toBe(true);
+  // and the embedded deliverable must reference nothing local at all
+  const embedded = await readFile('ghl-embedded.html', 'utf8');
+  expect(embedded).not.toMatch(/(?:src|poster)="assets\//);
+  expect(embedded).not.toMatch(/url\(assets\//);
   // nav must not point at a section the build dropped
   for (const href of [...raw.matchAll(/href="#([a-z-]+)"/g)].map((m) => m[1])) {
     expect(raw, `nav points at #${href}, which is not in the fragment`).toContain(`id="${href}"`);
