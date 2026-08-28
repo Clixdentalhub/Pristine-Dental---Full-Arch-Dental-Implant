@@ -574,6 +574,11 @@ ul,ol{margin:0;padding:0;list-style:none}
 /* ============================================================
    TRUST STRIP / STATS
    ============================================================ */
+/* The trust strip is one row of figures, not a full section — it reads as a
+   band between the hero and the problem cards, so it sits tighter than the
+   section default. The extra bottom is clearance for the cut overlay. */
+#trust{padding-top:var(--s-5);padding-bottom:calc(var(--s-5) + 64px)}
+@media (min-width:768px){ #trust{padding-top:var(--s-6);padding-bottom:calc(var(--s-6) + 96px)} }
 .stats{display:grid;gap:var(--s-3);text-align:center}
 @media (min-width:640px){ .stats{grid-template-columns:repeat(2,1fr)} }
 @media (min-width:900px){ .stats{grid-template-columns:repeat(4,1fr)} }
@@ -1057,7 +1062,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 
         <ul class="ticks" aria-label="What full arch implants give you">
           <li class="tick"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg>
-            <span>Fixed permanently into the jaw — never taken out, never <span class="nb">re-glued</span></span></li>
+            <span>Fixed permanently into the jaw — never taken out, <span class="nb">never re-glued</span></span></li>
           <li class="tick"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg>
             <span>Advanced 3D digital planning — most cases need no bone&nbsp;graft</span></li>
           <li class="tick"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg>
@@ -1634,9 +1639,9 @@ ul,ol{margin:0;padding:0;list-style:none}
      ======================================================== -->
 <section class="section" id="included" aria-labelledby="included-h">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head centre">
       <p class="eyebrow">What you get</p>
-      <h2 id="included-h">Everything in your free consultation</h2>
+      <h2 id="included-h">Everything in your free&nbsp;consultation</h2>
     </div>
 
     <div class="grid grid-2" data-anim="mask-rise" style="align-items:start">
@@ -1756,7 +1761,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="a7" id="q7">
-          How long do full arch implants last?
+          How long do full arch implants&nbsp;last?
           <svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
         </button>
         <div class="faq-a" id="a7" role="region" aria-labelledby="q7"><div>
@@ -1768,7 +1773,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="a8" id="q8">
-          What happens at the free consultation?
+          What happens at the free&nbsp;consultation?
           <svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
         </button>
         <div class="faq-a" id="a8" role="region" aria-labelledby="q8"><div>
