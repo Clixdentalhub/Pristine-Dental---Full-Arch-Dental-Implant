@@ -101,6 +101,17 @@ test('/index.html — the video scrim holds contrast against white footage', asy
     for (const el of section.querySelectorAll('*')) {
       const own = [...el.childNodes].filter((n) => n.nodeType === 3 && n.textContent.trim());
       if (!own.length || el.closest('.sr-only') || el.closest('[aria-hidden="true"]')) continue;
+      // Text on its own opaque surface (the form card, a button, a chip)
+      // does not sit on the scrim — its contrast is measured against that
+      // surface by the normal pass, not against the footage here.
+      let onOwnSurface = false;
+      for (let a = el; a && a !== section; a = a.parentElement) {
+        const acs = getComputedStyle(a);
+        const alpha = (acs.backgroundColor.match(/rgba?\([^)]*?([\d.]+)\)$/) || [])[1];
+        if ((acs.backgroundColor.startsWith('rgb(') || Number(alpha) >= 0.9) ||
+            acs.backgroundImage !== 'none') { onOwnSurface = true; break; }
+      }
+      if (onOwnSurface) continue;
       const cs = getComputedStyle(el);
       const size = parseFloat(cs.fontSize), weight = Number(cs.fontWeight) || 400;
       texts.push({ color: cs.color, large: size >= 24 || (size >= 18.66 && weight >= 700),

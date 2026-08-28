@@ -440,14 +440,6 @@ ul,ol{margin:0;padding:0;list-style:none}
 }
 .hero h1{color:#fff;margin-bottom:var(--s-2)}
 .hero .lede{font-size:1.06rem;margin-bottom:var(--s-3)}
-.offer-strip{
-  display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;
-  font-family:var(--font-head);font-weight:600;font-size:.86rem;
-  letter-spacing:.02em;color:var(--color-flourish);
-  border-block:1px solid #2E2820;padding-block:12px;margin-block:var(--s-3);
-}
-.offer-strip span{display:inline-flex;align-items:center;gap:8px}
-.offer-strip i{width:4px;height:4px;border-radius:50%;background:#5A4E3A;display:block}
 /* anchor figure */
 .anchor-figure{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:var(--s-2)}
 .anchor-figure b{
@@ -456,7 +448,8 @@ ul,ol{margin:0;padding:0;list-style:none}
   color:var(--cta-on-dark);letter-spacing:-.03em;
 }
 .anchor-figure em{font-style:normal;font-size:.95rem;color:var(--color-on-primary-mut)}
-.anchor-figure s{color:#8C8478;text-decoration-thickness:2px}
+/* #BDB5A9 keeps 4.5:1 even over the scrim's worst case, a white video frame */
+.anchor-figure s{color:#BDB5A9;text-decoration-thickness:2px}
 
 /* ============================================================
    P6 · QUALIFIER FORM — "Ink Atelier"
@@ -841,8 +834,10 @@ ul,ol{margin:0;padding:0;list-style:none}
 
 /* ============================================================
    BACKGROUND VIDEO
-   On the trust strip, never the hero: the hero holds the qualifier,
-   and looping motion does not belong behind a form.
+   Behind the hero. The scrim's alpha floor is what makes this safe
+   over a form: the qualifier card carries its own solid background,
+   and every colour painted directly on the band is proven against a
+   full-white frame in tests/contrast.spec.mjs.
 
    The band renders correctly with no video at all — scrim over the
    flat band colour. Set data-video on it and JS builds the element;
@@ -1038,6 +1033,10 @@ ul,ol{margin:0;padding:0;list-style:none}
      Motion: H2 word rise (headline only). No other pattern here.
      ======================================================== -->
 <section class="hero" id="enquiry">
+  <!-- Background video. The hosted .mp4 goes in data-video, its poster
+       frame in data-poster; empty, the band is a flat colour and nothing
+       is requested. -->
+  <div class="bg-video" aria-hidden="true" data-video="https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/6a91a8b24fe74193542ef41d.mp4" data-poster="assets/img/hero-poster.jpg"></div>
   <div class="drift" aria-hidden="true"><b></b><b></b></div>
   <div class="wrap">
     <div class="hero-grid">
@@ -1063,16 +1062,7 @@ ul,ol{margin:0;padding:0;list-style:none}
             <span>Advanced 3D digital planning — most cases need no bone&nbsp;graft</span></li>
           <li class="tick"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg>
             <span>Complex cases welcome — including patients declined&nbsp;elsewhere</span></li>
-          <li class="tick"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg>
-            <span>Free consultation including a CBCT scan worth £250</span></li>
         </ul>
-
-        <div class="offer-strip">
-          <span>£1,500 off</span><i aria-hidden="true"></i>
-          <span>From £116/month</span><i aria-hidden="true"></i>
-          <span>Free CBCT scan, worth £250</span><i aria-hidden="true"></i>
-          <span>5-year 0% finance</span>
-        </div>
 
         <div class="chips">
           <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg> 5.0 Google rating</span>
@@ -1213,10 +1203,6 @@ ul,ol{margin:0;padding:0;list-style:none}
      3 · TRUST STRIP — dark band. Motion: U1 count up.
      ======================================================== -->
 <section class="section dark has-cut" id="trust" aria-labelledby="trust-h">
-  <!-- Background video. Paste the hosted .mp4 into data-video and its poster
-       frame into data-poster; leave them empty and the band is a flat colour.
-       Nothing is requested until they are set. -->
-  <div class="bg-video" aria-hidden="true" data-video="https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/6a91a8b24fe74193542ef41d.mp4" data-poster="assets/img/hero-poster.jpg"></div>
   <div class="wrap">
     <h2 id="trust-h" class="sr-only">Why patients choose Pristine Dental Group</h2>
     <ul class="stats" data-anim="count">
