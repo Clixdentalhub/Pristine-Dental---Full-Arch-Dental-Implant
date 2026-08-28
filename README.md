@@ -198,6 +198,33 @@ problem and a GDC one.
 
 ---
 
+## Adding more images
+
+**Google Drive cannot be the source.** Its links need "anyone with link", are
+rate-limited, and Google serves an interstitial rather than raw bytes for
+larger files. It is a place to keep originals, not to serve them from.
+
+The route is the one the current live funnel already uses:
+
+```bash
+node set-media.mjs --slots        # what still needs a URL — read out of the
+                                  # documents, so it cannot go stale
+# upload those to the GoHighLevel media library, copy the URLs
+node set-media.mjs --fill urls.txt   # assign them to empty slots, in order
+node set-media.mjs                   # rewrite the documents
+npm test && node build-ghl.mjs
+```
+
+`--fill` prints what it assigned to what before anything is applied, so a
+wrong order is caught by reading rather than by looking at the page. For a
+single image — the background video, say — pasting the URL straight into the
+attribute is quicker than the manifest.
+
+`--slots` reads the **documents**, not `media.json`. Once a slot has a URL its
+local path is gone from the page, so a manifest cannot rebuild itself; it goes
+stale the moment a section is added or removed. What is outstanding is whatever
+the page still cannot render.
+
 ## Getting the media into the build
 
 None of the media is in this repository. It could not be: the build

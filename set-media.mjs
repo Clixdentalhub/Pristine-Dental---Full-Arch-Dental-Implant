@@ -1,9 +1,17 @@
 #!/usr/bin/env node
 /* Repoints every media reference in the documents at hosted URLs.
 
-     node set-media.mjs --init     # write media.json listing every slot
-     node set-media.mjs            # apply media.json to the documents
-     node set-media.mjs --revert   # put the local assets/ paths back
+     node set-media.mjs --slots        # which slots still need a URL
+     node set-media.mjs --fill urls.txt  # fill empty slots from a list, in order
+     node set-media.mjs                # apply media.json to the documents
+     node set-media.mjs --revert       # put the local assets/ paths back
+     node set-media.mjs --init         # rebuild media.json from the documents
+
+   Google Drive is not an image host: its links need 'anyone with link', are
+   rate-limited, and Google serves an interstitial rather than raw bytes for
+   larger files. Upload to the GoHighLevel media library instead — the same
+   place the current live funnel serves its images from — and paste those
+   URLs here.
 
    Why this exists: the current live funnel already serves its images from the
    GoHighLevel CDN. Uploading this campaign's media to the same media library
@@ -26,6 +34,60 @@ async function slots() {
     for (const m of html.matchAll(REF)) found.add(m[1] || m[2]);
   }
   return [...found].sort();
+}
+
+if (mode === '--slots') {
+  /* Read the documents, not media.json. Once a slot has been given a URL its
+     local path is gone from the page, so a manifest cannot rebuild itself —
+     it goes stale the moment a section is added or removed. What is actually
+     outstanding is whatever the page still cannot render. */
+  const outstanding = [];
+  for (const doc of DOCS) {
+    const html = await readFile(doc, 'utf8');
+    for (const m of html.matchAll(REF)) {
+      outstanding.push({ doc, what: m[1] || m[2], why: 'local path, will 404 once published' });
+    }
+    for (const m of html.matchAll(/<div class="bg-video"[^>]*data-video="(\s*)"[^>]*>/g)) {
+      outstanding.push({ doc, what: 'background video + poster', why: 'data-video / data-poster are empty' });
+    }
+    for (const m of html.matchAll(/photo: '',\s*slot: '([^']+)'/g)) {
+      outstanding.push({ doc, what: m[1], why: 'roster entry has no portrait' });
+    }
+  }
+  if (!outstanding.length) {
+    console.log('\nNothing outstanding — every image in both documents resolves to a URL.\n');
+    process.exit(0);
+  }
+  console.log(`\n${outstanding.length} thing(s) still need a hosted URL:\n`);
+  for (const o of outstanding) console.log(`  ${o.doc.padEnd(16)} ${o.what.padEnd(38)} ${o.why}`);
+  console.log(`\nUpload to the GHL media library, then either paste the URL straight into`);
+  console.log(`the attribute, or list the URLs in a file and run --fill.\n`);
+  process.exit(0);
+}
+
+if (mode === '--fill') {
+  const listFile = process.argv[3];
+  if (!listFile) { console.error('usage: node set-media.mjs --fill <file-of-urls>'); process.exit(1); }
+  const urls = (await readFile(listFile, 'utf8')).split('\n').map((l) => l.trim())
+    .filter((l) => l && !l.startsWith('#'));
+  const map = JSON.parse(await readFile(MAP, 'utf8'));
+  const empty = Object.entries(map).filter(([, v]) => !v).map(([k]) => k);
+
+  if (urls.length > empty.length) {
+    console.error(`${urls.length} URLs but only ${empty.length} empty slot(s). Nothing written.`);
+    process.exit(1);
+  }
+  urls.forEach((u, i) => { map[empty[i]] = u; });
+  await writeFile(MAP, JSON.stringify(map, null, 2) + '\n');
+
+  console.log(`\nAssigned in order — check these before applying:\n`);
+  urls.forEach((u, i) => console.log(`  ${empty[i].padEnd(38)} ← ${u.split('/').pop()}`));
+  if (urls.length < empty.length) {
+    console.log(`\n${empty.length - urls.length} slot(s) still empty:`);
+    for (const k of empty.slice(urls.length)) console.log(`  ${k}`);
+  }
+  console.log(`\nWrong order? Edit ${MAP}. Then:  node set-media.mjs\n`);
+  process.exit(0);
 }
 
 if (mode === '--init') {
