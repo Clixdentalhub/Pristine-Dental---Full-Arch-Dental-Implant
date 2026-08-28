@@ -324,12 +324,31 @@ applies to errors: `--color-error` fails on the dark form card, so
 | `--cta-on-dark` on `--color-primary` | 11.16:1 | 3 |
 | `--cta-on-dark-text` on `--cta-on-dark` | 11.05:1 | 4.5 |
 | `--color-error-on-dark` on `--color-primary` | 9.28:1 | 4.5 |
-| `--color-on-accent` on `--color-accent` | 5.23:1 | 4.5 |
+| `--color-on-accent` on `--color-accent` | 5.91:1 | 4.5 |
 | `--color-foreground` on `--color-background` | 17.35:1 | 4.5 |
 | `--color-foreground-mut` on `--color-background` | 7.51:1 | 4.5 |
 | `--color-muted` on `--color-background` | 5.04:1 | 4.5 |
-| `--color-accent` on `--color-background` | 4.94:1 | 4.5 |
+| `--color-accent` on `--color-background` | 5.58:1 | 4.5 |
 | `--color-border-strong` on `--color-background` | 3.19:1 | 3 |
+
+---
+
+## The luxury pass
+
+Worked as subtraction, not addition — the brief the prompt pack sets for the
+*Gilded Hairline* treatment, applied to the whole page.
+
+- **Air first.** Section rhythm went from 64/80 to 88/112, card padding from 24
+  to 32. Space reads as expensive before any colour does.
+- **Lighter headings.** 700 → 600 with tracking pulled from −.02em to −.03em. A
+  700 weight shouts; 600 at tighter tracking carries the same authority quietly.
+  Body leading 1.65 → 1.72, eyebrow tracking .16em → .22em.
+- **Hairlines, not slabs.** The featured price card keeps its inset ring and
+  loses its drop shadow; hover lifts 3px instead of 4 and half as heavily.
+- **A deeper gold.** `--color-accent` moved from `#96610F` to `#8A5A12` — less
+  orange, and more contrast headroom with it (5.91:1 with white, against 5.23).
+- **Slower motion.** Durations 240/460/680 → 280/520/760. Rushed transitions
+  read as cheap.
 
 ---
 
