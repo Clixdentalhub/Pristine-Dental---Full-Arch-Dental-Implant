@@ -823,6 +823,26 @@ ul{margin:0;padding:0;list-style:none}
   .bg-video::after{background:rgba(18,18,18,.93)}
 }
 
+
+/* ============================================================
+   PHOTO-BACKED CALLOUT
+   The image is a background, so the scrim has to carry the text
+   on its own: the panel colour is painted at .93 over the photo,
+   which is what keeps the measured contrast honest when nobody
+   has seen the picture. Same reasoning as the video band.
+   ============================================================ */
+.card-photo{position:relative;isolation:isolate;overflow:hidden;color:var(--color-on-primary)}
+.card-photo>.card-photo-bg{
+  position:absolute;inset:0;z-index:-1;
+  background-size:cover;background-position:center;
+}
+.card-photo>.card-photo-bg::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(18,18,18,.93) 0%,rgba(18,18,18,.96) 100%);
+}
+.card-photo h3{color:#fff}
+.card-photo p{color:var(--color-on-primary-mut)}
+
 /* ============================================================
    P8 · MOTION — one pattern per section, never two
    Every animated element has a defined resting state, so nothing
@@ -1195,8 +1215,8 @@ ul{margin:0;padding:0;list-style:none}
 
     <div class="grid grid-4" data-anim="cascade">
       <article class="card lift">
-        <div class="media media-4x3" data-slot="HRD05259.jpg — 800×600">
-          <img src="assets/practice/HRD05259.jpg" width="800" height="600" loading="lazy"
+        <div class="media media-4x3" data-slot="DSC09021.jpg — 800×600">
+          <img src="assets/cards/DSC09021.jpg" width="800" height="600" loading="lazy"
                alt="A denture wearer covering their mouth while eating at a restaurant table">
         </div>
         <div class="card-body">
@@ -1206,8 +1226,8 @@ ul{margin:0;padding:0;list-style:none}
       </article>
 
       <article class="card lift">
-        <div class="media media-4x3" data-slot="HRD05260.jpg — 800×600">
-          <img src="assets/practice/HRD05260.jpg" width="800" height="600" loading="lazy"
+        <div class="media media-4x3" data-slot="DSC09022.jpg — 800×600">
+          <img src="assets/cards/DSC09022.jpg" width="800" height="600" loading="lazy"
                alt="A patient in a dental chair being shown an X-ray of failing teeth">
         </div>
         <div class="card-body">
@@ -1217,8 +1237,8 @@ ul{margin:0;padding:0;list-style:none}
       </article>
 
       <article class="card lift">
-        <div class="media media-4x3" data-slot="HRD05261.jpg — 800×600">
-          <img src="assets/practice/HRD05261.jpg" width="800" height="600" loading="lazy"
+        <div class="media media-4x3" data-slot="DSC09023.jpg — 800×600">
+          <img src="assets/cards/DSC09023.jpg" width="800" height="600" loading="lazy"
                alt="An older adult looking thoughtfully out of a window">
         </div>
         <div class="card-body">
@@ -1228,8 +1248,8 @@ ul{margin:0;padding:0;list-style:none}
       </article>
 
       <article class="card lift">
-        <div class="media media-4x3" data-slot="HRD05262.jpg — 800×600">
-          <img src="assets/practice/HRD05262.jpg" width="800" height="600" loading="lazy"
+        <div class="media media-4x3" data-slot="DSC09025.jpg — 800×600">
+          <img src="assets/cards/DSC09025.jpg" width="800" height="600" loading="lazy"
                alt="A dentist reviewing a three-dimensional CBCT jaw scan on a monitor">
         </div>
         <div class="card-body">
@@ -1700,12 +1720,14 @@ ul{margin:0;padding:0;list-style:none}
       </ul>
 
       <div class="grid" style="gap:var(--s-3)">
-        <div class="card-plain">
+        <div class="card-plain card-photo">
+          <span class="card-photo-bg" aria-hidden="true" style="background-image:url(assets/cards/DSC09026.jpg)"></span>
           <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px;margin-right:6px"><path d="M3 17h2l1.6-5.2A2 2 0 0 1 8.5 10.4h7a2 2 0 0 1 1.9 1.4L19 17h2"/><circle cx="7.5" cy="18.5" r="1.6"/><circle cx="16.5" cy="18.5" r="1.6"/></svg>Concierge <span class="nb">pick-up</span></h3>
           <p style="margin:0">Getting to us shouldn&rsquo;t be the reason you put this off. A complimentary <span class="nb">pick-up</span>
           and drop-off service is available on request for consultation and treatment days.</p>
         </div>
-        <div class="card-plain">
+        <div class="card-plain card-photo">
+          <span class="card-photo-bg" aria-hidden="true" style="background-image:url(assets/cards/DSC09029.jpg)"></span>
           <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px;margin-right:6px"><path d="M12 3 4 6.5v5.2c0 5 3.4 8.6 8 9.8 4.6-1.2 8-4.8 8-9.8V6.5Z"/><path d="M9 12.2l2.1 2.1L15.4 10"/></svg>Complex cases welcome</h3>
           <p style="margin:0">Previously declined, existing bone loss, or a failed implant from another practice —
           these are the cases we plan for most often. Bring any scans or notes you already have.</p>

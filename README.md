@@ -133,6 +133,44 @@ problem and a GDC one.
 
 ---
 
+## Getting the media into the build
+
+None of the media is in this repository. It could not be: the build
+environment's proxy blocks every media host — `drive.google.com`,
+`drive.usercontent.google.com`, `lh3.googleusercontent.com`,
+`assets.cdn.filesafe.space`, `images.leadconnectorhq.com` and the practice's
+own domain all refuse the connection. Only `fonts.googleapis.com`,
+`fonts.gstatic.com`, the npm registry and GitHub are reachable.
+
+There are three ways in. They are not equivalent.
+
+**1 · Hosted URLs — the option to prefer.** The current live funnel already
+serves its images from the GoHighLevel CDN. Upload this campaign's media to the
+same media library, then:
+
+```bash
+node set-media.mjs --init      # writes media.json, one line per slot
+# paste the hosted URL against each slot
+node set-media.mjs             # rewrites both documents
+npm test
+```
+
+The documents then need no `assets/` folder at all — one file each, paste and
+go, and the images stay separately cacheable. `node set-media.mjs --revert`
+puts the local paths back.
+
+**2 · Local files.** Download the Drive folders, run `optimise-images.mjs` and
+`optimise-video.mjs`, and the existing relative paths resolve. Good for working
+offline; means an assets folder travels with the documents.
+
+**3 · Attach the files to the conversation.** Files attached to a chat message
+land on disk in the session and can be committed directly. Drive *links* cannot
+— they only yield metadata. This is the only route by which media reaches the
+repository without leaving the conversation, and it is bounded by how many
+files are practical to attach.
+
+---
+
 ## The logo
 
 `assets/brand/pristine-dental-group-logo.png`, from the shared Drive folder.
