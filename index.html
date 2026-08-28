@@ -337,9 +337,32 @@ ul{margin:0;padding:0;list-style:none}
   content:"";position:absolute;left:0;top:0;width:48px;height:48px;
   background:repeating-linear-gradient(135deg,#EFE9E0 0 10px,#E6DED2 10px 20px);
 }
+/* Once the file has decoded the slot has done its job. Left behind a PNG with
+   transparent corners it shows its stripes straight through the artwork. */
+.media.loaded{background:transparent}
+.media.loaded::before{display:none}
+
 .media-16x9{aspect-ratio:16/9}
 .media-4x3{aspect-ratio:4/3}
 .media-1x1{aspect-ratio:1/1}
+/* a portrait already cropped to a circle brings its own frame; a border and a
+   fill behind it only fight the artwork */
+.media-bare{background:transparent;border:0}
+
+/* Team: the portrait belongs beside the roster that labels it, not stretched
+   across the whole band above it. */
+.team-grid{display:grid;gap:var(--s-4);align-items:start}
+@media (min-width:900px){ .team-grid{grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:var(--s-5)} }
+.team-portrait{margin:0;max-width:300px}
+@media (max-width:899px){ .team-portrait{max-width:230px;margin-inline:auto} }
+.team-portrait figcaption{
+  text-align:center;margin-top:var(--s-1);
+  font-family:var(--font-head);font-weight:600;font-size:1rem;
+}
+.team-portrait figcaption span{
+  display:block;font-family:var(--font-body);font-weight:400;font-size:.76rem;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent);margin-top:3px;
+}
 
 /* ============================================================
    CARDS — image-on-top pattern
@@ -1524,11 +1547,16 @@ ul{margin:0;padding:0;list-style:none}
       <h2 id="team-h">Meet the people restoring your&nbsp;smile</h2>
     </div>
 
-    <div class="media media-16x9" data-slot="HRD05266.jpg — 1600×900" style="border-radius:var(--r-md);border:1px solid var(--color-border)">
-      <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69fc5161a6982c1655afaa37.png" width="1600" height="900" loading="lazy"
-           alt="The Pristine Dental Group implant team in their Kingsbury practice">
-    </div>
+    <div class="team-grid">
+      <figure class="team-portrait">
+        <div class="media media-1x1 media-bare" data-slot="HRD05266.jpg">
+          <img id="team-photo" src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69fc5161a6982c1655afaa37.png" width="800" height="800" loading="lazy"
+               alt="Dr Shabeeb, principal dentist at Pristine Dental Group">
+        </div>
+        <figcaption id="team-caption">Dr Shabeeb<span>Principal dentist</span></figcaption>
+      </figure>
 
+      <div>
     <div class="roster" role="group" aria-label="Choose a team member">
       <button type="button" id="tab-shabeeb" aria-controls="profile" aria-expanded="true" data-member="shabeeb">Dr Shabeeb</button>
       <button type="button" id="tab-coord" aria-controls="profile" aria-expanded="false" data-member="coord">Treatment coordinator</button>
@@ -1543,6 +1571,8 @@ ul{margin:0;padding:0;list-style:none}
       <p id="profile-body">Dr Shabeeb leads every implant case at Pristine Dental Group, with advanced training in
       restorative dentistry and a particular interest in complex full arch work — including patients declined elsewhere.
       Every case is planned in 3D before treatment begins. GDC number <span class="ph">GDC number</span>.</p>
+    </div>
+      </div>
     </div>
   </div>
 </section>
@@ -2178,22 +2208,28 @@ ul{margin:0;padding:0;list-style:none}
     shabeeb: {
       role: 'Principal dentist',
       name: 'Dr Shabeeb',
+      photo: document.getElementById('team-photo') ? document.getElementById('team-photo').src : '',
+      slot: 'HRD05266.jpg',
       quote: '“We understand how missing teeth affect daily life and confidence. Our goal is a long-lasting result that restores both function and how you feel about your smile.”',
       body: 'Dr Shabeeb leads every implant case at Pristine Dental Group, with advanced training in restorative dentistry and a particular interest in complex full arch work — including patients declined elsewhere. Every case is planned in 3D before treatment begins. GDC number [GDC number].'
     },
     coord: {
       role: 'Treatment coordinator',
       name: '[Coordinator name]',
+      photo: '', slot: 'staff/coordinator.jpg',
       quote: '“[Coordinator quote — something about guiding patients through costs and finance without pressure.]”',
       body: '[Coordinator biography. Typically: the first person you speak to, handles your appointment, your finance application and any questions between visits.]'
     },
     nurse: {
       role: 'Implant nurse',
       name: '[Nurse name]',
+      photo: '', slot: 'staff/implant-nurse.jpg',
       quote: '“[Nurse quote — something about comfort and aftercare on the day.]”',
       body: '[Nurse biography. Typically: qualifications, years assisting on implant surgery, and their role in your aftercare.]'
     }
   };
+  var pPhoto = document.getElementById('team-photo');
+  var pCaption = document.getElementById('team-caption');
   var pRole = document.getElementById('profile-role');
   var pName = document.getElementById('profile-name');
   var pQuote = document.getElementById('profile-quote');
@@ -2221,6 +2257,24 @@ ul{margin:0;padding:0;list-style:none}
       document.querySelectorAll('.roster button').forEach(function (b) {
         b.setAttribute('aria-expanded', b === btn ? 'true' : 'false');
       });
+      /* the portrait follows the roster; a member with no photo yet keeps the
+         labelled slot rather than showing the previous person's face */
+      if (pPhoto) {
+        var box = pPhoto.closest('.media');
+        box.classList.remove('loaded');
+        box.dataset.slot = m.slot || 'photo to come';
+        pPhoto.alt = m.photo ? (m.name.replace(/[\[\]]/g, '') + ', ' + m.role.toLowerCase() + ' at Pristine Dental Group') : '';
+        /* src="" resolves to the page URL and fires a pointless request for the
+           document itself, so drop the attribute instead and let the slot show */
+        if (m.photo) pPhoto.src = m.photo; else pPhoto.removeAttribute('src');
+      }
+      if (pCaption) {
+        pCaption.textContent = '';
+        paint(pCaption, m.name);
+        var r = document.createElement('span');
+        r.textContent = m.role;
+        pCaption.appendChild(r);
+      }
       paint(pRole, m.role);
       paint(pName, m.name);
       paint(pQuote, m.quote);
@@ -2278,9 +2332,18 @@ ul{margin:0;padding:0;list-style:none}
      actually decoded — a missing or broken file leaves the lockup. */
   (function () {
     var img = document.querySelector('.brand-logo');
-    if (!img) return;
-    var show = function () { if (img.naturalWidth) img.closest('.brand').classList.add('has-logo'); };
-    if (img.complete) show(); else img.addEventListener('load', show, { once: true });
+    if (img) {
+      var show = function () { if (img.naturalWidth) img.closest('.brand').classList.add('has-logo'); };
+      if (img.complete) show(); else img.addEventListener('load', show, { once: true });
+    }
+
+    /* Mark a media block once its file has actually decoded, so the labelled
+       slot behind it stops showing through transparent artwork. Resting state
+       is the slot, so a missing file still says which file it wants. */
+    document.querySelectorAll('.media img').forEach(function (im) {
+      var mark = function () { if (im.naturalWidth) im.closest('.media').classList.add('loaded'); };
+      if (im.complete) mark(); else im.addEventListener('load', mark, { once: true });
+    });
   })();
 
   /* ---------------------------------------------------------

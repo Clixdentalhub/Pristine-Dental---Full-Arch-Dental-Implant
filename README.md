@@ -157,7 +157,7 @@ Where each photograph is used:
 | --- | --- |
 | Hero | `HRD05258.jpg` |
 | Problem cards, in order | `HRD05259` · `HRD05260` · `HRD05261` · `HRD05262` |
-| Team, wide | `HRD05266.jpg` |
+| Team portrait | `HRD05266.jpg`, plus `assets/staff/` for the other two roster entries |
 | Gallery slider | the remaining 17, `HRD05269` → `HRD05296` |
 
 **The assignment above is arbitrary.** These files were never readable from
@@ -171,6 +171,18 @@ For the same reason the gallery's `alt` text is generic ("Pristine Dental Group
 implant practice in Kingsbury, London") rather than describing each image. That
 is honest but not good accessibility — write real alt text once someone has
 seen them.
+
+**The team portrait follows the roster.** Selecting a member swaps the photo,
+the caption and the profile panel together. A member with no photo yet keeps
+the labelled slot rather than showing the previous person's face.
+
+**Two image bugs worth remembering.** The labelled slot sits *behind* the
+`<img>`, so a PNG with transparent corners — a portrait pre-cropped to a circle,
+for instance — showed the diagonal stripes straight through the artwork. A
+`.loaded` class now hides the slot once a file has actually decoded; the resting
+state is still the slot, so a missing file continues to name what it wants. And
+`src=""` resolves to the page URL and fires a request for the document itself,
+so the roster removes the attribute instead.
 
 **The before/after sliders were left empty on purpose.** They need genuine
 paired clinical photographs of the same patient. Filling them from a general
