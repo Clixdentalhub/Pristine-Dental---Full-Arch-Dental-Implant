@@ -370,6 +370,24 @@ ul,ol{margin:0;padding:0;list-style:none}
 
 /* Team: the portrait sits beside the profile it belongs to, not stretched
    across the whole band above it. */
+/* Geometric mesh ornament — the polygonal line motif from the
+   practice's own material, redrawn as gold hairlines. Two layers
+   drift against each other, slowly enough to read as stillness. */
+.geo{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.geo svg{position:absolute;opacity:.5}
+.geo svg:first-child{right:-140px;top:-80px;width:620px;height:620px}
+.geo svg:last-child{left:-180px;bottom:-120px;width:520px;height:520px;transform:rotate(180deg)}
+@media (max-width:767px){ .geo svg:first-child{right:-260px} .geo svg:last-child{left:-300px} }
+@media (prefers-reduced-motion:no-preference){
+  .geo svg:first-child{animation:geo-drift 46s ease-in-out infinite alternate}
+  .geo svg:last-child{animation:geo-drift 58s ease-in-out infinite alternate-reverse}
+}
+@keyframes geo-drift{
+  from{transform:translate3d(0,0,0) rotate(0deg)}
+  to{transform:translate3d(-28px,20px,0) rotate(4deg)}
+}
+.geo+.wrap{position:relative;z-index:1}
+
 /* The doctor sits in the middle of the composition: portrait and
    profile centre on each other and the pair centres in the wrap. */
 .team-grid{display:grid;gap:var(--s-4);align-items:center;justify-content:center}
@@ -1477,6 +1495,21 @@ ul,ol{margin:0;padding:0;list-style:none}
      Motion: M2 zoom settle from 114%.
      ======================================================== -->
 <section class="section tint" id="team" aria-labelledby="team-h" data-anim="zoom-settle">
+  <div class="geo" aria-hidden="true">
+    <svg viewBox="0 0 600 600" fill="none" stroke="#8A5A12" stroke-width="1" opacity=".14">
+      <path d="M80 40 220 90 150 210 80 40M220 90 400 30 340 170 220 90M340 170 400 30 560 120 340 170M150 210 340 170 250 330 150 210M250 330 340 170 470 300 250 330M470 300 560 120 590 340 470 300M60 260 150 210 130 380 60 260M130 380 250 330 300 480 130 380M300 480 470 300 520 470 300 480M520 470 590 340 580 560 520 470M170 520 300 480 290 590 170 520"/>
+      <circle cx="220" cy="90" r="3" fill="#8A5A12" stroke="none"/>
+      <circle cx="340" cy="170" r="3" fill="#8A5A12" stroke="none"/>
+      <circle cx="250" cy="330" r="3" fill="#8A5A12" stroke="none"/>
+      <circle cx="470" cy="300" r="3" fill="#8A5A12" stroke="none"/>
+      <circle cx="300" cy="480" r="3" fill="#8A5A12" stroke="none"/>
+    </svg>
+    <svg viewBox="0 0 600 600" fill="none" stroke="#8A5A12" stroke-width="1" opacity=".14">
+      <path d="M80 40 220 90 150 210 80 40M220 90 400 30 340 170 220 90M340 170 400 30 560 120 340 170M150 210 340 170 250 330 150 210M250 330 340 170 470 300 250 330M470 300 560 120 590 340 470 300M60 260 150 210 130 380 60 260M130 380 250 330 300 480 130 380M300 480 470 300 520 470 300 480"/>
+      <circle cx="220" cy="90" r="3" fill="#8A5A12" stroke="none"/>
+      <circle cx="470" cy="300" r="3" fill="#8A5A12" stroke="none"/>
+    </svg>
+  </div>
   <div class="wrap">
     <div class="section-head centre">
       <p class="eyebrow">Your team</p>
@@ -1489,13 +1522,13 @@ ul,ol{margin:0;padding:0;list-style:none}
           <img id="team-photo" src="assets/img/team-dr-shabeeb.jpg" width="800" height="800" loading="lazy"
                alt="Dr Shabeeb, principal dentist at Pristine Dental Group">
         </div>
-        <figcaption id="team-caption">Dr Shabeeb<span>Principal dentist</span></figcaption>
+        <figcaption id="team-caption">Dr Shabeeb Paktiawal<span>Principal dentist</span></figcaption>
       </figure>
 
       <div>
     <div class="profile" id="profile" aria-live="polite">
-      <p class="role" id="profile-role">Principal dentist</p>
-      <h3 id="profile-name" style="margin-bottom:var(--s-2)">Dr Shabeeb</h3>
+      <p class="role" id="profile-role">Principal dentist · BDS, PG Dip Implant &amp; Restorative Dentistry</p>
+      <h3 id="profile-name" style="margin-bottom:var(--s-2)">Dr Shabeeb Paktiawal</h3>
       <blockquote id="profile-quote">&ldquo;We understand how missing teeth affect daily life and confidence.
       Our goal is a <span class="nb">long-lasting</span> result that restores both function and how you feel about your smile.&rdquo;</blockquote>
       <p id="profile-body">Dr Shabeeb leads every implant case at Pristine Dental Group, with advanced training in
@@ -1509,20 +1542,20 @@ ul,ol{margin:0;padding:0;list-style:none}
       <figure class="team-portrait">
         <div class="media media-1x1 media-bare" data-slot="staff-coordinator.jpg">
           <img src="assets/img/staff-coordinator.jpg" width="800" height="800" loading="lazy"
-               alt="Treatment coordinator at Pristine Dental Group">
+               alt="Dental nurse at Pristine Dental Group">
         </div>
-        <figcaption><span class="ph">Name</span><span>Treatment coordinator</span></figcaption>
+        <figcaption><span class="ph">Name</span><span>Dental nurse</span></figcaption>
       </figure>
       <figure class="team-portrait">
         <div class="media media-1x1 media-bare" data-slot="staff-implant-nurse.jpg">
           <img src="assets/img/staff-implant-nurse.jpg" width="800" height="800" loading="lazy"
-               alt="Implant nurse at Pristine Dental Group">
+               alt="Dental nurse at Pristine Dental Group">
         </div>
-        <figcaption><span class="ph">Name</span><span>Implant nurse</span></figcaption>
+        <figcaption><span class="ph">Name</span><span>Dental nurse</span></figcaption>
       </figure>
     </div>
-    <p style="text-align:center;margin:var(--s-3) 0 0;font-size:.85rem"><span class="ph">Confirm both names and
-    job titles — the two roles above are read from the uniforms in the photographs, not from a staff list.</span></p>
+    <p style="text-align:center;margin:var(--s-3) 0 0;font-size:.85rem"><span class="ph">Type each nurse's name.
+    Chantelle Herrera and Ijaz Ahmed are not in the supplied photo set — send their portraits and the roster grows to match.</span></p>
   </div>
 </section>
 
@@ -1715,7 +1748,8 @@ ul,ol{margin:0;padding:0;list-style:none}
         <div class="faq-a" id="a4" role="region" aria-labelledby="q4"><div>
           <p>A single arch starts from £7,000 with the current £1,500 discount applied — around £116 a month
           on 5-year <span class="nb">interest-free</span> finance, subject to status. Your written fixed price is confirmed at your
-          consultation, once the scan shows how many implants your case needs.</p>
+          consultation, once the scan shows how many implants your case needs — and there are no hidden
+          costs: every fee is in the written plan before treatment begins.</p>
         </div></div>
       </div>
 
@@ -1725,8 +1759,9 @@ ul,ol{margin:0;padding:0;list-style:none}
           <svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
         </button>
         <div class="faq-a" id="a5" role="region" aria-labelledby="q5"><div>
-          <p>Treatment is carried out under local anaesthetic and most patients describe it as far more
-          comfortable than they expected. <span class="ph">Confirm whether sedation is offered, and any additional cost.</span></p>
+          <p>Not in the way most people fear. Placement is done under gentle local anaesthetic with
+          <span class="nb">high-precision</span> technique — most patients say it feels similar to a tooth extraction, with mild
+          soreness afterwards. Your bone and gum health are assessed beforehand so healing is predictable.</p>
         </div></div>
       </div>
 
@@ -1764,6 +1799,18 @@ ul,ol{margin:0;padding:0;list-style:none}
           it to be.</p>
         </div></div>
       </div>
+
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" aria-controls="a9" id="q9">
+          What if I need to cancel or move my&nbsp;appointment?
+          <svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <div class="faq-a" id="a9" role="region" aria-labelledby="q9"><div>
+          <p>Things come up — we simply ask for at least 24 hours&rsquo; notice so the slot can go to someone
+          who needs it. Missed appointments or late cancellations may carry a fee for longer,
+          <span class="nb">high-demand</span> slots.</p>
+        </div></div>
+      </div>
     </div>
   </div>
 
@@ -1793,7 +1840,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 
         <ul class="ticks" style="margin-block:var(--s-3)">
           <li class="tick"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4.4 8-11a8 8 0 1 0-16 0c0 6.6 8 11 8 11Z"/><circle cx="12" cy="11" r="2.6"/></svg>
-            <span>Pristine Dental Group<br>499 Kingsbury Road, London NW9 9ED</span></li>
+            <span>Pristine Dental Group<br>499 Kingsbury Road, London NW9 9ED<br><em style="font-style:normal;font-size:.88em;color:var(--color-flourish)">Free parking behind the clinic</em></span></li>
           <li class="tick"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.4 2"/></svg>
             <span>Open 7 days a week, <span class="nb">9am–5:30pm</span></span></li>
         </ul>
@@ -1883,6 +1930,9 @@ ul,ol{margin:0;padding:0;list-style:none}
   "@context":"https://schema.org",
   "@type":"Dentist",
   "telephone":"+447476987708",
+  "openingHoursSpecification":{"@type":"OpeningHoursSpecification",
+    "dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+    "opens":"09:00","closes":"17:30"},
   "name":"Pristine Dental Group",
   "description":"Full arch dental implants in Kingsbury, London. £1,500 off, from £116 per month on 5-year interest-free finance, with a free consultation and CBCT scan worth £250.",
   "address":{
@@ -1901,7 +1951,7 @@ ul,ol{margin:0;padding:0;list-style:none}
   },
   "employee":{
     "@type":"Person",
-    "name":"Dr Shabeeb",
+    "name":"Dr Shabeeb Paktiawal",
     "jobTitle":"Principal Dentist"
   }
 }
