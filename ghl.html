@@ -324,6 +324,19 @@ ul,ol{margin:0;padding:0;list-style:none}
 .btn-call{color:var(--color-flourish);text-decoration:none;font-weight:600;font-size:.92rem;
   display:none;align-items:center;gap:8px;white-space:nowrap;padding:8px 4px}
 @media (min-width:900px){ .btn-call{display:inline-flex} }
+/* Adaptive header: over a light band the chrome turns light and the
+   wordmark shows in its true colours; over dark bands it stays dark
+   with the recoloured white mark. Toggled by the scroll-spy below. */
+.site-header{transition:background var(--d-1) var(--ease),border-color var(--d-1) var(--ease),color var(--d-1) var(--ease)}
+.site-header.on-light{background:rgba(251,248,244,.95);border-bottom-color:var(--color-border);color:var(--color-foreground)}
+.site-header.on-light .brand-logo{filter:none}
+.site-header.on-light :is(.nav,.nav-rail) a{color:var(--color-foreground-mut)}
+.site-header.on-light :is(.nav,.nav-rail) a:hover{color:var(--color-foreground);background:#EFE8DC}
+.site-header.on-light :is(.nav,.nav-rail) a[aria-current="true"]{color:#fff;background:var(--color-accent);font-weight:600}
+.site-header.on-light :is(.btn-call,.brand-sub,.brand-place){color:var(--color-accent)}
+.site-header.on-light .nav-rail{border-top-color:var(--color-border)}
+.site-header.on-light .btn-primary{background:var(--color-accent);color:var(--color-on-accent)}
+.site-header.on-light .btn-primary:hover{background:var(--color-accent-dark)}
 .header-cta{display:none}
 @media (min-width:560px){ .header-cta{display:inline-flex} }
 
@@ -1960,6 +1973,15 @@ ul,ol{margin:0;padding:0;list-style:none}
   });
   var lastId = null;
 
+  /* every band, not just the nav-linked ones — the header needs to
+     know light from dark for all of them */
+  var bands = Array.prototype.slice.call(document.querySelectorAll('main > section, footer'));
+  function bandIsDark(el) {
+    if (!el) return true;
+    var c = el.className || '';
+    return el.tagName === 'FOOTER' || /\bhero\b|\bdark\b|\bdeep\b/.test(c);
+  }
+
   function onScrollFrame() {
     var y = window.scrollY || window.pageYOffset;
     var max = document.documentElement.scrollHeight - window.innerHeight;
@@ -1969,6 +1991,14 @@ ul,ol{margin:0;padding:0;list-style:none}
     mobileBar.classList.toggle('on', y > 420);
 
     var line = y + (parseFloat(getComputedStyle(root).getPropertyValue('--header-h')) || 64) + 24;
+
+    /* which band sits under the header's own midline? */
+    var mid = y + (parseFloat(getComputedStyle(root).getPropertyValue('--header-row-h')) || 64) / 2;
+    var under = null;
+    for (var b = 0; b < bands.length; b++) {
+      if (bands[b].offsetTop <= mid) under = bands[b];
+    }
+    header.classList.toggle('on-light', !bandIsDark(under));
     var current = null;
     for (var i = 0; i < targets.length; i++) {
       if (targets[i].offsetTop <= line) current = targets[i];
