@@ -32,6 +32,11 @@ let styles = [...src.matchAll(/<style>([\s\S]*?)<\/style>/g)].map((m) => m[1]).j
 let body = src.match(/<body>([\s\S]*)<\/body>/)[1];
 const scripts = [...body.matchAll(/<script[\s\S]*?<\/script>/g)].map((m) => m[0]);
 body = body.replace(/<script[\s\S]*?<\/script>/g, '');
+/* Inside GHL there is no thank-you.html at a relative path: the form's
+   built-in confirmation panel stands instead. Point THANK_YOU at the
+   funnel's own thank-you step to restore the redirect. */
+scripts.forEach((s, i) => { scripts[i] = s.replace("var THANK_YOU = 'thank-you.html';", 'var THANK_YOU = null; // set to your GHL thank-you step path to redirect') });
+
 
 /* 1 · rescope body → .pdg so the funnel cannot restyle the host page */
 styles = styles
