@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
-    "build": "node build.mjs",
-    "serve": "node tests/serve.mjs",
+    "preflight": "node preflight.mjs",
+    "embed": "python3 embed-images.py index.html dist.html",
+    "media": "node set-media.mjs",
     "images": "node optimise-images.mjs",
-    "video": "node optimise-video.mjs"
+    "video": "node optimise-video.mjs",
+    "serve": "node tests/serve.mjs"
   },
   "repository": {
     "type": "git",

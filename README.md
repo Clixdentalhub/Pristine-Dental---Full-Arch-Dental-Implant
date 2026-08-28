@@ -17,9 +17,30 @@ npm install
 node tests/fonts/fetch.mjs   # once — see the note below
 npm test          # the verification harness
 npm run serve     # http://127.0.0.1:4321
-npm run build     # → dist/, plus the pre-publish checklist
+npm run preflight # what still needs setting before publish
+npm run embed     # → dist.html, images inlined
 node make-preview.mjs preview   # → preview/, for a hosted preview
 ```
+
+### Embedding vs hosting
+
+`embed-images.py` turns a page that references local images into one
+self-contained file, for pasting into a builder with nowhere to host the image
+files. It inlines `src`, `href`, `poster` and CSS `url()`.
+
+It deliberately leaves **video** external. A `data:` URI cannot be streamed —
+the browser must finish downloading the whole thing before the first frame
+plays — so a background loop inlined that way stalls the page instead of
+decorating it. The poster frame is inlined and the still shows until the video
+arrives. Host the video.
+
+Between the two routes: hosting is faster for anything you are paying to send
+traffic to, because base64 costs about a third more bytes and a browser cannot
+cache part of an HTML file, so every visitor re-downloads every image on every
+load. Embed when you cannot host, or for a review copy you want to send as a
+single file.
+
+### Preview builds
 
 `make-preview.mjs` emits the two documents without `<!doctype>`, `<html>`,
 `<head>` or `<body>` — a host that supplies its own wrapper needs the page
