@@ -452,7 +452,6 @@ ul,ol{margin:0;padding:0;list-style:none}
 }
 .anchor-figure em{font-style:normal;font-size:.95rem;color:var(--color-on-primary-mut)}
 .anchor-figure s{color:#8C8478;text-decoration-thickness:2px}
-.hero-media{border-radius:var(--r-md);border:1px solid #2C2620}
 
 /* ============================================================
    P6 · QUALIFIER FORM — "Ink Atelier"
@@ -836,6 +835,33 @@ ul,ol{margin:0;padding:0;list-style:none}
 .card-photo p{color:var(--color-on-primary-mut)}
 
 /* ============================================================
+   BACKGROUND VIDEO
+   On the trust strip, never the hero: the hero holds the qualifier,
+   and looping motion does not belong behind a form.
+
+   The band renders correctly with no video at all — scrim over the
+   flat band colour. Set data-video on it and JS builds the element;
+   until then nothing is requested and nothing is broken.
+   ============================================================ */
+.bg-video{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:-1}
+.bg-video video{width:100%;height:100%;object-fit:cover;display:block}
+/* The alpha floor is load-bearing, not taste: against the worst case the
+   footage can present — a full white frame — .82 is what keeps the muted
+   label at 4.5:1. Verified in tests/contrast.spec.mjs, which reads these
+   alphas back out of the computed style. */
+.bg-video::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,
+    rgba(18,18,18,.82) 0%,
+    rgba(18,18,18,.88) 45%,
+    rgba(18,18,18,.96) 100%);
+}
+@media (max-width:767px){
+  /* the four figures stack here, so the type covers the whole frame */
+  .bg-video::after{background:rgba(18,18,18,.93)}
+}
+
+/* ============================================================
    P8 · MOTION — one pattern per section, never two
    Every animated element has a defined resting state, so nothing
    depends on JS to look right — only to know when to start.
@@ -1049,10 +1075,6 @@ ul,ol{margin:0;padding:0;list-style:none}
           <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17h2l1.6-5.2A2 2 0 0 1 8.5 10.4h7a2 2 0 0 1 1.9 1.4L19 17h2"/><circle cx="7.5" cy="18.5" r="1.6"/><circle cx="16.5" cy="18.5" r="1.6"/></svg><span>Concierge&nbsp;<span class="nb">pick-up</span> available</span></span>
         </div>
 
-        <div class="media media-16x9 hero-media" style="margin-top:var(--s-3)">
-          <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69f4781cbbacf0a056f73910.jpg" width="1600" height="900" loading="eager"
-               alt="A full arch dental implant patient at Pristine Dental Group smiling after treatment">
-        </div>
       </div>
 
       <!-- P6 · three-step qualifier, Ink Atelier treatment -->
@@ -1186,7 +1208,10 @@ ul,ol{margin:0;padding:0;list-style:none}
      3 · TRUST STRIP — dark band. Motion: U1 count up.
      ======================================================== -->
 <section class="section dark has-cut" id="trust" aria-labelledby="trust-h">
-  <div class="drift" aria-hidden="true"><b></b><b></b></div>
+  <!-- Background video. Paste the hosted .mp4 into data-video and its poster
+       frame into data-poster; leave them empty and the band is a flat colour.
+       Nothing is requested until they are set. -->
+  <div class="bg-video" aria-hidden="true" data-video="" data-poster=""></div>
   <div class="wrap">
     <h2 id="trust-h" class="sr-only">Why patients choose Pristine Dental Group</h2>
     <ul class="stats" data-anim="count">
@@ -2131,6 +2156,39 @@ ul,ol{margin:0;padding:0;list-style:none}
     });
   })();
 
+
+  /* ---------------------------------------------------------
+     Background video, built only when a source is set. It starts
+     when the band is on screen, motion is allowed and the visitor
+     has not asked to save data, and stops when the band leaves —
+     so a multi-megabyte loop never decodes against a page the
+     reader has left. The poster is the resting state throughout.
+     --------------------------------------------------------- */
+  (function () {
+    var band = document.querySelector('.bg-video');
+    if (!band || !band.dataset.video) return;
+
+    var v = document.createElement('video');
+    v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'none';
+    if (band.dataset.poster) v.poster = band.dataset.poster;
+    v.setAttribute('muted', '');            // Safari wants the attribute too
+    v.setAttribute('playsinline', '');
+    v.src = band.dataset.video;
+    band.appendChild(v);
+
+    var saveData = navigator.connection && navigator.connection.saveData;
+    if (reduced || saveData || !('IntersectionObserver' in window)) return;  // poster stands
+
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          if (v.preload === 'none') v.preload = 'auto';
+          var pr = v.play();
+          if (pr && pr.catch) pr.catch(function () { /* autoplay refused: poster stands */ });
+        } else if (!v.paused) { v.pause(); }
+      });
+    }, { rootMargin: '200px 0px' }).observe(band);
+  })();
 
   document.getElementById('year').textContent = new Date().getFullYear();
 })();

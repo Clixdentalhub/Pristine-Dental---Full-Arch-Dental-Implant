@@ -270,11 +270,15 @@ location line is kept.
 
 ## The background video
 
-`assets/video/prestine-dental-hero.mp4` plus a poster frame, both produced by:
+The band is wired but has no source: the mp4 exists only in Drive, and the live
+page hosts no video to point at. Two attributes turn it on — no code change:
 
-```bash
-node optimise-video.mjs ~/Downloads/prestine-dental-hero.mp4
+```html
+<div class="bg-video" data-video="https://…/hero.mp4" data-poster="https://…/poster.jpg">
 ```
+
+Leave them empty and nothing is requested and nothing is broken — the band is
+the scrim over its flat colour. Set them and JS builds the `<video>`.
 
 It sits on the **trust strip**, not the hero, for two reasons. The hero holds
 the qualifier form, and looping motion does not belong behind a form. The

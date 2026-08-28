@@ -460,7 +460,6 @@ ul,ol{margin:0;padding:0;list-style:none}
 }
 .anchor-figure em{font-style:normal;font-size:.95rem;color:var(--color-on-primary-mut)}
 .anchor-figure s{color:#8C8478;text-decoration-thickness:2px}
-.hero-media{border-radius:var(--r-md);border:1px solid #2C2620}
 
 /* ============================================================
    P6 · QUALIFIER FORM — "Ink Atelier"
@@ -842,6 +841,33 @@ ul,ol{margin:0;padding:0;list-style:none}
 }
 .card-photo h3{color:#fff}
 .card-photo p{color:var(--color-on-primary-mut)}
+
+/* ============================================================
+   BACKGROUND VIDEO
+   On the trust strip, never the hero: the hero holds the qualifier,
+   and looping motion does not belong behind a form.
+
+   The band renders correctly with no video at all — scrim over the
+   flat band colour. Set data-video on it and JS builds the element;
+   until then nothing is requested and nothing is broken.
+   ============================================================ */
+.bg-video{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:-1}
+.bg-video video{width:100%;height:100%;object-fit:cover;display:block}
+/* The alpha floor is load-bearing, not taste: against the worst case the
+   footage can present — a full white frame — .82 is what keeps the muted
+   label at 4.5:1. Verified in tests/contrast.spec.mjs, which reads these
+   alphas back out of the computed style. */
+.bg-video::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,
+    rgba(18,18,18,.82) 0%,
+    rgba(18,18,18,.88) 45%,
+    rgba(18,18,18,.96) 100%);
+}
+@media (max-width:767px){
+  /* the four figures stack here, so the type covers the whole frame */
+  .bg-video::after{background:rgba(18,18,18,.93)}
+}
 
 /* ============================================================
    P8 · MOTION — one pattern per section, never two
