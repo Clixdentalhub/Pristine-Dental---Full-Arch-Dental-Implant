@@ -77,10 +77,17 @@ for (const path of PAGES) {
     // exactly one h1
     expect(await page.locator('h1').count()).toBe(1);
 
-    // every image carries a non-empty alt
+    // every image carries an alt ATTRIBUTE. Empty alt is legitimate — it
+    // marks a decorative image (the gallery's duplicated marquee set) —
+    // but an absent attribute is always a defect.
     const missingAlt = await page.evaluate(() =>
-      [...document.images].filter((i) => !i.getAttribute('alt')).map((i) => i.getAttribute('src')));
+      [...document.images].filter((i) => i.getAttribute('alt') === null).map((i) => i.getAttribute('src')));
     expect(missingAlt, 'images without alt').toEqual([]);
+    // and an empty alt is only allowed inside aria-hidden markup
+    const decorative = await page.evaluate(() =>
+      [...document.images].filter((i) => i.getAttribute('alt') === '' && !i.closest('[aria-hidden="true"]'))
+        .map((i) => i.getAttribute('src')));
+    expect(decorative, 'empty alt outside aria-hidden').toEqual([]);
 
     // no dead, bracketed or #-only hrefs
     const badHrefs = await page.evaluate(() => {
