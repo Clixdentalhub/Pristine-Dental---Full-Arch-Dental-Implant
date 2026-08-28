@@ -19,8 +19,33 @@ npm test          # the verification harness
 npm run serve     # http://127.0.0.1:4321
 npm run preflight # what still needs setting before publish
 npm run embed     # → dist.html, images inlined
+npm run ghl       # → ghl.html, one block to paste into GoHighLevel
 node make-preview.mjs preview   # → preview/, for a hosted preview
 ```
+
+### Pasting into GoHighLevel
+
+`node build-ghl.mjs` writes `ghl.html`: the page content only, with no
+`<!doctype>` / document wrapper, because a GHL page is already a document and a
+second one cannot nest inside it. Paste it into a custom-code block.
+
+Three things it does that matter:
+
+- **Everything is wrapped in `.pdg`, and every `body` rule is rescoped to it,**
+  so the funnel cannot restyle the rest of the GHL page. `html` rules stay put,
+  because anchor scrolling resolves from them. `tests/ghl.spec.mjs` renders the
+  fragment inside a host page with its own font and background and asserts
+  neither side wins.
+- **Any image still pointing at a local `assets/` path is removed.** In this
+  repo a missing file degrades to a labelled slot, which is right while
+  building; pasted into a live builder it reads as a broken page.
+- **A section whose media is entirely missing is dropped whole,** along with its
+  nav link, rather than shipped as a row of empty frames. Currently that is
+  *Results* and *Inside the practice*. Fill `media.json` and rebuild to keep them.
+
+`body { overflow-x: hidden }` was removed from the source for this: on a
+wrapper it silently kills `position: sticky`, and the harness already proves
+there is no overflow at any of the seven widths.
 
 ### Embedding vs hosting
 
