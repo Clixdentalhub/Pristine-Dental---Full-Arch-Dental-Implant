@@ -18,7 +18,15 @@ node tests/fonts/fetch.mjs   # once — see the note below
 npm test          # the verification harness
 npm run serve     # http://127.0.0.1:4321
 npm run build     # → dist/, plus the pre-publish checklist
+node make-preview.mjs preview   # → preview/, for a hosted preview
 ```
+
+`make-preview.mjs` emits the two documents without `<!doctype>`, `<html>`,
+`<head>` or `<body>` — a host that supplies its own wrapper needs the page
+content only. It also swaps the map embed for an address panel with an outbound
+link, because frame embedding is commonly blocked on preview hosts, and takes
+`FUNNEL_URL` / `THANKS_URL` so the form still forwards correctly between two
+separately hosted pages. Nothing about the design changes.
 
 ---
 
