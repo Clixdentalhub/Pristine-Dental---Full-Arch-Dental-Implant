@@ -255,17 +255,27 @@ ul{margin:0;padding:0;list-style:none}
    Until the file is dropped in, the inline mark below stands in:
    it is real markup, not a placeholder box.
    ============================================================ */
-:root{ --logo-invert:0; }
+/* The supplied artwork is a dark wordmark on a transparent ground, and this
+   header is near-black — as delivered it is barely legible on it. Knocking it
+   back to a flat white (brightness(0) then invert) guarantees 19.8:1 whatever
+   colour the artwork happens to be. If a light or reversed version of the logo
+   is supplied, set --logo-filter:none and use that instead. */
+:root{ --logo-filter:brightness(0) invert(1); }
 .brand-logo{
-  height:34px;width:auto;display:block;
-  filter:invert(var(--logo-invert));
+  height:30px;width:auto;display:block;
+  filter:var(--logo-filter);
 }
-@media (min-width:768px){ .brand-logo{height:40px} }
+@media (min-width:768px){ .brand-logo{height:36px} }
 /* Resting state is the inline lockup. The image is revealed only once
    it has actually decoded, so the header is right with JS switched off. */
 .brand-logo{display:none}
+.brand-fallback{display:flex;align-items:center;gap:10px}
 .brand.has-logo .brand-logo{display:block}
 .brand.has-logo .brand-fallback{display:none}
+/* the logo carries the name, so only the location is worth keeping beside it */
+.brand-place{display:none;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--color-flourish);white-space:nowrap}
+.brand.has-logo .brand-place{display:block}
 
 /* ============================================================
    BUTTONS
@@ -343,7 +353,7 @@ ul{margin:0;padding:0;list-style:none}
    fill behind it only fight the artwork */
 .media-bare{background:transparent;border:0}
 
-/* Team: the portrait belongs beside the roster that labels it, not stretched
+/* Team: the portrait sits beside the profile it belongs to, not stretched
    across the whole band above it. */
 .team-grid{display:grid;gap:var(--s-4);align-items:start}
 @media (min-width:900px){ .team-grid{grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:var(--s-5)} }
@@ -682,18 +692,8 @@ ul{margin:0;padding:0;list-style:none}
 }
 
 /* ============================================================
-   TEAM — roster drives one profile panel
+   TEAM
    ============================================================ */
-.roster{display:flex;flex-wrap:wrap;gap:10px;margin:var(--s-3) 0}
-.roster button{
-  font:inherit;font-family:var(--font-head);font-weight:600;font-size:.9rem;cursor:pointer;
-  padding:10px 18px;border-radius:var(--r-pill);
-  background:var(--color-surface);border:1px solid var(--color-border);
-  color:var(--color-foreground);
-  transition:background-color var(--d-1) var(--ease),border-color var(--d-1) var(--ease),color var(--d-1) var(--ease);
-}
-.roster button:hover{border-color:var(--color-accent);color:var(--color-accent)}
-.roster button[aria-expanded="true"]{background:var(--color-accent);border-color:var(--color-accent);color:var(--color-on-accent)}
 .profile{background:var(--color-surface);border:1px solid var(--color-border);
   border-radius:var(--r-md);padding:var(--s-3)}
 @media (min-width:768px){ .profile{padding:var(--s-4)} }
@@ -813,31 +813,6 @@ ul{margin:0;padding:0;list-style:none}
    save-data connection the band is a still image rather than a
    broken black box. JS only decides when to start.
    ============================================================ */
-.bg-video{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:-1}
-.bg-video video{
-  width:100%;height:100%;object-fit:cover;display:block;
-}
-/* The scrim is what makes the type legible, and it is heavy on
-   purpose: every measured contrast pair on this band resolves
-   against the band colour, so the scrim has to actually deliver
-   that colour rather than merely suggest it. */
-.bg-video::after{
-  content:"";position:absolute;inset:0;
-  /* The alpha floor is load-bearing, not taste. Against the worst case
-     the footage can present - a full white frame - .82 is what keeps the
-     muted label at 4.5:1; at .72 it measured 4.17. Verified by
-     tests/contrast.spec.mjs, which reads these alphas back out of the
-     computed style rather than trusting the comment. */
-  background:linear-gradient(180deg,
-    rgba(18,18,18,.82) 0%,
-    rgba(18,18,18,.88) 45%,
-    rgba(18,18,18,.96) 100%);
-}
-@media (max-width:767px){
-  /* the four figures stack into a column here, so the type covers the whole
-     frame and the scrim has to hold everywhere, not just at the base */
-  .bg-video::after{background:rgba(18,18,18,.93)}
-}
 
 
 /* ============================================================
@@ -956,7 +931,7 @@ ul{margin:0;padding:0;list-style:none}
       <a class="brand" href="#main" aria-label="Pristine Dental Group, Kingsbury, London">
         <img class="brand-logo" src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_320/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/6a03110a82125b9874694e66.png"
              width="252" height="62" alt="Pristine Dental Group" data-fallback="inline-lockup">
-        <span class="brand-fallback" style="display:flex;align-items:center;gap:10px">
+        <span class="brand-fallback">
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#E4C590" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M12 21c-1.3 0-1.8-2-2.3-4.2C9.2 14.6 8.6 13 7.4 13c-1 0-1.6 1-2.1 1-.7 0-1.3-1.4-1.3-3.6C4 6.3 6.2 3.5 9 3.5c1.4 0 2.2.7 3 .7s1.6-.7 3-.7c2.8 0 5 2.8 5 6.9 0 2.2-.6 3.6-1.3 3.6-.5 0-1.1-1-2.1-1-1.2 0-1.8 1.6-2.3 3.8C13.8 19 13.3 21 12 21Z"/>
           </svg>
@@ -964,12 +939,14 @@ ul{margin:0;padding:0;list-style:none}
             <span class="brand-sub">Kingsbury, London</span>
           </span>
         </span>
+        <span class="brand-place">Kingsbury, London</span>
       </a>
 
       <nav class="nav" aria-label="Section navigation">
         <ul>
           <li><a href="#problem">Is this you?</a></li>
           <li><a href="#pricing">Pricing</a></li>
+          
           <li><a href="#journey">Your visit</a></li>
           <li><a href="#team">Your dentist</a></li>
           <li><a href="#faq">FAQs</a></li>
@@ -993,6 +970,7 @@ ul{margin:0;padding:0;list-style:none}
     <ul>
       <li><a href="#problem">Is this you?</a></li>
       <li><a href="#pricing">Pricing</a></li>
+      
       <li><a href="#journey">Your visit</a></li>
       <li><a href="#team">Your dentist</a></li>
       <li><a href="#faq">FAQs</a></li>
@@ -1189,11 +1167,7 @@ ul{margin:0;padding:0;list-style:none}
      3 · TRUST STRIP — dark band. Motion: U1 count up.
      ======================================================== -->
 <section class="section dark has-cut" id="trust" aria-labelledby="trust-h">
-  <div class="bg-video" aria-hidden="true">
-    <video id="trust-video" muted loop playsinline preload="none">
-      
-    </video>
-  </div>
+  <div class="drift" aria-hidden="true"><b></b><b></b></div>
   <div class="wrap">
     <h2 id="trust-h" class="sr-only">Why patients choose Pristine Dental Group</h2>
     <ul class="stats" data-anim="count">
@@ -1334,13 +1308,6 @@ ul{margin:0;padding:0;list-style:none}
   </div>
 </section>
 
-<!-- ========================================================
-     6 · BEFORE AND AFTER — Motion: M3 clip sweep.
-     Native range drives --pos, which clips the top layer.
-     ======================================================== -->
-
-<!-- section "results" omitted: six before/after images, none supplied — and these need genuine paired clinical photographs, not stand-ins -->
-
 
 <!-- ========================================================
      7 · REVIEWS — three-column vertical marquee.
@@ -1473,8 +1440,8 @@ ul{margin:0;padding:0;list-style:none}
 </section>
 
 <!-- ========================================================
-     10 · TEAM — wide photo above a roster that drives one
-     profile panel. Motion: M2 zoom settle from 114%.
+     10 · TEAM — portrait beside the profile.
+     Motion: M2 zoom settle from 114%.
      ======================================================== -->
 <section class="section tint" id="team" aria-labelledby="team-h" data-anim="zoom-settle">
   <div class="wrap">
@@ -1493,12 +1460,6 @@ ul{margin:0;padding:0;list-style:none}
       </figure>
 
       <div>
-    <div class="roster" role="group" aria-label="Choose a team member">
-      <button type="button" id="tab-shabeeb" aria-controls="profile" aria-expanded="true" data-member="shabeeb">Dr Shabeeb</button>
-      <button type="button" id="tab-coord" aria-controls="profile" aria-expanded="false" data-member="coord">Treatment coordinator</button>
-      <button type="button" id="tab-nurse" aria-controls="profile" aria-expanded="false" data-member="nurse">Implant nurse</button>
-    </div>
-
     <div class="profile" id="profile" aria-live="polite">
       <p class="role" id="profile-role">Principal dentist</p>
       <h3 id="profile-name" style="margin-bottom:var(--s-2)">Dr Shabeeb</h3>
@@ -1517,9 +1478,98 @@ ul{margin:0;padding:0;list-style:none}
      PRACTICE GALLERY — the photography set, as a slider.
      Motion: the scroll-snap track is this section's one pattern.
      ======================================================== -->
+<section class="section dark has-cut" id="gallery" aria-labelledby="gallery-h">
+  <div class="drift" aria-hidden="true"><b></b><b></b></div>
+  <div class="wrap">
+    <div class="section-head centre">
+      <p class="eyebrow">Inside the practice</p>
+      <h2 id="gallery-h">Where your treatment&nbsp;happens</h2>
+      <p class="lede" style="margin-inline:auto">Every implant is planned and placed here, at 499 Kingsbury Road.
+      <span class="ph">Write a caption for each photograph, and individual alt text — the current alt text is
+      generic because it was written without sight of the images.</span></p>
+    </div>
+  </div>
 
-<!-- section "gallery" omitted: seventeen gallery images, none supplied -->
+  <div class="gallery" id="gallery-rail" role="region" aria-label="Photographs of the practice, scrollable" tabindex="0">
+    <div class="gallery-track">
+        <figure class="gallery-item">
+          <div class="media media-4x3">
+            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69f48aac07cf68d3e5860587.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3">
+            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69f48aacbbacf0a056fd0dd1.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3">
+            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69f48aac94b9e824d52ffd49.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3">
+            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/6992facc1d5e04733c4a5bbc.webp" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3">
+            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69f4781ce9694b9664de0fff.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3">
+            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69f852477165b6587e28941b.png" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3">
+            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69f8512c7165b6587e2868b2.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3">
+            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69f8512c484d69862564d0cc.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3">
+            <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_768/u_https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/69f8512c945c4a6aa5193e11.jpg" width="800" height="600" loading="lazy"
+                 alt="Pristine Dental Group implant practice in Kingsbury, London">
+          </div>
+        </figure>
+    </div>
+  </div>
 
+  <div class="wrap">
+    <div class="gallery-nav">
+      <button type="button" data-gal="prev" aria-controls="gallery-rail" aria-label="Previous photograph">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H6M11.5 5.5 5 12l6.5 6.5"/></svg>
+      </button>
+      <span class="gallery-count" id="gallery-count">1 / 9</span>
+      <button type="button" data-gal="next" aria-controls="gallery-rail" aria-label="Next photograph">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12.5 5.5 19 12l-6.5 6.5"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="cut to-bg" aria-hidden="true">
+    <svg viewBox="0 0 1440 120" preserveAspectRatio="none" role="presentation" focusable="false">
+      <path class="l1" d="M0,120 L0,44 L560,44 L620,4 L820,4 L880,44 L1440,44 L1440,120 Z"/>
+      <path class="l2" d="M0,120 L0,64 L570,64 L628,26 L812,26 L870,64 L1440,64 L1440,120 Z"/>
+      <path class="l3" d="M0,120 L0,84 L580,84 L636,50 L804,50 L860,84 L1440,84 L1440,120 Z"/>
+      <path class="l4" d="M0,120 L0,102 L590,102 L644,74 L796,74 L850,102 L1440,102 L1440,120 Z"/>
+    </svg>
+  </div>
+</section>
 
 <!-- ========================================================
      11 · WHAT'S INCLUDED — Motion: C5 mask rise in place.
@@ -1736,6 +1786,7 @@ ul{margin:0;padding:0;list-style:none}
         <ul style="display:grid;gap:6px">
           <li><a href="#problem">Is this you?</a></li>
           <li><a href="#pricing">Options and pricing</a></li>
+          
           <li><a href="#journey">Your visit</a></li>
           <li><a href="#team">Your dentist</a></li>
           <li><a href="#faq">FAQs</a></li>
@@ -2000,85 +2051,7 @@ ul{margin:0;padding:0;list-style:none}
     });
   });
 
-  /* --------------------------------------------------------- Team roster */
-  var MEMBERS = {
-    shabeeb: {
-      role: 'Principal dentist',
-      name: 'Dr Shabeeb',
-      photo: document.getElementById('team-photo') ? document.getElementById('team-photo').src : '',
-      slot: 'HRD05266.jpg',
-      quote: '“We understand how missing teeth affect daily life and confidence. Our goal is a long-lasting result that restores both function and how you feel about your smile.”',
-      body: 'Dr Shabeeb leads every implant case at Pristine Dental Group, with advanced training in restorative dentistry and a particular interest in complex full arch work — including patients declined elsewhere. Every case is planned in 3D before treatment begins. GDC number [GDC number].'
-    },
-    coord: {
-      role: 'Treatment coordinator',
-      name: '[Coordinator name]',
-      photo: '', slot: 'staff/coordinator.jpg',
-      quote: '“[Coordinator quote — something about guiding patients through costs and finance without pressure.]”',
-      body: '[Coordinator biography. Typically: the first person you speak to, handles your appointment, your finance application and any questions between visits.]'
-    },
-    nurse: {
-      role: 'Implant nurse',
-      name: '[Nurse name]',
-      photo: '', slot: 'staff/implant-nurse.jpg',
-      quote: '“[Nurse quote — something about comfort and aftercare on the day.]”',
-      body: '[Nurse biography. Typically: qualifications, years assisting on implant surgery, and their role in your aftercare.]'
-    }
-  };
-  var pPhoto = document.getElementById('team-photo');
-  var pCaption = document.getElementById('team-caption');
-  var pRole = document.getElementById('profile-role');
-  var pName = document.getElementById('profile-name');
-  var pQuote = document.getElementById('profile-quote');
-  var pBody = document.getElementById('profile-body');
-  /* Placeholder text is written with textContent and re-wrapped, so
-     bracketed values stay highlighted without ever parsing HTML. */
-  function paint(target, text) {
-    target.textContent = '';
-    text.split(/(\[[^\]]+\])/).forEach(function (part) {
-      if (!part) return;
-      if (part.charAt(0) === '[') {
-        var s = document.createElement('span');
-        s.className = 'ph';
-        s.textContent = part.slice(1, -1);
-        target.appendChild(s);
-      } else {
-        target.appendChild(document.createTextNode(part));
-      }
-    });
-  }
-  document.querySelectorAll('.roster button').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var m = MEMBERS[btn.dataset.member];
-      if (!m) return;
-      document.querySelectorAll('.roster button').forEach(function (b) {
-        b.setAttribute('aria-expanded', b === btn ? 'true' : 'false');
-      });
-      /* the portrait follows the roster; a member with no photo yet keeps the
-         labelled slot rather than showing the previous person's face */
-      if (pPhoto) {
-        var box = pPhoto.closest('.media');
-        box.classList.remove('loaded');
-        box.dataset.slot = m.slot || 'photo to come';
-        pPhoto.alt = m.photo ? (m.name.replace(/[\[\]]/g, '') + ', ' + m.role.toLowerCase() + ' at Pristine Dental Group') : '';
-        /* src="" resolves to the page URL and fires a pointless request for the
-           document itself, so drop the attribute instead and let the slot show */
-        if (m.photo) pPhoto.src = m.photo; else pPhoto.removeAttribute('src');
-      }
-      if (pCaption) {
-        pCaption.textContent = '';
-        paint(pCaption, m.name);
-        var r = document.createElement('span');
-        r.textContent = m.role;
-        pCaption.appendChild(r);
-      }
-      paint(pRole, m.role);
-      paint(pName, m.name);
-      paint(pQuote, m.quote);
-      paint(pBody, m.body);
-    });
-  });
-
+  /* --------------------------------------------------------- Team */
   /* ---------------------------------------------------------
      Practice gallery. The scroll container already works with a
      trackpad, a touch drag and the arrow keys; these buttons and
@@ -2143,31 +2116,6 @@ ul{margin:0;padding:0;list-style:none}
     });
   })();
 
-  /* ---------------------------------------------------------
-     Background video. It starts only when it is on screen, motion
-     is allowed, and the visitor has not asked to save data — and
-     it stops again when the band scrolls away, so a 4 MB loop is
-     never decoding against a page the reader has left.
-     --------------------------------------------------------- */
-  (function () {
-    var v = document.getElementById('trust-video');
-    if (!v) return;
-    var saveData = navigator.connection && navigator.connection.saveData;
-    if (reduced || saveData || !('IntersectionObserver' in window)) return;  // poster stands
-
-    var vio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) {
-          if (v.preload === 'none') v.preload = 'auto';
-          var p = v.play();
-          if (p && p.catch) p.catch(function () { /* autoplay refused: poster stands */ });
-        } else if (!v.paused) {
-          v.pause();
-        }
-      });
-    }, { rootMargin: '200px 0px' });
-    vio.observe(v);
-  })();
 
   document.getElementById('year').textContent = new Date().getFullYear();
 })();

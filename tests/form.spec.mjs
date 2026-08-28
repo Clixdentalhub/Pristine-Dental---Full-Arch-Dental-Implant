@@ -115,14 +115,3 @@ test('a hostile name in the query string is never printed', async ({ page }) => 
   expect(await page.content()).not.toContain('onerror=alert');
 });
 
-test('the before/after slider is a native range that drives the clip', async ({ page }) => {
-  const box = page.locator('.ba').first();
-  const input = box.locator('input[type=range]');
-  await input.focus();
-  const before = await box.evaluate((e) => e.style.getPropertyValue('--pos'));
-  await page.keyboard.press('ArrowRight');
-  await page.keyboard.press('ArrowRight');
-  const after = await box.evaluate((e) => e.style.getPropertyValue('--pos'));
-  expect(after).not.toBe(before);
-  expect(after).toBe('52%');
-});

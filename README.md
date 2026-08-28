@@ -184,6 +184,13 @@ state is still the slot, so a missing file continues to name what it wants. And
 `src=""` resolves to the page URL and fires a request for the document itself,
 so the roster removes the attribute instead.
 
+**Sections are reconciled to the images that exist.** The before/after section
+and the team roster were removed rather than shipped empty: the first needs
+paired clinical photographs of the same patient, and the second had portraits
+for one of its three members. `build-ghl.mjs` makes the same judgement
+automatically now — it reads each section and drops one whose image slots all
+still point at local paths, instead of working from a list kept by hand.
+
 **The before/after sliders were left empty on purpose.** They need genuine
 paired clinical photographs of the same patient. Filling them from a general
 practice shoot would misrepresent treatment outcomes, which is both an ASA/CAP
@@ -249,10 +256,17 @@ wordmark — which is real markup, not a placeholder box. The image replaces it
 only once it has actually decoded, so the header is correct with JavaScript
 switched off and correct again if the file is ever missing.
 
-The supplied PNG is **252×62 with a transparent ground**. Whether its artwork is
-light or dark could not be verified here, and the header is near-black: if the
-logo turns out to be dark and disappears, set `--logo-invert: 1` in the `:root`
-block. That is the only change needed.
+The supplied PNG is **252×62, a dark wordmark on a transparent ground**, and the
+header is near-black — as delivered it is barely legible on it. `--logo-filter`
+knocks it back to a flat white (`brightness(0) invert(1)`), which measures
+19.8:1 whatever colour the artwork happens to be. If a reversed or light version
+of the logo exists, use that and set `--logo-filter: none`.
+
+Two bugs worth remembering from getting this right: the fallback lockup carried
+its `display:flex` as an **inline style**, which beats the class rule meant to
+hide it — so the logo and the fallback rendered at the same time. And once the
+logo carries the name, repeating it beside the mark is redundant; only the
+location line is kept.
 
 ## The background video
 

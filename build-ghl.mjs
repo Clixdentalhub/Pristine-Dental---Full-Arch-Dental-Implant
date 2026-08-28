@@ -35,15 +35,21 @@ styles = styles
   .replace(/(^|\})\s*body\s*\{/g, '$1\n.pdg{')
   .replace(/([^a-zA-Z-])body\s+/g, '$1.pdg ');
 
-/* 2 · drop sections whose media never arrived */
-const DROP = [
-  { id: 'results', why: 'six before/after images, none supplied — and these need genuine paired clinical photographs, not stand-ins' },
-  { id: 'gallery', why: 'seventeen gallery images, none supplied' },
-];
+/* 2 · Drop a section whose media never arrived — decided by reading the
+      section, not from a list kept by hand, so it stays right as media.json
+      is filled in. A section counts as unusable when it has image slots and
+      every one of them still points at a local path. */
 const dropped = [];
-for (const { id, why } of DROP) {
-  const re = new RegExp(`<section[^>]*id="${id}"[\\s\\S]*?\\n</section>`, '');
-  if (re.test(body)) { body = body.replace(re, `\n<!-- section "${id}" omitted: ${why} -->\n`); dropped.push({ id, why }); }
+for (const m of [...body.matchAll(/<section[^>]*id="([a-z-]+)"[\s\S]*?\n<\/section>/g)]) {
+  const [block, id] = m;
+  const imgs = [...block.matchAll(/<img[^>]+src="([^"]+)"/g)].map((x) => x[1]);
+  if (imgs.length < 2 || imgs.some((u) => /^https?:/.test(u))) continue;
+  body = body.replace(block, `\n<!-- section "${id}" omitted: ${imgs.length} images, none supplied -->\n`);
+  dropped.push({ id, why: `${imgs.length} images, none supplied` });
+}
+/* and their nav links, so nothing points at a section that is gone */
+for (const { id } of dropped) {
+  body = body.replace(new RegExp(`\\s*<li><a href="#${id}">[^<]*</a></li>`, 'g'), '');
 }
 /* and their nav links, so nothing points at a section that is gone */
 for (const { id } of dropped) {
