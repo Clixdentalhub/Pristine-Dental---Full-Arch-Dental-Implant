@@ -287,9 +287,6 @@ ul,ol{margin:0;padding:0;list-style:none}
 .brand.has-logo .brand-logo{display:block}
 .brand.has-logo .brand-fallback{display:none}
 /* the logo carries the name, so only the location is worth keeping beside it */
-.brand-place{display:none;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--color-flourish);white-space:nowrap}
-.brand.has-logo .brand-place{display:block}
 
 /* ============================================================
    BUTTONS
@@ -329,11 +326,11 @@ ul,ol{margin:0;padding:0;list-style:none}
    with the recoloured white mark. Toggled by the scroll-spy below. */
 .site-header{transition:background var(--d-1) var(--ease),border-color var(--d-1) var(--ease),color var(--d-1) var(--ease)}
 .site-header.on-light{background:rgba(251,248,244,.95);border-bottom-color:var(--color-border);color:var(--color-foreground)}
-.site-header.on-light .brand-logo{filter:none}
+.site-header.on-light .brand-logo{filter:brightness(0)}
 .site-header.on-light :is(.nav,.nav-rail) a{color:var(--color-foreground-mut)}
 .site-header.on-light :is(.nav,.nav-rail) a:hover{color:var(--color-foreground);background:#EFE8DC}
 .site-header.on-light :is(.nav,.nav-rail) a[aria-current="true"]{color:#fff;background:var(--color-accent);font-weight:600}
-.site-header.on-light :is(.btn-call,.brand-sub,.brand-place){color:var(--color-accent)}
+.site-header.on-light :is(.btn-call,.brand-sub){color:var(--color-accent)}
 .site-header.on-light .nav-rail{border-top-color:var(--color-border)}
 .site-header.on-light .btn-primary{background:var(--color-accent);color:var(--color-on-accent)}
 .site-header.on-light .btn-primary:hover{background:var(--color-accent-dark)}
@@ -1020,7 +1017,6 @@ ul,ol{margin:0;padding:0;list-style:none}
             <span class="brand-sub">Kingsbury, London</span>
           </span>
         </span>
-        <span class="brand-place">Kingsbury, London</span>
       </a>
 
       <nav class="nav" aria-label="Section navigation">
