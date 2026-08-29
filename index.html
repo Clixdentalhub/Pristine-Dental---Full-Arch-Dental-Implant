@@ -280,7 +280,7 @@ ul,ol{margin:0;padding:0;list-style:none}
    back to a flat white (brightness(0) then invert) guarantees 19.8:1 whatever
    colour the artwork happens to be. If a light or reversed version of the logo
    is supplied, set --logo-filter:none and use that instead. */
-:root{ --logo-filter:brightness(1.5); } /* the real bronze, lifted so it carries on near-black */
+:root{ --logo-filter:brightness(0) invert(1); } /* scrolled state on dark bands: the white mark */
 .brand-logo{
   height:30px;width:auto;display:block;
   filter:var(--logo-filter);
@@ -330,7 +330,13 @@ ul,ol{margin:0;padding:0;list-style:none}
 /* Adaptive header: over a light band the chrome turns light and the
    wordmark shows in its true colours; over dark bands it stays dark
    with the recoloured white mark. Toggled by the scroll-spy below. */
-.site-header{transition:background var(--d-1) var(--ease),border-color var(--d-1) var(--ease),color var(--d-1) var(--ease)}
+.site-header{transition:background var(--d-2) var(--ease),border-color var(--d-2) var(--ease),color var(--d-2) var(--ease)}
+.brand-logo{transition:filter var(--d-2) var(--ease),opacity var(--d-2) var(--ease)}
+/* At the very top the bar is transparent over the page's cream ground,
+   so it wears the light-context colours: true bronze mark, dark links.
+   The first scroll solidifies it dark and turns the mark white.
+   The id out-specifies .on-light, which supplies the colours. */
+#site-header.at-top{background:transparent;border-bottom-color:transparent;backdrop-filter:none}
 .site-header.on-light{background:rgba(251,248,244,.95);border-bottom-color:var(--color-border);color:var(--color-foreground)}
 .site-header.on-light .brand-logo{filter:none}
 .site-header.on-light :is(.nav,.nav-rail) a{color:var(--color-foreground-mut)}
@@ -2002,7 +2008,9 @@ ul,ol{margin:0;padding:0;list-style:none}
     for (var b = 0; b < bands.length; b++) {
       if (bands[b].offsetTop <= mid) under = bands[b];
     }
-    header.classList.toggle('on-light', !bandIsDark(under));
+    var atTop = y < 24;
+    header.classList.toggle('on-light', atTop || !bandIsDark(under));
+    header.classList.toggle('at-top', atTop);
     var current = null;
     for (var i = 0; i < targets.length; i++) {
       if (targets[i].offsetTop <= line) current = targets[i];
