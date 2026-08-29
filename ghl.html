@@ -248,7 +248,9 @@ ul,ol{margin:0;padding:0;list-style:none}
 .nav-rail ul{
   display:flex;gap:2px;align-items:center;justify-content:center;
   width:max-content;min-width:100%;
-  padding:6px var(--s-2);
+  /* inline padding clears the rail's 18px edge fade, so the first
+     and last links are never half-dissolved at rest */
+  padding:6px var(--s-3);
 }
 @media (min-width:1200px){ .nav-rail{display:none} }
 
@@ -393,7 +395,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 .geo svg{position:absolute;opacity:.5}
 .geo svg:first-child{right:-140px;top:-80px;width:620px;height:620px}
 .geo svg:last-child{left:-180px;bottom:-120px;width:520px;height:520px;transform:rotate(180deg)}
-@media (max-width:767px){ .geo svg:first-child{right:-260px} .geo svg:last-child{left:-300px} }
+@media (max-width:767px){ .geo{opacity:.55} .geo svg:first-child{right:-260px} .geo svg:last-child{left:-300px} }
 @media (prefers-reduced-motion:no-preference){
   .geo svg:first-child{animation:geo-drift 46s ease-in-out infinite alternate}
   .geo svg:last-child{animation:geo-drift 58s ease-in-out infinite alternate-reverse}
@@ -1130,7 +1132,7 @@ ul,ol{margin:0;padding:0;list-style:none}
           <!-- ── Step 1 ── -->
           <div class="step" data-step="1">
             <fieldset class="opts">
-              <legend class="step-q">Which best describes your situation?</legend>
+              <legend class="step-q">Which best describes your&nbsp;situation?</legend>
               <label class="opt"><input type="radio" name="situation" value="Loose or uncomfortable dentures" required>
                 <span>Loose or uncomfortable dentures</span></label>
               <label class="opt"><input type="radio" name="situation" value="Several failing or missing teeth">
@@ -1832,7 +1834,7 @@ ul,ol{margin:0;padding:0;list-style:none}
           <li class="tick"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4.4 8-11a8 8 0 1 0-16 0c0 6.6 8 11 8 11Z"/><circle cx="12" cy="11" r="2.6"/></svg>
             <span>Pristine Dental Group<br>499 Kingsbury Road, London NW9 9ED<br><em style="font-style:normal;font-size:.88em;color:var(--color-flourish)">Free parking behind the clinic</em></span></li>
           <li class="tick"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.4 2"/></svg>
-            <span>Open 7 days a week, <span class="nb">9am–5:30pm</span></span></li>
+            <span>Open 7 days a&nbsp;week, <span class="nb">9am–5:30pm</span></span></li>
         </ul>
 
         <div style="display:flex;flex-wrap:wrap;gap:12px">
