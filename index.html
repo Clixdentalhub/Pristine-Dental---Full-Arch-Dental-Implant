@@ -854,6 +854,29 @@ ul,ol{margin:0;padding:0;list-style:none}
 
 
 /* ============================================================
+   PHOTOGRAPHIC SECTION BAND
+   A still behind a dark section. The scrim carries the same .82
+   alpha floor the video band uses, which tests/contrast.spec.mjs
+   proves against the worst frame a photograph can present.
+   ============================================================ */
+.section-photo{position:relative;isolation:isolate}
+.section-photo>.photo-bg{
+  position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none;
+  background-size:cover;background-position:center 38%;
+}
+.section-photo>.photo-bg::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,
+    rgba(18,18,18,.90) 0%,
+    rgba(18,18,18,.86) 42%,
+    rgba(18,18,18,.94) 100%);
+}
+@media (max-width:767px){
+  .section-photo>.photo-bg{background-position:center}
+  .section-photo>.photo-bg::after{background:rgba(18,18,18,.93)}
+}
+
+/* ============================================================
    BACKGROUND VIDEO
    Placed on the closing band, never the hero: the hero holds the
    qualifier, and looping motion does not belong behind a form.
@@ -883,6 +906,29 @@ ul,ol{margin:0;padding:0;list-style:none}
 }
 .card-photo h3{color:#fff}
 .card-photo p{color:var(--color-on-primary-mut)}
+
+/* ============================================================
+   PHOTOGRAPHIC SECTION BAND
+   A still behind a dark section. The scrim carries the same .82
+   alpha floor the video band uses, which tests/contrast.spec.mjs
+   proves against the worst frame a photograph can present.
+   ============================================================ */
+.section-photo{position:relative;isolation:isolate}
+.section-photo>.photo-bg{
+  position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none;
+  background-size:cover;background-position:center 38%;
+}
+.section-photo>.photo-bg::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,
+    rgba(18,18,18,.90) 0%,
+    rgba(18,18,18,.86) 42%,
+    rgba(18,18,18,.94) 100%);
+}
+@media (max-width:767px){
+  .section-photo>.photo-bg{background-position:center}
+  .section-photo>.photo-bg::after{background:rgba(18,18,18,.93)}
+}
 
 /* ============================================================
    BACKGROUND VIDEO
@@ -1449,7 +1495,8 @@ ul,ol{margin:0;padding:0;list-style:none}
      8 · REASSURANCE — dark band, the main objection.
      Motion: S3 rule draws first.
      ======================================================== -->
-<section class="section dark has-cut" id="reassurance" aria-labelledby="reassure-h" data-anim="rule-first">
+<section class="section dark has-cut section-photo" id="reassurance" aria-labelledby="reassure-h" data-anim="rule-first">
+  <div class="photo-bg" aria-hidden="true" style="background-image:url(assets/img/reassurance-cbct.jpg)"></div>
   <div class="drift" aria-hidden="true"><b></b><b></b></div>
   <div class="wrap">
     <div style="max-width:70ch;margin-inline:auto;text-align:center">
