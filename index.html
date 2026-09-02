@@ -473,7 +473,9 @@ ul,ol{margin:0;padding:0;list-style:none}
 .tick{display:flex;gap:12px;align-items:flex-start;line-height:1.5}
 .tick svg{flex:0 0 auto;margin-top:3px;color:var(--color-accent)}
 .dark .tick svg,.deep .tick svg,.form-card .tick svg{color:var(--color-flourish)}
-.chips{display:flex;flex-wrap:wrap;gap:10px}
+/* the chips are a separate band of proof, not a fourth tick — the gap
+   above them is what stops them reading as part of the list */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:var(--s-4)}
 .chip{
   display:inline-flex;align-items:center;gap:7px;
   font-size:.8rem;font-weight:600;letter-spacing:.01em;
