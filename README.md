@@ -1,0 +1,452 @@
+# Pristine Dental Group — Full Arch Implant Campaign
+
+A two-page lead-generation funnel for the full arch dental implant campaign
+(£1,500 off · from £116/month · free consultation and CBCT scan worth £250 ·
+5-year 0% finance), built on the house design system in `PROMPTPACK.md`.
+
+| File | What it is |
+| --- | --- |
+| `index.html` | The funnel page. Self-contained: HTML + CSS + vanilla JS, no framework, no build step, no external JS. |
+| `thank-you.html` | Post-submission confirmation, on the same tokens, header and footer. Permanently `noindex`. |
+| `tests/` | Playwright verification harness — 7 widths, contrast maths, form behaviour, typography line boxes, screenshots. |
+| `build.mjs` | Deployment build: inlines every local image as a data URI and prints what still needs setting. |
+| `sync-head.mjs` | Copies `<head>` from `index.html` into the other documents so the token block cannot drift. |
+
+```bash
+npm install
+node tests/fonts/fetch.mjs   # once — see the note below
+npm test          # the verification harness
+npm run serve     # http://127.0.0.1:4321
+npm run preflight # what still needs setting before publish
+npm run embed     # → dist.html, images inlined
+npm run ghl       # → ghl.html, one block to paste into GoHighLevel
+node make-preview.mjs preview   # → preview/, for a hosted preview
+```
+
+### Pasting into GoHighLevel
+
+`node build-ghl.mjs` writes `ghl.html`: the page content only, with no
+`<!doctype>` / document wrapper, because a GHL page is already a document and a
+second one cannot nest inside it. Paste it into a custom-code block.
+
+Three things it does that matter:
+
+- **Everything is wrapped in `.pdg`, and every `body` rule is rescoped to it,**
+  so the funnel cannot restyle the rest of the GHL page. `html` rules stay put,
+  because anchor scrolling resolves from them. `tests/ghl.spec.mjs` renders the
+  fragment inside a host page with its own font and background and asserts
+  neither side wins.
+- **Any image still pointing at a local `assets/` path is removed.** In this
+  repo a missing file degrades to a labelled slot, which is right while
+  building; pasted into a live builder it reads as a broken page.
+- **A section whose media is entirely missing is dropped whole,** along with its
+  nav link, rather than shipped as a row of empty frames. Currently that is
+  *Results* and *Inside the practice*. Fill `media.json` and rebuild to keep them.
+
+`body { overflow-x: hidden }` was removed from the source for this: on a
+wrapper it silently kills `position: sticky`, and the harness already proves
+there is no overflow at any of the seven widths.
+
+### Embedding vs hosting
+
+`embed-images.py` turns a page that references local images into one
+self-contained file, for pasting into a builder with nowhere to host the image
+files. It inlines `src`, `href`, `poster` and CSS `url()`.
+
+It deliberately leaves **video** external. A `data:` URI cannot be streamed —
+the browser must finish downloading the whole thing before the first frame
+plays — so a background loop inlined that way stalls the page instead of
+decorating it. The poster frame is inlined and the still shows until the video
+arrives. Host the video.
+
+Between the two routes: hosting is faster for anything you are paying to send
+traffic to, because base64 costs about a third more bytes and a browser cannot
+cache part of an HTML file, so every visitor re-downloads every image on every
+load. Embed when you cannot host, or for a review copy you want to send as a
+single file.
+
+### Preview builds
+
+`make-preview.mjs` emits the two documents without `<!doctype>`, `<html>`,
+`<head>` or `<body>` — a host that supplies its own wrapper needs the page
+content only. It also swaps the map embed for an address panel with an outbound
+link, because frame embedding is commonly blocked on preview hosts, and takes
+`FUNNEL_URL` / `THANKS_URL` so the form still forwards correctly between two
+separately hosted pages. Nothing about the design changes.
+
+---
+
+## Before this can go live
+
+`noindex` is in the `<head>` of `index.html` and stays there until the list
+below is empty. `npm run build` prints the current list — it reads the
+documents rather than this file, so it cannot go stale.
+
+**Blocking — the page does not work without these**
+
+1. **Phone number.** Every click-to-call currently points at the form
+   (`data-needs="phone"`). Swap those to `href="tel:+44…"`.
+2. **WhatsApp number.** Two CTAs reference it (`data-needs="whatsapp"`).
+   Ad copy 2, 4 and 5 all promise "WhatsApp us a photo".
+3. **Form endpoint.** `ENDPOINT` in `index.html` is `null`, so the form
+   validates, shows its success state and forwards to the thank-you page
+   **without posting the lead anywhere**. Set it before spending a penny on ads.
+4. **Conversion tag.** One clearly marked block at the foot of
+   `thank-you.html`. The funnel page deliberately fires nothing on submit —
+   fire it in one place or every lead counts twice. IDs found on the current
+   live page, for reference: GTM `GTM-P5KXR2DS`, Meta Pixel `773289062042919`.
+5. **Photography.** 23 images, all wired to the filenames in the shared Drive
+   folder. See *Adding the photographs* below. Each missing file renders as a
+   labelled slot naming the expected filename, so the page is legible without
+   them — but they are placeholders, not a design choice.
+   The six before/after slots are deliberately **not** filled from that set;
+   see the same section for why.
+
+**Commercial — check these against what the practice will actually honour**
+
+6. **Full mouth (both arches) price and monthly figure.** The brief gives
+   single-arch numbers only. `£13,500` / `£225` are bracketed guesses derived
+   from doubling the single-arch price, and are almost certainly wrong.
+7. **The "was" price.** `£8,500` is inferred from £7,000 + £1,500 off. If the
+   pre-discount price was never £8,500, the discount claim is not substantiated
+   and must be reworded — CAP rules on savings claims apply.
+8. **Single implant at £795 / £13.25pm.** Carried over from the current live
+   page, not from this campaign brief. Confirm it is still current or drop the card.
+9. **Opening hours**, and whether concierge pick-up has a catchment radius.
+
+**Regulatory — do not publish without these**
+
+10. **GDC numbers** — practice registration and Dr Shabeeb's.
+11. **Company number** and registered details.
+12. **Finance provider name and FCA firm reference number**, plus the correct
+    permission wording. Appointed-representative status reads differently from
+    direct authorisation and the footer must match the register.
+13. **Privacy policy, terms and complaints procedure URLs.**
+14. **Patient photo consent** on file for every before-and-after image.
+15. **Review provenance.** The quotes are carried over from the practice's own
+    live page. Verify each against the Google listing before publishing; the
+    ninth is a bracketed placeholder.
+16. Sedation availability, treatment timeline, and any warranty — three FAQ
+    answers carry a bracketed note where the brief was silent.
+
+---
+
+## Adding the photographs
+
+The page expects `assets/practice/HRD052xx.jpg`, matching the filenames in the
+shared Drive folder exactly — so no renaming is needed. Download the folder,
+then:
+
+```bash
+node optimise-images.mjs ~/Downloads/practice-photos
+```
+
+That resizes to 1600px and re-encodes into `assets/practice/`. **Do not skip
+it**: the originals are 2–4 MB each and 23 of them dropped in raw make an
+~80 MB page.
+
+Both media scripts need a **full ffmpeg on `PATH`** (`brew install ffmpeg`,
+`apt install ffmpeg`, or `FFMPEG=/path/to/ffmpeg`). Playwright ships an ffmpeg
+binary, but it is a stripped build for capturing traces — no lavfi, no libx264,
+no mp4 muxer, no mjpeg encoder — so it cannot do this work. The scripts probe
+for the encoders they need and say what is missing rather than failing midway.
+
+Where each photograph is used:
+
+| Slot | File |
+| --- | --- |
+| Hero | `HRD05258.jpg` |
+| Problem cards, in order | `HRD05259` · `HRD05260` · `HRD05261` · `HRD05262` |
+| Team portrait | `HRD05266.jpg`, plus `assets/staff/` for the other two roster entries |
+| Gallery slider | the remaining 17, `HRD05269` → `HRD05296` |
+
+**The assignment above is arbitrary.** These files were never readable from
+this environment — the sandbox proxy blocks every Google Drive host, and the
+Drive tool returns base64, which for 23 files of this size is not a viable
+transfer. So the six named slots were filled in filename order, not by what the
+photographs show. Open them, and swap any `src` that is in the wrong place;
+they all read from the same folder, so it is a one-line change each.
+
+For the same reason the gallery's `alt` text is generic ("Pristine Dental Group
+implant practice in Kingsbury, London") rather than describing each image. That
+is honest but not good accessibility — write real alt text once someone has
+seen them.
+
+**The team portrait follows the roster.** Selecting a member swaps the photo,
+the caption and the profile panel together. A member with no photo yet keeps
+the labelled slot rather than showing the previous person's face.
+
+**Two image bugs worth remembering.** The labelled slot sits *behind* the
+`<img>`, so a PNG with transparent corners — a portrait pre-cropped to a circle,
+for instance — showed the diagonal stripes straight through the artwork. A
+`.loaded` class now hides the slot once a file has actually decoded; the resting
+state is still the slot, so a missing file continues to name what it wants. And
+`src=""` resolves to the page URL and fires a request for the document itself,
+so the roster removes the attribute instead.
+
+**Sections are reconciled to the images that exist.** The before/after section
+and the team roster were removed rather than shipped empty: the first needs
+paired clinical photographs of the same patient, and the second had portraits
+for one of its three members. `build-ghl.mjs` makes the same judgement
+automatically now — it reads each section and drops one whose image slots all
+still point at local paths, instead of working from a list kept by hand.
+
+**The before/after sliders were left empty on purpose.** They need genuine
+paired clinical photographs of the same patient. Filling them from a general
+practice shoot would misrepresent treatment outcomes, which is both an ASA/CAP
+problem and a GDC one.
+
+---
+
+## Adding more images
+
+**Google Drive cannot be the source.** Its links need "anyone with link", are
+rate-limited, and Google serves an interstitial rather than raw bytes for
+larger files. It is a place to keep originals, not to serve them from.
+
+The route is the one the current live funnel already uses:
+
+```bash
+node set-media.mjs --slots        # what still needs a URL — read out of the
+                                  # documents, so it cannot go stale
+# upload those to the GoHighLevel media library, copy the URLs
+node set-media.mjs --fill urls.txt   # assign them to empty slots, in order
+node set-media.mjs                   # rewrite the documents
+npm test && node build-ghl.mjs
+```
+
+`--fill` prints what it assigned to what before anything is applied, so a
+wrong order is caught by reading rather than by looking at the page. For a
+single image — the background video, say — pasting the URL straight into the
+attribute is quicker than the manifest.
+
+`--slots` reads the **documents**, not `media.json`. Once a slot has a URL its
+local path is gone from the page, so a manifest cannot rebuild itself; it goes
+stale the moment a section is added or removed. What is outstanding is whatever
+the page still cannot render.
+
+## Getting the media into the build
+
+None of the media is in this repository. It could not be: the build
+environment's proxy blocks every media host — `drive.google.com`,
+`drive.usercontent.google.com`, `lh3.googleusercontent.com`,
+`assets.cdn.filesafe.space`, `images.leadconnectorhq.com` and the practice's
+own domain all refuse the connection. Only `fonts.googleapis.com`,
+`fonts.gstatic.com`, the npm registry and GitHub are reachable.
+
+There are three ways in. They are not equivalent.
+
+**1 · Hosted URLs — the option to prefer, and the one the existing funnel
+already uses.** The current live page carries no image bytes at all: 130
+`srcset` entries point at `images.leadconnectorhq.com`, and the visitor's
+browser fetches them at view time. That is why this environment's inability to
+download anything is beside the point — the page only ever needs the URL
+string, never the file.
+
+Five slots are already filled this way, read out of the saved copy of the live
+funnel and identified by their position in it (the logo, Dr Shabeeb's portrait,
+and the three condition images that sit under *"Dental Implants can help
+with:"*, which map one-to-one onto the problem cards here). **Those five are
+positional guesses, not sightings** — check them and swap any that are wrong.
+
+For the rest, upload this campaign's media to the same library, then:
+
+```bash
+node set-media.mjs --init      # writes media.json, one line per slot
+# paste the hosted URL against each slot
+node set-media.mjs             # rewrites both documents
+npm test
+```
+
+The documents then need no `assets/` folder at all — one file each, paste and
+go, and the images stay separately cacheable. `node set-media.mjs --revert`
+puts the local paths back.
+
+**2 · Local files.** Download the Drive folders, run `optimise-images.mjs` and
+`optimise-video.mjs`, and the existing relative paths resolve. Good for working
+offline; means an assets folder travels with the documents.
+
+**3 · Attach the files to the conversation.** Files attached to a chat message
+land on disk in the session and can be committed directly. Drive *links* cannot
+— they only yield metadata. This is the only route by which media reaches the
+repository without leaving the conversation, and it is bounded by how many
+files are practical to attach.
+
+---
+
+## The logo
+
+`assets/brand/pristine-dental-group-logo.png`, from the shared Drive folder.
+
+Until it is present the header shows an inline lockup — the tooth mark plus the
+wordmark — which is real markup, not a placeholder box. The image replaces it
+only once it has actually decoded, so the header is correct with JavaScript
+switched off and correct again if the file is ever missing.
+
+The supplied PNG is **252×62, a dark wordmark on a transparent ground**, and the
+header is near-black — as delivered it is barely legible on it. `--logo-filter`
+knocks it back to a flat white (`brightness(0) invert(1)`), which measures
+19.8:1 whatever colour the artwork happens to be. If a reversed or light version
+of the logo exists, use that and set `--logo-filter: none`.
+
+Two bugs worth remembering from getting this right: the fallback lockup carried
+its `display:flex` as an **inline style**, which beats the class rule meant to
+hide it — so the logo and the fallback rendered at the same time. And once the
+logo carries the name, repeating it beside the mark is redundant; only the
+location line is kept.
+
+## The background video
+
+The band is wired but has no source: the mp4 exists only in Drive, and the live
+page hosts no video to point at. Two attributes turn it on — no code change:
+
+```html
+<div class="bg-video" data-video="https://…/hero.mp4" data-poster="https://…/poster.jpg">
+```
+
+Leave them empty and nothing is requested and nothing is broken — the band is
+the scrim over its flat colour. Set them and JS builds the `<video>`.
+
+It sits on the **trust strip**, not the hero, for two reasons. The hero holds
+the qualifier form, and looping motion does not belong behind a form. The
+closing band was the other candidate, but its map embed is a large opaque
+rectangle covering the half where footage would show, and the copy half needs
+the heaviest scrim — the video would have been paid for and then hidden. The
+trust strip is a short band with four figures and four short labels, so the
+footage actually reads.
+
+**The poster is the resting state.** `autoplay` is deliberately absent from the
+markup: JavaScript starts playback only when the band is on screen, motion is
+allowed, and the visitor has not asked to save data — and pauses it again when
+the band scrolls away. With JS off, under `prefers-reduced-motion`, on a
+metered connection, or if autoplay is refused, the band is a still frame rather
+than a black box.
+
+**The scrim's alpha floor is load-bearing.** Every contrast pair on that band
+is measured against the band colour, which is only honest if the scrim actually
+delivers that colour over the footage. Nobody involved has seen this video, so
+`tests/contrast.spec.mjs` reads the alphas back out of the computed style and
+checks the worst case the footage could present — a full white frame. At `.72`
+the muted label measured 4.17:1; the floor is now `.82`, which holds every
+colour on the band at 4.5:1 even against white.
+
+---
+
+## Colour, proven rather than eyeballed
+
+The full token block sits in one `:root` in `index.html`. Every pair is
+computed from relative luminance by `tests/contrast.spec.mjs`, which measures
+what the browser actually rendered on every dark band rather than checking the
+tokens against themselves.
+
+The rule that drives the palette: **a CTA sitting on a dark band almost never
+passes contrast in its normal colour.** `--color-accent` (`#96610F`) is 5.23:1
+with white text on the light ground, but only 1.7:1 against `--color-primary`.
+`--cta-on-dark` (`#F2C14E`) exists for that case and measures 11.16:1 against
+the dark band, with `--cta-on-dark-text` at 11.05:1 on top of it. The same
+applies to errors: `--color-error` fails on the dark form card, so
+`--color-error-on-dark` (`#FF9C8E`, 9.28:1) is what the form actually uses.
+
+| Pair | Ratio | Needs |
+| --- | --- | --- |
+| `--color-on-primary` on `--color-primary` | 18.73:1 | 4.5 |
+| `--color-on-primary-mut` on `--color-primary` | 10.36:1 | 4.5 |
+| `--color-flourish` on `--color-primary` | 11.32:1 | 3 |
+| `--cta-on-dark` on `--color-primary` | 11.16:1 | 3 |
+| `--cta-on-dark-text` on `--cta-on-dark` | 11.05:1 | 4.5 |
+| `--color-error-on-dark` on `--color-primary` | 9.28:1 | 4.5 |
+| `--color-on-accent` on `--color-accent` | 5.91:1 | 4.5 |
+| `--color-foreground` on `--color-background` | 17.35:1 | 4.5 |
+| `--color-foreground-mut` on `--color-background` | 7.51:1 | 4.5 |
+| `--color-muted` on `--color-background` | 5.04:1 | 4.5 |
+| `--color-accent` on `--color-background` | 5.58:1 | 4.5 |
+| `--color-border-strong` on `--color-background` | 3.19:1 | 3 |
+
+---
+
+## The luxury pass
+
+Worked as subtraction, not addition — the brief the prompt pack sets for the
+*Gilded Hairline* treatment, applied to the whole page.
+
+- **Air first.** Section rhythm went from 64/80 to 88/112, card padding from 24
+  to 32. Space reads as expensive before any colour does.
+- **Lighter headings.** 700 → 600 with tracking pulled from −.02em to −.03em. A
+  700 weight shouts; 600 at tighter tracking carries the same authority quietly.
+  Body leading 1.65 → 1.72, eyebrow tracking .16em → .22em.
+- **Hairlines, not slabs.** The featured price card keeps its inset ring and
+  loses its drop shadow; hover lifts 3px instead of 4 and half as heavily.
+- **A deeper gold.** `--color-accent` moved from `#96610F` to `#8A5A12` — less
+  orange, and more contrast headroom with it (5.91:1 with white, against 5.23).
+- **Slower motion.** Durations 240/460/680 → 280/520/760. Rushed transitions
+  read as cheap.
+
+---
+
+## Motion
+
+One pattern per section, never two — a page where every band moves differently
+reads as nervous; one vocabulary used consistently reads as designed.
+
+| Section | Pattern |
+| --- | --- |
+| Hero | H2 word rise (headline only, masked per word at runtime) |
+| Trust strip | U1 count up |
+| Problem cards | C1 cascade left-to-right |
+| Options and pricing | C2 centre-out |
+| Before and after | M3 clip sweep |
+| Reviews | vertical marquee, three columns at different speeds |
+| Reassurance | S3 rule draws first |
+| Journey | U2 numbered step draw |
+| Team | M2 zoom settle from 114% |
+| What's included | C5 mask rise in place |
+| FAQ | S4 settle from 97% |
+| Final CTA | M1 colour curtain |
+
+Headline masking is built from the live text at runtime, per word. Masking
+hand-written lines means hard-coding the line breaks, and the headline then
+re-wraps inside them — a three-line headline becomes five ragged ones at
+1280px. Per word preserves natural wrapping at every width, and the plain text
+stands if the script never runs.
+
+Every animated element has a defined resting state, so nothing depends on JS to
+look right — only to know when to start. `prefers-reduced-motion` puts elements
+into their **finished** state, not a faster animation, and the review marquee's
+duplicate clone is never added at all.
+
+---
+
+## Notes for whoever picks this up next
+
+- **The form auto-advances on pointer input only.** Arrow keys move between
+  radios and fire `change` at every stop, so advancing on keyboard selection
+  throws a keyboard user past the question the instant they start reading it.
+  Pointer intent is tracked with `pointerdown` and checked in the `change`
+  handler; keyboard users get the Continue button, which is why it stays.
+- **`--header-h` must be ≥ the real rendered header at every width**, because
+  every anchor offset resolves from it. Below 1200px the nav drops to its own
+  rail, which is a second row — hence 112/120px there and 80px above it. JS
+  measures and corrects it, and the harness asserts it at all seven widths.
+- **Section cuts are overlays on the outgoing band**, at `bottom:-1px`, painted
+  in the incoming band's colour. That 1px bleed is what stops a hairline seam on
+  fractional device pixel ratios. A cut runs one direction only — reversing the
+  band order means inverting the layer colours, not reusing the rule.
+- **Never put looping motion behind a form.** The hero's drift layer sits behind
+  an opaque form card that carries its own static bloom.
+- **`.nb` binds hyphenated compounds** (`pick-up`, `interest-free`). A hyphen is
+  a break opportunity and `word-break: keep-all` does not suppress it in
+  Chromium. Never use one as a direct child of a `display:flex` row — it becomes
+  a flex item and the words render out of order.
+- **The two documents duplicate the token block** because each is
+  self-contained. Edit `index.html` and run `node sync-head.mjs`.
+- **The harness serves Google Fonts from a local cache.** Chromium cannot
+  reach `fonts.googleapis.com` from CI, and each blocked request stalled page
+  load by ~12 seconds while leaving the typography pass measuring the fallback
+  stack rather than the real font metrics — which is the opposite of useful.
+  `node tests/fonts/fetch.mjs` caches the stylesheet and its woff2 files
+  (gitignored); the suite went from 1.8 minutes to 16 seconds. Without the
+  cache the suite still runs, on fallback metrics, and says so.
+- The harness ignores network failures from `fonts.googleapis.com`,
+  Google Maps and `/assets/` — the first two are unreachable from CI, and the
+  third is the outstanding photography, inventoried separately. Anything the
+  page itself throws is always a hard failure.
