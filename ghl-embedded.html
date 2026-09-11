@@ -507,25 +507,29 @@ ul,ol{margin:0;padding:0;list-style:none}
   .hero-copy{text-align:center}
   .hero-copy .lede{margin-inline:auto}
   .hero-copy .anchor-figure{align-items:center}
-  .hero-copy .af-save{align-items:center}
+  /* keep the savings on one line at phone width */
+  .hero-copy .af-save{justify-content:center;gap:10px;flex-wrap:nowrap}
+  .hero-copy .save-pill{font-size:.76rem;padding:5px 10px}
+  .hero-copy .af-wasnow{font-size:.88rem}
   .hero-copy .ticks{width:fit-content;max-width:100%;margin-inline:auto;text-align:left}
   .hero-copy .chips{justify-content:center}
 }
 /* anchor figure */
 /* centre, not baseline: the two small lines sit as one block, and the
    big figure centres on it — baseline left line two hanging underneath */
-.anchor-figure{display:flex;flex-direction:column;align-items:flex-start;gap:14px;margin-bottom:var(--s-2)}
-.af-price{display:flex;align-items:center;gap:12px}
+/* Three lines, no more: the figure, the finance note, then the savings.
+   The big number and "per month" share the first line on a baseline. */
+.anchor-figure{display:flex;flex-direction:column;align-items:flex-start;gap:8px;margin-bottom:var(--s-2)}
+.af-price{display:flex;align-items:baseline;gap:10px}
 .af-price b{
   font-family:var(--font-head);font-weight:700;
   font-size:clamp(2.4rem,9vw,3.6rem);line-height:1;
   color:var(--cta-on-dark);letter-spacing:-.03em;
 }
-.af-per{font-size:.9rem;line-height:1.35;color:var(--color-on-primary-mut)}
-.af-per em{font-style:normal}
-/* the savings sit in their own block below the price — the discount reads
-   as a distinct claim, not a tail on the finance line */
-.af-save{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.af-per{font-size:.95rem;color:var(--color-on-primary-mut)}
+.af-fin{font-size:.95rem;color:var(--color-on-primary-mut)}
+/* the savings share one line — pill then the was/now, wrapping together */
+.af-save{display:flex;flex-flow:row wrap;align-items:center;gap:8px 12px}
 .save-pill{
   align-self:flex-start;display:inline-flex;align-items:center;gap:6px;
   background:var(--cta-on-dark);color:var(--cta-on-dark-text);
@@ -1164,15 +1168,10 @@ ul,ol{margin:0;padding:0;list-style:none}
         <h1 data-words>A Fixed, Permanent Smile — £1,500 Off Full Arch Implants</h1>
 
         <div class="anchor-figure">
-          <div class="af-price">
-            <b>£116</b>
-            <span class="af-per">per&nbsp;month<br><em>5-year <span class="nb">interest-free</span> finance</em></span>
-          </div>
+          <div class="af-price"><b>£116</b><span class="af-per">per&nbsp;month</span></div>
+          <div class="af-fin">5-year <span class="nb">interest-free</span> finance</div>
           <div class="af-save">
-            <span class="save-pill">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.6 12.2 12.9 4.5A1.9 1.9 0 0 0 11.5 4H6a2 2 0 0 0-2 2v5.5c0 .5.2 1 .6 1.4l7.7 7.7a2 2 0 0 0 2.8 0l5.5-5.5a2 2 0 0 0 0-2.9ZM7.8 9.3a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Z"/></svg>
-              Save £1,500
-            </span>
+            <span class="save-pill">Save £1,500</span>
             <span class="af-wasnow"><s>was £8,500</s> now from <b>£7,000</b></span>
           </div>
         </div>
