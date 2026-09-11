@@ -519,14 +519,13 @@ ul,ol{margin:0;padding:0;list-style:none}
    shared mobile treatment every funnel hero inherits. */
 @media (max-width:1023.98px){
   .hero-copy{text-align:center}
-  .hero-copy .lede{margin-inline:auto}
   .hero-copy .anchor-figure{align-items:center}
-  /* keep the savings on one line at phone width */
-  .hero-copy .af-save{justify-content:center;gap:10px;flex-wrap:nowrap}
-  .hero-copy .save-pill{font-size:.76rem;padding:5px 10px}
-  .hero-copy .af-wasnow{font-size:.88rem}
   .hero-copy .ticks{width:fit-content;max-width:100%;margin-inline:auto;text-align:left}
-  .hero-copy .chips{justify-content:center}
+  /* on the stacked mobile hero the savings recap and trust chips are cut,
+     to keep the opening screen short — both still show on desktop, and the
+     £1,500 saving is still in the headline */
+  .hero-copy .af-save,
+  .hero-copy .chips{display:none}
 }
 /* anchor figure */
 /* centre, not baseline: the two small lines sit as one block, and the
