@@ -32,6 +32,10 @@ let styles = [...src.matchAll(/<style>([\s\S]*?)<\/style>/g)].map((m) => m[1]).j
 let body = src.match(/<body>([\s\S]*)<\/body>/)[1];
 const scripts = [...body.matchAll(/<script[\s\S]*?<\/script>/g)].map((m) => m[0]);
 body = body.replace(/<script[\s\S]*?<\/script>/g, '');
+/* Google Tag Manager lives in the page <head> and immediately after <body>.
+   A custom-code block cannot reach either, so GTM is added in GHL's own
+   page tracking settings instead — strip its noscript out of the fragment. */
+body = body.replace(/\s*<!-- Google Tag Manager \(noscript\) -->[\s\S]*?<!-- End Google Tag Manager \(noscript\) -->/g, '');
 /* Inside GHL there is no thank-you.html at a relative path: the form's
    built-in confirmation panel stands instead. Point THANK_YOU at the
    funnel's own thank-you step to restore the redirect. */

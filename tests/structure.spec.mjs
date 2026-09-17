@@ -10,7 +10,7 @@ import { PAGES, WIDTHS } from './helpers.mjs';
        ::before slot pattern degrades to a labelled placeholder. The
        "every image src resolves" test below inventories those.
    Anything the page itself throws is always a hard failure. */
-const IGNORABLE = /fonts\.googleapis|fonts\.gstatic|google\.com\/maps|maps\.googleapis|\/assets\/|leadconnectorhq\.com|filesafe\.space/;
+const IGNORABLE = /fonts\.googleapis|fonts\.gstatic|google\.com\/maps|maps\.googleapis|googletagmanager\.com|google-analytics\.com|\/assets\/|leadconnectorhq\.com|filesafe\.space/;
 
 function watch(page) {
   const consoleErrors = [], pageErrors = [];

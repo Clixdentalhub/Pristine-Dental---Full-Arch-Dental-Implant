@@ -12,6 +12,8 @@ let styles = [...src.matchAll(/<style>([\s\S]*?)<\/style>/g)].map((m) => m[1]).j
 let body = src.match(/<body>([\s\S]*)<\/body>/)[1];
 const scripts = [...body.matchAll(/<script[\s\S]*?<\/script>/g)].map((m) => m[0]);
 body = body.replace(/<script[\s\S]*?<\/script>/g, '');
+/* GTM is added in GHL's page tracking settings, not the block — strip it. */
+body = body.replace(/\s*<!-- Google Tag Manager \(noscript\) -->[\s\S]*?<!-- End Google Tag Manager \(noscript\) -->/g, '');
 
 styles = styles
   .replace(/(^|\})\s*body\s*\{/g, '$1\n.pdg{')
