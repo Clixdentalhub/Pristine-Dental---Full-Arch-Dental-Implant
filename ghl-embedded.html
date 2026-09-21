@@ -1092,35 +1092,71 @@ ul,ol{margin:0;padding:0;list-style:none}
 
 
 /* ============================================================
-   SEE THE TREATMENT — two click-to-play videos (with sound)
+   SEE THE TREATMENT — a private screening.
+   Gilt-framed players, a frosted play control with a breathing
+   halo, index numerals, and a warm bloom behind the pair.
    ============================================================ */
-.tvid-grid{padding-top:14px}
+#treatments{position:relative;isolation:isolate}
+#treatments::before{               /* warm bloom for depth */
+  content:"";position:absolute;z-index:-1;inset:10% 0 0;
+  background:radial-gradient(52% 46% at 50% 38%, rgba(242,193,78,.07) 0%, transparent 72%);
+  pointer-events:none;
+}
+.tvid-grid{padding-top:22px;gap:var(--s-4)}
+@media (min-width:640px){ .tvid-grid{gap:var(--s-5)} }
 .tvid-card{
   position:relative;isolation:isolate;overflow:hidden;
-  border-radius:var(--r-lg);background:#0A0A0A;
-  aspect-ratio:16/9;box-shadow:0 30px 60px -45px rgba(0,0,0,.7);
+  border-radius:var(--r-lg);aspect-ratio:16/9;
+  background:linear-gradient(155deg,#171410 0%,#0A0A0A 62%);
+  box-shadow:0 44px 90px -55px rgba(0,0,0,.9), inset 0 0 0 1px rgba(242,193,78,.30);
+  transition:transform var(--d-2) var(--ease), box-shadow var(--d-2) var(--ease);
+}
+.tvid-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 58px 100px -55px rgba(0,0,0,.95), inset 0 0 0 1px rgba(242,193,78,.55);
 }
 .tvid-card video{width:100%;height:100%;object-fit:cover;display:block}
+/* index numeral, top-left, like a plate on a frame */
+.tvid-index{
+  position:absolute;top:16px;left:20px;z-index:3;
+  font-family:var(--font-head);font-weight:700;font-size:.82rem;
+  letter-spacing:.14em;color:rgba(242,193,78,.85);
+}
+.tvid-index::after{content:"";display:inline-block;width:26px;height:1px;
+  margin-left:10px;vertical-align:middle;background:rgba(242,193,78,.5)}
 .tvid-cover{
   position:absolute;inset:0;z-index:2;cursor:pointer;border:0;color:#fff;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
-  padding:var(--s-3);text-align:center;font-family:inherit;
-  background:linear-gradient(180deg,rgba(10,10,10,.34) 0%,rgba(10,10,10,.72) 100%);
-  transition:background var(--d-1) var(--ease);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+  padding:var(--s-4);text-align:center;font-family:inherit;
+  background:
+    radial-gradient(120% 92% at 50% 40%, rgba(10,10,10,.14) 0%, rgba(10,10,10,.72) 80%),
+    linear-gradient(180deg, rgba(10,10,10,.22) 0%, rgba(10,10,10,.6) 100%);
+  transition:opacity var(--d-2) var(--ease);
 }
-.tvid-cover:hover,.tvid-cover:focus-visible{background:linear-gradient(180deg,rgba(10,10,10,.26) 0%,rgba(10,10,10,.64) 100%)}
 .tvid-cover[hidden]{display:none}
-.tvid-btn{
-  width:74px;height:74px;border-radius:50%;flex:0 0 auto;
-  background:var(--cta-on-dark);color:var(--cta-on-dark-text);
-  display:grid;place-items:center;
-  box-shadow:0 12px 30px -8px rgba(0,0,0,.6);
-  transition:transform var(--d-1) var(--ease);
+/* play control: frosted disc, gold ring, a halo that breathes */
+.tvid-play{position:relative;width:78px;height:78px;flex:0 0 auto;display:grid;place-items:center}
+.tvid-play::before{content:"";position:absolute;inset:-12px;border-radius:50%;
+  border:1px solid rgba(242,193,78,.4);animation:tvidHalo 3.4s var(--ease) infinite}
+.tvid-disc{
+  width:78px;height:78px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(22,19,15,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  border:1.5px solid var(--cta-on-dark);color:var(--cta-on-dark);
+  box-shadow:0 16px 36px -12px rgba(0,0,0,.75), inset 0 0 22px rgba(242,193,78,.14);
+  transition:transform var(--d-1) var(--ease), background var(--d-1) var(--ease);
 }
-.tvid-cover:hover .tvid-btn,.tvid-cover:focus-visible .tvid-btn{transform:scale(1.06)}
-.tvid-btn svg{margin-left:3px}
-.tvid-label{font-family:var(--font-head);font-weight:700;font-size:1.15rem;letter-spacing:-.01em}
-.tvid-sub{font-size:.85rem;color:var(--color-on-primary-mut)}
+.tvid-cover:hover .tvid-disc,.tvid-cover:focus-visible .tvid-disc{
+  transform:scale(1.07);background:rgba(242,193,78,.18);
+}
+.tvid-disc svg{margin-left:4px}
+@keyframes tvidHalo{0%{transform:scale(1);opacity:.75}70%{transform:scale(1.4);opacity:0}100%{opacity:0}}
+.tvid-label{font-family:var(--font-head);font-weight:700;font-size:1.3rem;letter-spacing:-.01em;color:#fff}
+.tvid-sub{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--color-on-primary-mut)}
+.tvid-sub svg{vertical-align:-3px;margin-right:7px;color:var(--cta-on-dark)}
+@media (prefers-reduced-motion:reduce){
+  .tvid-play::before{animation:none}
+  .tvid-card,.tvid-disc,.tvid-cover{transition:none}
+}
 
 </style>
 <div class="pdg">
@@ -1494,35 +1530,71 @@ ul,ol{margin:0;padding:0;list-style:none}
 
 <style>
 /* ============================================================
-   SEE THE TREATMENT — two click-to-play videos (with sound)
+   SEE THE TREATMENT — a private screening.
+   Gilt-framed players, a frosted play control with a breathing
+   halo, index numerals, and a warm bloom behind the pair.
    ============================================================ */
-.tvid-grid{padding-top:14px}
+#treatments{position:relative;isolation:isolate}
+#treatments::before{               /* warm bloom for depth */
+  content:"";position:absolute;z-index:-1;inset:10% 0 0;
+  background:radial-gradient(52% 46% at 50% 38%, rgba(242,193,78,.07) 0%, transparent 72%);
+  pointer-events:none;
+}
+.tvid-grid{padding-top:22px;gap:var(--s-4)}
+@media (min-width:640px){ .tvid-grid{gap:var(--s-5)} }
 .tvid-card{
   position:relative;isolation:isolate;overflow:hidden;
-  border-radius:var(--r-lg);background:#0A0A0A;
-  aspect-ratio:16/9;box-shadow:0 30px 60px -45px rgba(0,0,0,.7);
+  border-radius:var(--r-lg);aspect-ratio:16/9;
+  background:linear-gradient(155deg,#171410 0%,#0A0A0A 62%);
+  box-shadow:0 44px 90px -55px rgba(0,0,0,.9), inset 0 0 0 1px rgba(242,193,78,.30);
+  transition:transform var(--d-2) var(--ease), box-shadow var(--d-2) var(--ease);
+}
+.tvid-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 58px 100px -55px rgba(0,0,0,.95), inset 0 0 0 1px rgba(242,193,78,.55);
 }
 .tvid-card video{width:100%;height:100%;object-fit:cover;display:block}
+/* index numeral, top-left, like a plate on a frame */
+.tvid-index{
+  position:absolute;top:16px;left:20px;z-index:3;
+  font-family:var(--font-head);font-weight:700;font-size:.82rem;
+  letter-spacing:.14em;color:rgba(242,193,78,.85);
+}
+.tvid-index::after{content:"";display:inline-block;width:26px;height:1px;
+  margin-left:10px;vertical-align:middle;background:rgba(242,193,78,.5)}
 .tvid-cover{
   position:absolute;inset:0;z-index:2;cursor:pointer;border:0;color:#fff;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
-  padding:var(--s-3);text-align:center;font-family:inherit;
-  background:linear-gradient(180deg,rgba(10,10,10,.34) 0%,rgba(10,10,10,.72) 100%);
-  transition:background var(--d-1) var(--ease);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+  padding:var(--s-4);text-align:center;font-family:inherit;
+  background:
+    radial-gradient(120% 92% at 50% 40%, rgba(10,10,10,.14) 0%, rgba(10,10,10,.72) 80%),
+    linear-gradient(180deg, rgba(10,10,10,.22) 0%, rgba(10,10,10,.6) 100%);
+  transition:opacity var(--d-2) var(--ease);
 }
-.tvid-cover:hover,.tvid-cover:focus-visible{background:linear-gradient(180deg,rgba(10,10,10,.26) 0%,rgba(10,10,10,.64) 100%)}
 .tvid-cover[hidden]{display:none}
-.tvid-btn{
-  width:74px;height:74px;border-radius:50%;flex:0 0 auto;
-  background:var(--cta-on-dark);color:var(--cta-on-dark-text);
-  display:grid;place-items:center;
-  box-shadow:0 12px 30px -8px rgba(0,0,0,.6);
-  transition:transform var(--d-1) var(--ease);
+/* play control: frosted disc, gold ring, a halo that breathes */
+.tvid-play{position:relative;width:78px;height:78px;flex:0 0 auto;display:grid;place-items:center}
+.tvid-play::before{content:"";position:absolute;inset:-12px;border-radius:50%;
+  border:1px solid rgba(242,193,78,.4);animation:tvidHalo 3.4s var(--ease) infinite}
+.tvid-disc{
+  width:78px;height:78px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(22,19,15,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  border:1.5px solid var(--cta-on-dark);color:var(--cta-on-dark);
+  box-shadow:0 16px 36px -12px rgba(0,0,0,.75), inset 0 0 22px rgba(242,193,78,.14);
+  transition:transform var(--d-1) var(--ease), background var(--d-1) var(--ease);
 }
-.tvid-cover:hover .tvid-btn,.tvid-cover:focus-visible .tvid-btn{transform:scale(1.06)}
-.tvid-btn svg{margin-left:3px}
-.tvid-label{font-family:var(--font-head);font-weight:700;font-size:1.15rem;letter-spacing:-.01em}
-.tvid-sub{font-size:.85rem;color:var(--color-on-primary-mut)}
+.tvid-cover:hover .tvid-disc,.tvid-cover:focus-visible .tvid-disc{
+  transform:scale(1.07);background:rgba(242,193,78,.18);
+}
+.tvid-disc svg{margin-left:4px}
+@keyframes tvidHalo{0%{transform:scale(1);opacity:.75}70%{transform:scale(1.4);opacity:0}100%{opacity:0}}
+.tvid-label{font-family:var(--font-head);font-weight:700;font-size:1.3rem;letter-spacing:-.01em;color:#fff}
+.tvid-sub{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--color-on-primary-mut)}
+.tvid-sub svg{vertical-align:-3px;margin-right:7px;color:var(--cta-on-dark)}
+@media (prefers-reduced-motion:reduce){
+  .tvid-play::before{animation:none}
+  .tvid-card,.tvid-disc,.tvid-cover{transition:none}
+}
 </style>
 
 <!-- ========================================================
@@ -1534,26 +1606,28 @@ ul,ol{margin:0;padding:0;list-style:none}
   <div class="wrap">
     <div class="section-head centre">
       <p class="eyebrow">See the treatment</p>
-      <h2 id="treatments-h">Watch how each treatment&nbsp;works</h2>
-      <p class="lede" style="margin-inline:auto">A short look at what your treatment involves &mdash; press&nbsp;play to&nbsp;watch.</p>
+      <h2 id="treatments-h">A closer look at your&nbsp;treatment</h2>
+      <p class="lede" style="margin-inline:auto">Press play for an unhurried look at what your care involves &mdash; <span class="nb">sound on</span>.</p>
     </div>
     <div class="grid grid-2 tvid-grid" data-anim="centre-out">
       <figure class="tvid-card">
+        <span class="tvid-index" aria-hidden="true">01</span>
         <video class="tvid" playsinline preload="none"
                src="https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/6ab112df30b0f957ccbc67c9.mp4"></video>
         <button type="button" class="tvid-cover" aria-label="Play the single implant treatment video">
-          <span class="tvid-btn" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          <span class="tvid-play" aria-hidden="true"><span class="tvid-disc"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></span>
           <span class="tvid-label">Single implant</span>
-          <span class="tvid-sub">Watch the treatment</span>
+          <span class="tvid-sub"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.8 5.2a9 9 0 0 1 0 13.6"/></svg>Watch <span class="nb">with sound</span></span>
         </button>
       </figure>
       <figure class="tvid-card">
+        <span class="tvid-index" aria-hidden="true">02</span>
         <video class="tvid" playsinline preload="none"
                src="https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/6ab112dfbdaa5e26a96cfaf5.mp4"></video>
         <button type="button" class="tvid-cover" aria-label="Play the full arch treatment video">
-          <span class="tvid-btn" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          <span class="tvid-play" aria-hidden="true"><span class="tvid-disc"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span></span>
           <span class="tvid-label">Full arch</span>
-          <span class="tvid-sub">Watch the treatment</span>
+          <span class="tvid-sub"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.8 5.2a9 9 0 0 1 0 13.6"/></svg>Watch <span class="nb">with sound</span></span>
         </button>
       </figure>
     </div>
