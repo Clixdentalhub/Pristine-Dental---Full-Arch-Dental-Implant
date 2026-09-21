@@ -1480,6 +1480,93 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </section>
 
 
+<style>
+/* ============================================================
+   SEE THE TREATMENT — two click-to-play videos (with sound)
+   ============================================================ */
+.tvid-grid{padding-top:14px}
+.tvid-card{
+  position:relative;isolation:isolate;overflow:hidden;
+  border-radius:var(--r-lg);background:#0A0A0A;
+  aspect-ratio:16/9;box-shadow:0 30px 60px -45px rgba(0,0,0,.7);
+}
+.tvid-card video{width:100%;height:100%;object-fit:cover;display:block}
+.tvid-cover{
+  position:absolute;inset:0;z-index:2;cursor:pointer;border:0;color:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  padding:var(--s-3);text-align:center;font-family:inherit;
+  background:linear-gradient(180deg,rgba(10,10,10,.34) 0%,rgba(10,10,10,.72) 100%);
+  transition:background var(--d-1) var(--ease);
+}
+.tvid-cover:hover,.tvid-cover:focus-visible{background:linear-gradient(180deg,rgba(10,10,10,.26) 0%,rgba(10,10,10,.64) 100%)}
+.tvid-cover[hidden]{display:none}
+.tvid-btn{
+  width:74px;height:74px;border-radius:50%;flex:0 0 auto;
+  background:var(--cta-on-dark);color:var(--cta-on-dark-text);
+  display:grid;place-items:center;
+  box-shadow:0 12px 30px -8px rgba(0,0,0,.6);
+  transition:transform var(--d-1) var(--ease);
+}
+.tvid-cover:hover .tvid-btn,.tvid-cover:focus-visible .tvid-btn{transform:scale(1.06)}
+.tvid-btn svg{margin-left:3px}
+.tvid-label{font-family:var(--font-head);font-weight:700;font-size:1.15rem;letter-spacing:-.01em}
+.tvid-sub{font-size:.85rem;color:var(--color-on-primary-mut)}
+</style>
+
+<!-- ========================================================
+     7 · SEE THE TREATMENT — two videos, click to play with sound.
+     Remote .mp4s stream in the visitor's browser; preload="none"
+     so nothing loads until play is pressed.
+     ======================================================== -->
+<section class="section" id="treatments" aria-labelledby="treatments-h">
+  <div class="wrap">
+    <div class="section-head centre">
+      <p class="eyebrow">See the treatment</p>
+      <h2 id="treatments-h">Watch how each treatment&nbsp;works</h2>
+      <p class="lede" style="margin-inline:auto">A short look at what your treatment involves &mdash; press&nbsp;play to&nbsp;watch.</p>
+    </div>
+    <div class="grid grid-2 tvid-grid" data-anim="centre-out">
+      <figure class="tvid-card">
+        <video class="tvid" playsinline preload="none"
+               src="https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/6ab112df30b0f957ccbc67c9.mp4"></video>
+        <button type="button" class="tvid-cover" aria-label="Play the single implant treatment video">
+          <span class="tvid-btn" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          <span class="tvid-label">Single implant</span>
+          <span class="tvid-sub">Watch the treatment</span>
+        </button>
+      </figure>
+      <figure class="tvid-card">
+        <video class="tvid" playsinline preload="none"
+               src="https://assets.cdn.filesafe.space/Qh2Etm9DVw9ouOs9EgCL/media/6ab112dfbdaa5e26a96cfaf5.mp4"></video>
+        <button type="button" class="tvid-cover" aria-label="Play the full arch treatment video">
+          <span class="tvid-btn" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          <span class="tvid-label">Full arch</span>
+          <span class="tvid-sub">Watch the treatment</span>
+        </button>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<script>
+/* Treatment videos: first click loads the .mp4, plays it with sound, and
+   reveals the native controls. If the browser blocks playback the cover
+   comes back so the visitor can try again. */
+(function () {
+  document.querySelectorAll('.tvid-card').forEach(function (card) {
+    var v = card.querySelector('video'), cover = card.querySelector('.tvid-cover');
+    if (!v || !cover) return;
+    cover.addEventListener('click', function () {
+      cover.hidden = true;
+      v.controls = true;                       // native controls appear only on play
+      if (v.preload === 'none') v.preload = 'auto';
+      var pr = v.play();
+      if (pr && pr.catch) pr.catch(function () { cover.hidden = false; });
+    });
+  });
+})();
+</script>
+
 <!-- ========================================================
      7 · REVIEWS — three-column vertical marquee.
      The aria-hidden clone is added by JS, and only when motion
