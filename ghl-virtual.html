@@ -1105,6 +1105,15 @@ ul,ol{margin:0;padding:0;list-style:none}
 .cal-ph{display:flex;align-items:center;justify-content:center;min-height:300px;padding:var(--s-3);
   border:1px dashed #6A5426;border-radius:var(--r-md);text-align:center;font-size:.9rem}
 .book-card .form-foot{margin-top:var(--s-2)}
+/* Desktop: the calendar runs taller than the copy beside it, so the copy
+   rides alongside it to the end of the hero instead of leaving a gap. Where
+   the copy is taller than the screen it pins by its bottom edge instead, so
+   the price and ticks stay in view. --copy-h is measured by JS; without it
+   this falls back to a plain top pin. */
+@media (min-width:1024px){
+  .hero-copy{position:sticky;
+    top:min(calc(var(--header-h) + var(--s-3)), calc(100vh - var(--copy-h, 0px) - var(--s-3)))}
+}
 
 
 /* ============================================================
@@ -1258,6 +1267,15 @@ ul,ol{margin:0;padding:0;list-style:none}
 .cal-ph{display:flex;align-items:center;justify-content:center;min-height:300px;padding:var(--s-3);
   border:1px dashed #6A5426;border-radius:var(--r-md);text-align:center;font-size:.9rem}
 .book-card .form-foot{margin-top:var(--s-2)}
+/* Desktop: the calendar runs taller than the copy beside it, so the copy
+   rides alongside it to the end of the hero instead of leaving a gap. Where
+   the copy is taller than the screen it pins by its bottom edge instead, so
+   the price and ticks stay in view. --copy-h is measured by JS; without it
+   this falls back to a plain top pin. */
+@media (min-width:1024px){
+  .hero-copy{position:sticky;
+    top:min(calc(var(--header-h) + var(--s-3)), calc(100vh - var(--copy-h, 0px) - var(--s-3)))}
+}
 </style>
 <section class="hero" id="enquiry">
   <!-- Background video. The hosted .mp4 goes in data-video, its poster
@@ -2476,5 +2494,14 @@ ul,ol{margin:0;padding:0;list-style:none}
     s.async = true;
     document.body.appendChild(s);
   }
+})();
+</script>
+<script>
+/* Measure the hero copy so its sticky offset can pin it by the bottom edge
+   when it is taller than the screen. */
+(function () {
+  var c = document.querySelector('.hero-copy');
+  if (!c || !('ResizeObserver' in window)) return;
+  new ResizeObserver(function () { c.style.setProperty('--copy-h', c.offsetHeight + 'px'); }).observe(c);
 })();
 </script>
