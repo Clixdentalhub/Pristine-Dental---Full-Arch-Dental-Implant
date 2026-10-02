@@ -1253,8 +1253,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <li><b aria-hidden="true">3</b><span>No obligation</span></li>
         </ol>
 
-        <div class="cal-slot" data-calendar="" data-needs="GoHighLevel calendar booking link">
-          <div class="cal-ph"><span class="ph">[ GoHighLevel calendar embed &mdash; booking link to be added ]</span></div>
+        <div class="cal-slot" data-calendar="https://api.leadconnectorhq.com/widget/booking/k4WmyISYYXyCtD2daAUf">
+          <div class="cal-ph"><a class="btn btn-primary" href="https://api.leadconnectorhq.com/widget/booking/k4WmyISYYXyCtD2daAUf" target="_blank" rel="noopener">Open the booking calendar</a></div>
         </div>
 
         <p class="form-foot">
@@ -2393,7 +2393,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>
 /* Free virtual consultation: build the GoHighLevel calendar embed from
    .cal-slot[data-calendar]. GHL's form_embed.js sizes the iframe to the
-   widget. Until the link is set the labelled slot stands and nothing loads. */
+   widget. Without JS the button inside the slot opens the calendar instead. */
 (function () {
   var slot = document.querySelector('.cal-slot');
   if (!slot || !slot.dataset.calendar) return;
@@ -2401,7 +2401,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   f.src = slot.dataset.calendar;
   f.title = 'Book your free virtual consultation';
   f.setAttribute('scrolling', 'no');
-  f.id = 'pdg-cal-' + Date.now();
+  f.setAttribute('allow', 'payment');
+  /* GHL's own id pattern, <calendarId>_<timestamp>: form_embed.js sizes the frame by it */
+  f.id = slot.dataset.calendar.split('/').pop() + '_' + Date.now();
   slot.innerHTML = '';
   slot.removeAttribute('data-needs');
   slot.appendChild(f);
