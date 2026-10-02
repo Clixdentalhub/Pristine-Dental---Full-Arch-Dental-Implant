@@ -5,7 +5,9 @@
    media beyond the logo, which embed-images.py inlines afterwards. */
 import { readFile, writeFile } from 'node:fs/promises';
 
-const src = await readFile('thank-you.html', 'utf8');
+/* node build-ghl-thank-you.mjs [page] [out] — defaults: thank-you.html -> ghl-thank-you.html */
+const [SRC = 'thank-you.html', OUT = 'ghl-thank-you.html'] = process.argv.slice(2);
+const src = await readFile(SRC, 'utf8');
 const FONTS = (src.match(/href="(https:\/\/fonts\.googleapis\.com\/css2[^"]+)"/) || [])[1];
 
 let styles = [...src.matchAll(/<style>([\s\S]*?)<\/style>/g)].map((m) => m[1]).join('\n');
@@ -31,7 +33,7 @@ const out = [
   ...scripts,
 ].filter(Boolean).join('\n');
 
-await writeFile('ghl-thank-you.html', out);
+await writeFile(OUT, out);
 const kb = (n) => (Buffer.byteLength(n) / 1024).toFixed(0) + ' KB';
-console.log(`ghl-thank-you.html  ${kb(out)}`);
+console.log(`${OUT}  ${kb(out)}`);
 console.log(`Run embed-images.py on it to inline the logo.`);
