@@ -1100,9 +1100,6 @@ ul,ol{margin:0;padding:0;list-style:none}
   font-size:.82rem;line-height:1.35;color:var(--color-on-primary-mut)}
 .book-steps b{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
   font-family:var(--font-head);font-size:.8rem;color:var(--cta-on-dark-text);background:var(--cta-on-dark)}
-.book-details[hidden]{display:none}
-.book-details .step-q{margin-bottom:var(--s-2)}
-.book-details .btn-block{margin-top:var(--s-1)}
 .cal-slot{border-radius:var(--r-md);overflow:hidden}
 .cal-slot iframe{display:block;width:100%;min-height:640px;border:0;background:#fff;border-radius:var(--r-md)}
 .cal-ph{display:flex;align-items:center;justify-content:center;min-height:300px;padding:var(--s-3);
@@ -1265,9 +1262,6 @@ ul,ol{margin:0;padding:0;list-style:none}
   font-size:.82rem;line-height:1.35;color:var(--color-on-primary-mut)}
 .book-steps b{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
   font-family:var(--font-head);font-size:.8rem;color:var(--cta-on-dark-text);background:var(--cta-on-dark)}
-.book-details[hidden]{display:none}
-.book-details .step-q{margin-bottom:var(--s-2)}
-.book-details .btn-block{margin-top:var(--s-1)}
 .cal-slot{border-radius:var(--r-md);overflow:hidden}
 .cal-slot iframe{display:block;width:100%;min-height:640px;border:0;background:#fff;border-radius:var(--r-md)}
 .cal-ph{display:flex;align-items:center;justify-content:center;min-height:300px;padding:var(--s-3);
@@ -1337,45 +1331,10 @@ ul,ol{margin:0;padding:0;list-style:none}
         </div>
 
         <ol class="book-steps" aria-label="How it works">
-          <li><b aria-hidden="true">1</b><span>Your details</span></li>
-          <li><b aria-hidden="true">2</b><span>Choose a time</span></li>
-          <li><b aria-hidden="true">3</b><span>Video call from&nbsp;home</span></li>
+          <li><b aria-hidden="true">1</b><span>Choose a time</span></li>
+          <li><b aria-hidden="true">2</b><span>Video call from&nbsp;home</span></li>
+          <li><b aria-hidden="true">3</b><span>No obligation</span></li>
         </ol>
-
-        <form class="book-details" id="book-details" novalidate hidden>
-          <p class="step-q">First, where should we send your video call&nbsp;details?</p>
-          <div class="field-row">
-            <div class="field">
-              <label for="b-first">First name</label>
-              <input id="b-first" name="firstName" type="text" autocomplete="given-name" placeholder="Jane" required>
-              <span class="err" id="err-b-first" role="alert"></span>
-            </div>
-            <div class="field">
-              <label for="b-last">Surname</label>
-              <input id="b-last" name="lastName" type="text" autocomplete="family-name" placeholder="Doe" required>
-              <span class="err" id="err-b-last" role="alert"></span>
-            </div>
-          </div>
-          <div class="field-row">
-            <div class="field">
-              <label for="b-phone">Phone</label>
-              <input id="b-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="07700 900123" required>
-              <span class="err" id="err-b-phone" role="alert"></span>
-            </div>
-            <div class="field">
-              <label for="b-email">Email</label>
-              <input id="b-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="jane@example.com" required>
-              <span class="err" id="err-b-email" role="alert"></span>
-            </div>
-          </div>
-          <div class="hp" aria-hidden="true">
-            <label for="b-company">Company</label>
-            <input id="b-company" name="company" type="text" tabindex="-1" autocomplete="off">
-          </div>
-          <button type="submit" class="btn btn-primary btn-block">Choose a time
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12.5 5.5 19 12l-6.5 6.5"/></svg>
-          </button>
-        </form>
 
         <div class="cal-slot" data-calendar="https://api.leadconnectorhq.com/widget/booking/k4WmyISYYXyCtD2daAUf">
           <div class="cal-ph"><a class="btn btn-primary" href="https://api.leadconnectorhq.com/widget/booking/k4WmyISYYXyCtD2daAUf" target="_blank" rel="noopener">Open the booking calendar</a></div>
@@ -2513,29 +2472,21 @@ ul,ol{margin:0;padding:0;list-style:none}
 })();
 </script>
 <script>
-/* Free virtual consultation — details first, then the calendar.
-
-   1. Attribution: UTMs and fbclid are read from the landing URL and kept
-      (localStorage, 30 days) so they survive a reload or a return visit.
-      Meta's fbc is derived from fbclid when the pixel has not set _fbc.
-   2. The details step posts the lead, with that attribution, to the GHL
-      inbound webhook, then reveals the calendar.
-   3. The calendar URL carries the same UTMs and fbclid, so GHL attributes
-      the booking too, and the visitor's details, to prefill its form.
-   Without JS none of this runs: the button in .cal-slot opens the calendar. */
+/* Free virtual consultation — the GoHighLevel calendar, with attribution.
+   UTMs and fbclid are read from the landing URL and kept for 30 days
+   (localStorage), so a reload or return visit still carries them. They are
+   added to the calendar URL so GHL attributes the booking to the ad.
+   GHL's form_embed.js sizes the iframe to the widget. Without JS the button
+   in .cal-slot opens the calendar instead. */
 (function () {
   'use strict';
-  var ENDPOINT = 'https://services.leadconnectorhq.com/hooks/Qh2Etm9DVw9ouOs9EgCL/webhook-trigger/871094b9-8424-4a6c-862d-98de89564df5';
   var KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'fbclid'];
   var STORE = 'pdg_attribution', MAX_AGE = 30 * 864e5;
 
-  /* ── attribution ── */
   var params = new URLSearchParams(location.search);
   var attr = {};
-  var fresh = KEYS.some(function (k) { return params.get(k); });
-  if (fresh) {
+  if (KEYS.some(function (k) { return params.get(k); })) {
     KEYS.forEach(function (k) { attr[k] = params.get(k) || ''; });
-    attr.landing_page = location.href;
     attr.captured_at = new Date().toISOString();
     try { localStorage.setItem(STORE, JSON.stringify(attr)); } catch (e) {}
   } else {
@@ -2544,96 +2495,27 @@ ul,ol{margin:0;padding:0;list-style:none}
       if (saved && Date.now() - Date.parse(saved.captured_at) < MAX_AGE) attr = saved;
     } catch (e) {}
   }
-  KEYS.forEach(function (k) { if (attr[k] == null) attr[k] = ''; });
-  function cookie(n) { var m = document.cookie.match('(?:^|; )' + n + '=([^;]*)'); return m ? decodeURIComponent(m[1]) : ''; }
-  var fbc = cookie('_fbc') || (attr.fbclid ? 'fb.1.' + Date.parse(attr.captured_at || Date()) + '.' + attr.fbclid : '');
-  var fbp = cookie('_fbp');
 
-  /* ── calendar ── */
   var slot = document.querySelector('.cal-slot');
-  var form = document.getElementById('book-details');
   if (!slot || !slot.dataset.calendar) return;
+  var url = new URL(slot.dataset.calendar);
+  KEYS.forEach(function (k) { if (attr[k]) url.searchParams.set(k, attr[k]); });
 
-  function buildCalendar(person) {
-    var url = new URL(slot.dataset.calendar);
-    KEYS.forEach(function (k) { if (attr[k]) url.searchParams.set(k, attr[k]); });
-    if (person) {
-      url.searchParams.set('first_name', person.firstName);
-      url.searchParams.set('last_name', person.lastName);
-      url.searchParams.set('email', person.email);
-      url.searchParams.set('phone', person.phone);
-    }
-    var f = document.createElement('iframe');
-    f.src = url.toString();
-    f.title = 'Book your free virtual consultation';
-    f.setAttribute('scrolling', 'no');
-    f.setAttribute('allow', 'payment');
-    /* GHL's own id pattern, <calendarId>_<timestamp>: form_embed.js sizes the frame by it */
-    f.id = url.pathname.split('/').pop() + '_' + Date.now();
-    slot.innerHTML = '';
-    slot.appendChild(f);
-    slot.hidden = false;
-    if (!document.querySelector('script[src*="form_embed.js"]')) {
-      var s = document.createElement('script');
-      s.src = 'https://link.msgsndr.com/js/form_embed.js';
-      s.async = true;
-      document.body.appendChild(s);
-    }
+  var f = document.createElement('iframe');
+  f.src = url.toString();
+  f.title = 'Book your free virtual consultation';
+  f.setAttribute('scrolling', 'no');
+  f.setAttribute('allow', 'payment');
+  /* GHL's own id pattern, <calendarId>_<timestamp>: form_embed.js sizes the frame by it */
+  f.id = url.pathname.split('/').pop() + '_' + Date.now();
+  slot.innerHTML = '';
+  slot.appendChild(f);
+  if (!document.querySelector('script[src*="form_embed.js"]')) {
+    var sc = document.createElement('script');
+    sc.src = 'https://link.msgsndr.com/js/form_embed.js';
+    sc.async = true;
+    document.body.appendChild(sc);
   }
-
-  if (!form) { buildCalendar(null); return; }   // no details step: calendar straight away
-
-  form.hidden = false;
-  slot.hidden = true;
-
-  var EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-  var PHONE = /^[0-9+()\s-]{9,}$/;
-  var fields = [].slice.call(form.querySelectorAll('input[required]'));
-
-  function check(input) {
-    var v = input.value.trim(), msg = '';
-    if (!v) msg = 'Please fill this in.';
-    else if (input.type === 'email' && !EMAIL.test(v)) msg = 'Please enter a valid email address.';
-    else if (input.type === 'tel' && !PHONE.test(v)) msg = 'Please enter a valid phone number.';
-    var err = document.getElementById('err-' + input.id);
-    if (err) err.textContent = msg;
-    input.setAttribute('aria-invalid', msg ? 'true' : 'false');
-    return !msg;
-  }
-  fields.forEach(function (i) { i.addEventListener('input', function () { if (i.getAttribute('aria-invalid') === 'true') check(i); }); });
-
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var bad = fields.filter(function (i) { return !check(i); });
-    if (bad.length) { bad[0].focus(); return; }
-
-    var person = {
-      firstName: form.firstName.value.trim(), lastName: form.lastName.value.trim(),
-      phone: form.phone.value.trim(), email: form.email.value.trim()
-    };
-    var isBot = !!form.company.value.trim();     // honeypot: show the calendar, send nothing
-
-    if (!isBot && ENDPOINT) {
-      var lead = {
-        firstName: person.firstName, lastName: person.lastName, phone: person.phone, email: person.email,
-        utm_source: attr.utm_source, utm_medium: attr.utm_medium, utm_campaign: attr.utm_campaign,
-        utm_term: attr.utm_term, utm_content: attr.utm_content, fbclid: attr.fbclid,
-        fbc: fbc, fbp: fbp,
-        landing_page: attr.landing_page || location.href, page_url: location.href,
-        referrer: document.referrer,
-        campaign: 'Full Arch — Free Virtual Consultation'
-      };
-      try {
-        fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(lead), keepalive: true }).catch(function () {});
-      } catch (e2) {}
-    }
-
-    form.hidden = true;
-    buildCalendar(person);
-    slot.setAttribute('tabindex', '-1');
-    slot.focus({ preventScroll: true });
-  });
 })();
 </script>
 <script>
