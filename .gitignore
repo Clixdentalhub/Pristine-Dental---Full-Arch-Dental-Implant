@@ -1,0 +1,8 @@
+node_modules/
+test-results/
+playwright-report/
+dist/
+tests/fonts/*.woff2
+tests/fonts/fonts.css
+tests/fonts/manifest.json
+shots/
