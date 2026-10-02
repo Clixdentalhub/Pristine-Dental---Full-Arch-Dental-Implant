@@ -1,5 +1,5 @@
 export const WIDTHS = [360, 375, 414, 768, 1024, 1280, 1440];
-export const PAGES = ['/index.html', '/thank-you.html'];
+export const PAGES = ['/index.html', '/thank-you.html', '/virtual.html'];
 
 /** WCAG relative luminance, per the spec formula. */
 export function luminance([r, g, b]) {

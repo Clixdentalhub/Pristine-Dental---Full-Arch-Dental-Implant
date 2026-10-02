@@ -1,9 +1,25 @@
-<!-- Pristine Dental Group — full arch funnel.
-     Paste into a GoHighLevel custom-code block. Page content only - the
-     document wrapper is omitted, because the GHL page already provides it. -->
-<style>@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Inter:wght@400;500;600&display=swap");</style>
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-P5KXR2DS');</script>
+<!-- End Google Tag Manager -->
+<!-- noindex stays until the highlighted placeholder is resolved: the Full Mouth
+     card needs the practice's real price and its monthly figure. Everything else
+     on this page is confirmed. See README.md -->
+<meta name="robots" content="noindex, nofollow">
+<title>Free Virtual Consultation — Full Arch Dental Implants, Kingsbury London | £1,500 Off, From £116/Month | Pristine Dental Group</title>
+<meta name="description" content="Book a free virtual consultation for full arch dental implants — a relaxed video call from home with Pristine Dental Group, Kingsbury, London. £1,500 off, from £116 per month on 5-year interest-free finance. CBCT scan (worth £250) and concierge pick-up included when you proceed.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
 <style>
-
 /* ============================================================
    P1 · TOKEN FOUNDATION
    Every pair below is proven by relative-luminance maths in
@@ -16,7 +32,7 @@
   --color-primary-dark:#0A0A0A;     /* deeper band / footer            */
   --color-on-primary:#FFFFFF;       /* 18.73:1 on primary              */
   --color-secondary:#232323;        /* raised surface on dark          */
-  --color-on-primary-mut:#C6C0B6;   /* .pdg copy on dark — 10.36:1     */
+  --color-on-primary-mut:#C6C0B6;   /* body copy on dark — 10.36:1     */
   --color-flourish:#E4C590;         /* icons + rules on dark — 11.32:1 */
 
   /* — CTA family — */
@@ -75,7 +91,7 @@
    ============================================================ */
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:calc(var(--header-h) + 16px)}
-.pdg{
+body{
   margin:0;
   font-family:var(--font-body);
   font-size:17px;line-height:1.72;
@@ -95,8 +111,7 @@ ul,ol{margin:0;padding:0;list-style:none}
 :focus-visible{outline:3px solid var(--color-accent);outline-offset:3px;border-radius:4px}
 .dark :focus-visible{outline-color:var(--cta-on-dark)}
 .wrap{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--s-2)}
-@media (min-width:768px){ .wrap{padding-inline:var(--s-4)}
-.pdg{font-size:18px} }
+@media (min-width:768px){ .wrap{padding-inline:var(--s-4)} body{font-size:18px} }
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .nb{white-space:nowrap}   /* compound binder — never a direct child of a flex row */
 
@@ -185,8 +200,8 @@ ul,ol{margin:0;padding:0;list-style:none}
    the base .section padding regardless of source order. */
 .section.has-cut{padding-bottom:calc(var(--s-7) + 64px)}
 @media (min-width:768px){ .section.has-cut{padding-bottom:calc(var(--s-8) + 96px)} }
-
-
+</style>
+<style>
 /* ============================================================
    P9 · STICKY HEADER, NAV RAIL, SCROLL PROGRESS
    ============================================================ */
@@ -436,8 +451,8 @@ ul,ol{margin:0;padding:0;list-style:none}
 
 /* ============================================================
    CARDS — image-on-top pattern
-   Media block and card .pdg are SIBLINGS in a flex column: media
-   with top-only radius and no bottom border, .pdg with bottom-only
+   Media block and card body are SIBLINGS in a flex column: media
+   with top-only radius and no bottom border, body with bottom-only
    radius. The image is never nested inside the card fighting its
    padding.
    ============================================================ */
@@ -484,8 +499,8 @@ ul,ol{margin:0;padding:0;list-style:none}
 .dark .chip,.deep .chip{background:#1C1916;border-color:#332D26;color:var(--color-on-primary-mut)}
 .chip svg{color:var(--color-accent)}
 .dark .chip svg,.deep .chip svg{color:var(--color-flourish)}
-
-
+</style>
+<style>
 /* ============================================================
    HERO
    ============================================================ */
@@ -664,8 +679,8 @@ ul,ol{margin:0;padding:0;list-style:none}
 .tick-draw.go circle{animation:draw 700ms var(--ease) forwards}
 .tick-draw.go path{animation:draw 460ms var(--ease) 380ms forwards}
 @keyframes draw{ to{stroke-dashoffset:0} }
-
-
+</style>
+<style>
 /* ============================================================
    TRUST STRIP / STATS
    ============================================================ */
@@ -1089,77 +1104,14 @@ ul,ol{margin:0;padding:0;list-style:none}
   .rev-track{animation:none!important}
   .mobile-bar{transition:none}
 }
-
-
-/* ============================================================
-   SEE THE TREATMENT — a private screening.
-   Gilt-framed players, a frosted play control with a breathing
-   halo, index numerals, and a warm bloom behind the pair.
-   ============================================================ */
-#treatments{position:relative;isolation:isolate}
-#treatments::before{               /* warm bloom for depth */
-  content:"";position:absolute;z-index:-1;inset:10% 0 0;
-  background:radial-gradient(52% 46% at 50% 38%, rgba(242,193,78,.07) 0%, transparent 72%);
-  pointer-events:none;
-}
-.tvid-grid{padding-top:22px;gap:var(--s-4)}
-@media (min-width:640px){ .tvid-grid{gap:var(--s-5)} }
-.tvid-card{
-  position:relative;isolation:isolate;overflow:hidden;
-  border-radius:var(--r-lg);aspect-ratio:16/9;
-  background:linear-gradient(155deg,#171410 0%,#0A0A0A 62%);
-  box-shadow:0 44px 90px -55px rgba(0,0,0,.9), inset 0 0 0 1px rgba(242,193,78,.30);
-  transition:transform var(--d-2) var(--ease), box-shadow var(--d-2) var(--ease);
-}
-.tvid-card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 58px 100px -55px rgba(0,0,0,.95), inset 0 0 0 1px rgba(242,193,78,.55);
-}
-.tvid-card video{width:100%;height:100%;object-fit:cover;display:block}
-/* index numeral, top-left, like a plate on a frame */
-.tvid-index{
-  position:absolute;top:16px;left:20px;z-index:3;
-  font-family:var(--font-head);font-weight:700;font-size:.82rem;
-  letter-spacing:.14em;color:rgba(242,193,78,.85);
-}
-.tvid-index::after{content:"";display:inline-block;width:26px;height:1px;
-  margin-left:10px;vertical-align:middle;background:rgba(242,193,78,.5)}
-.tvid-cover{
-  position:absolute;inset:0;z-index:2;cursor:pointer;border:0;color:#fff;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
-  padding:var(--s-4);text-align:center;font-family:inherit;
-  background:
-    radial-gradient(120% 92% at 50% 40%, rgba(10,10,10,.14) 0%, rgba(10,10,10,.72) 80%),
-    linear-gradient(180deg, rgba(10,10,10,.22) 0%, rgba(10,10,10,.6) 100%);
-  transition:opacity var(--d-2) var(--ease);
-}
-.tvid-cover[hidden]{display:none}
-/* play control: frosted disc, gold ring, a halo that breathes */
-.tvid-play{position:relative;width:78px;height:78px;flex:0 0 auto;display:grid;place-items:center}
-.tvid-play::before{content:"";position:absolute;inset:-12px;border-radius:50%;
-  border:1px solid rgba(242,193,78,.4);animation:tvidHalo 3.4s var(--ease) infinite}
-.tvid-disc{
-  width:78px;height:78px;border-radius:50%;display:grid;place-items:center;
-  background:rgba(22,19,15,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
-  border:1.5px solid var(--cta-on-dark);color:var(--cta-on-dark);
-  box-shadow:0 16px 36px -12px rgba(0,0,0,.75), inset 0 0 22px rgba(242,193,78,.14);
-  transition:transform var(--d-1) var(--ease), background var(--d-1) var(--ease);
-}
-.tvid-cover:hover .tvid-disc,.tvid-cover:focus-visible .tvid-disc{
-  transform:scale(1.07);background:rgba(242,193,78,.18);
-}
-.tvid-disc svg{margin-left:4px}
-@keyframes tvidHalo{0%{transform:scale(1);opacity:.75}70%{transform:scale(1.4);opacity:0}100%{opacity:0}}
-.tvid-label{font-family:var(--font-head);font-weight:700;font-size:1.3rem;letter-spacing:-.01em;color:#fff}
-.tvid-sub{font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--color-on-primary-mut)}
-.tvid-sub svg{vertical-align:-3px;margin-right:7px;color:var(--cta-on-dark)}
-@media (prefers-reduced-motion:reduce){
-  .tvid-play::before{animation:none}
-  .tvid-card,.tvid-disc,.tvid-cover{transition:none}
-}
-
 </style>
-<div class="pdg">
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P5KXR2DS"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
 <a class="sr-only" href="#main">Skip to content</a>
 
 <!-- ========================================================
@@ -1201,7 +1153,7 @@ ul,ol{margin:0;padding:0;list-style:none}
         <span>07476&nbsp;987708</span>
       </a>
 
-      <a class="btn btn-primary btn-sm header-cta" href="#qualifier-card">Book free consultation</a>
+      <a class="btn btn-primary btn-sm header-cta" href="#booking">Free virtual consultation</a>
     </div>
   </div>
 
@@ -1226,6 +1178,22 @@ ul,ol{margin:0;padding:0;list-style:none}
      2 · HERO
      Motion: H2 word rise (headline only). No other pattern here.
      ======================================================== -->
+<style>
+/* ============================================================
+   BOOKING CARD — free virtual consultation, GHL calendar embed
+   ============================================================ */
+.book-steps{list-style:none;margin:0 0 var(--s-3);padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.book-steps li{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;
+  padding:12px 8px;border-radius:var(--r-md);border:1px solid #2E2820;background:rgba(255,255,255,.025);
+  font-size:.82rem;line-height:1.35;color:var(--color-on-primary-mut)}
+.book-steps b{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  font-family:var(--font-head);font-size:.8rem;color:var(--cta-on-dark-text);background:var(--cta-on-dark)}
+.cal-slot{border-radius:var(--r-md);overflow:hidden}
+.cal-slot iframe{display:block;width:100%;min-height:640px;border:0;background:#fff;border-radius:var(--r-md)}
+.cal-ph{display:flex;align-items:center;justify-content:center;min-height:300px;padding:var(--s-3);
+  border:1px dashed #6A5426;border-radius:var(--r-md);text-align:center;font-size:.9rem}
+.book-card .form-foot{margin-top:var(--s-2)}
+</style>
 <section class="hero" id="enquiry">
   <!-- Background video. The hosted .mp4 goes in data-video, its poster
        frame in data-poster; empty, the band is a flat colour and nothing
@@ -1236,9 +1204,9 @@ ul,ol{margin:0;padding:0;list-style:none}
     <div class="hero-grid">
 
       <div class="hero-copy">
-        <p class="eyebrow">Full arch dental implants · Kingsbury, London</p>
+        <p class="eyebrow">Start from home · Kingsbury, London</p>
 
-        <h1 data-words>A Fixed, Permanent Smile — £1,500 Off Full Arch Implants</h1>
+        <h1 data-words>Free Virtual Consultation — £1,500 Off Full Arch Implants</h1>
 
         <div class="anchor-figure">
           <div class="af-price"><b>£116</b><span class="af-per">per&nbsp;month</span></div>
@@ -1249,11 +1217,11 @@ ul,ol{margin:0;padding:0;list-style:none}
           </div>
         </div>
 
-        <ul class="ticks" aria-label="What full arch implants give you">
+        <ul class="ticks" aria-label="Your concierge journey">
           <li class="tick"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg>
-            <span>Fixed permanently — never removed, <span class="nb">never re-glued</span></span></li>
+            <span>A relaxed video call from home — <span class="nb">no travel</span>, no&nbsp;obligation</span></li>
           <li class="tick"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg>
-            <span>3D-planned — most cases need <span class="nb">no bone graft</span></span></li>
+            <span>CBCT scan <span class="nb">(worth £250)</span> and concierge <span class="nb">pick-up</span> when you&nbsp;proceed</span></li>
           <li class="tick"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg>
             <span>Complex cases welcome, including those <span class="nb">declined elsewhere</span></span></li>
         </ul>
@@ -1266,117 +1234,33 @@ ul,ol{margin:0;padding:0;list-style:none}
 
       </div>
 
-      <!-- P6 · three-step qualifier, Ink Atelier treatment -->
-      <div class="form-card" id="qualifier-card">
+      <!-- Booking card. The free virtual consultation is booked straight into the
+           GoHighLevel calendar: set data-calendar on .cal-slot to the calendar's
+           booking URL and the page builds the embed. Empty, a labelled slot stands. -->
+      <div class="form-card book-card" id="booking">
         <div class="form-head">
           <p class="form-kicker">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
-            Limited appointments
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6" width="13" height="12" rx="2.5"/><path d="m15.5 10.5 6-3.5v10l-6-3.5"/></svg>
+            Free &middot; No travel required
           </p>
-          <h2>Claim your free consultation &amp; CBCT scan</h2>
-          <p class="form-sub">Two quick questions, then your details. Takes about 30&nbsp;seconds — worth £250, no obligation.</p>
+          <h2>Book your free virtual consultation</h2>
+          <p class="form-sub">Pick a time that suits you for a relaxed video call with our team &mdash; ask anything, with no obligation to&nbsp;proceed.</p>
         </div>
 
-        <div class="steps-meter" id="meter">
-          <div class="bar"><i id="meter-fill"></i></div>
-          <span class="count" id="meter-count">Step 1 of 3</span>
+        <ol class="book-steps" aria-label="How it works">
+          <li><b aria-hidden="true">1</b><span>Choose a time</span></li>
+          <li><b aria-hidden="true">2</b><span>Video call from&nbsp;home</span></li>
+          <li><b aria-hidden="true">3</b><span>No obligation</span></li>
+        </ol>
+
+        <div class="cal-slot" data-calendar="" data-needs="GoHighLevel calendar booking link">
+          <div class="cal-ph"><span class="ph">[ GoHighLevel calendar embed &mdash; booking link to be added ]</span></div>
         </div>
 
-        <form id="qualifier" novalidate>
-          <!-- ── Step 1 ── -->
-          <div class="step" data-step="1">
-            <fieldset class="opts">
-              <legend class="step-q">Which best describes your&nbsp;situation?</legend>
-              <label class="opt"><input type="radio" name="situation" value="Loose or uncomfortable dentures" required>
-                <span>Loose or uncomfortable dentures</span></label>
-              <label class="opt"><input type="radio" name="situation" value="Several failing or missing teeth">
-                <span>Several failing or missing teeth</span></label>
-              <label class="opt"><input type="radio" name="situation" value="A full top or bottom set missing">
-                <span>A full top or bottom set missing</span></label>
-              <label class="opt"><input type="radio" name="situation" value="Declined for implants elsewhere">
-                <span>I&rsquo;ve been declined for implants before</span></label>
-            </fieldset>
-            <p class="err" id="err-situation" role="alert"></p>
-            <div class="form-actions">
-              <button type="button" class="btn btn-primary" data-next>Continue
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12.5 5.5 19 12l-6.5 6.5"/></svg>
-              </button>
-            </div>
-          </div>
-
-          <!-- ── Step 2 ── -->
-          <div class="step" data-step="2" hidden>
-            <fieldset class="opts">
-              <legend class="step-q">How soon would you like to start?</legend>
-              <label class="opt"><input type="radio" name="timing" value="As soon as possible" required>
-                <span>As soon as possible</span></label>
-              <label class="opt"><input type="radio" name="timing" value="Within 1 to 3 months">
-                <span>Within 1 to 3 months</span></label>
-              <label class="opt"><input type="radio" name="timing" value="In 3 to 6 months">
-                <span>In 3 to 6 months</span></label>
-              <label class="opt"><input type="radio" name="timing" value="Researching my options">
-                <span>Just researching my options</span></label>
-            </fieldset>
-            <p class="err" id="err-timing" role="alert"></p>
-            <div class="form-actions">
-              <button type="button" class="btn-back" data-back>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H6M11.5 5.5 5 12l6.5 6.5"/></svg> Back</button>
-              <button type="button" class="btn btn-primary" data-next>Continue
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12.5 5.5 19 12l-6.5 6.5"/></svg>
-              </button>
-            </div>
-          </div>
-
-          <!-- ── Step 3 ── -->
-          <div class="step" data-step="3" hidden>
-            <p class="step-q">Where shall we send your appointment details?</p>
-            <div class="field-row">
-              <div class="field">
-                <label for="f-first">First name</label>
-                <input id="f-first" name="firstName" type="text" autocomplete="given-name" placeholder="Jane" required>
-                <span class="err" id="err-firstName" role="alert"></span>
-              </div>
-              <div class="field">
-                <label for="f-last">Surname</label>
-                <input id="f-last" name="lastName" type="text" autocomplete="family-name" placeholder="Doe" required>
-                <span class="err" id="err-lastName" role="alert"></span>
-              </div>
-            </div>
-            <div class="field">
-              <label for="f-phone">Phone</label>
-              <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="07700 900123" required>
-              <span class="err" id="err-phone" role="alert"></span>
-            </div>
-            <div class="field">
-              <label for="f-email">Email</label>
-              <input id="f-email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="jane@example.com" required>
-              <span class="err" id="err-email" role="alert"></span>
-            </div>
-            <div class="hp" aria-hidden="true">
-              <label for="f-company">Company</label>
-              <input id="f-company" name="company" type="text" tabindex="-1" autocomplete="off">
-            </div>
-            <div class="form-actions">
-              <button type="button" class="btn-back" data-back>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H6M11.5 5.5 5 12l6.5 6.5"/></svg> Back</button>
-              <button type="submit" class="btn btn-primary">Claim my free consultation</button>
-            </div>
-            <p class="form-foot">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>
-              We use your details only to arrange this consultation. No obligation, and you can ask us to delete them at any time.
-            </p>
-          </div>
-        </form>
-
-        <!-- success state -->
-        <div class="form-done" id="form-done" hidden tabindex="-1">
-          <svg class="tick-draw" id="done-tick" width="72" height="72" viewBox="0 0 72 72" fill="none" stroke="#F2C14E" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin:0 auto var(--s-2)">
-            <circle cx="36" cy="36" r="31" style="--len:195"/>
-            <path d="M22 37.5l10 10 19-21" style="--len:46"/>
-          </svg>
-          <h3>Request received</h3>
-          <p class="form-sub">Our team will call you shortly to confirm your appointment. Please keep an eye on your phone.</p>
-        </div>
+        <p class="form-foot">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>
+          Your details are used only to arrange your consultation. No obligation, ever.
+        </p>
       </div>
 
     </div>
@@ -1402,7 +1286,7 @@ ul,ol{margin:0;padding:0;list-style:none}
     <ul class="stats" data-anim="count">
       <li class="stat"><b data-count="5" data-dp="1">5.0</b><span>Google rating, from hundreds of patients</span></li>
       <li class="stat"><b data-count="1500" data-prefix="£" data-comma="1">£1,500</b><span>Off full arch implants right now</span></li>
-      <li class="stat"><b data-count="250" data-prefix="£">£250</b><span>Free CBCT scan and&nbsp;consultation</span></li>
+      <li class="stat"><b data-count="250" data-prefix="£">£250</b><span>CBCT scan included when you&nbsp;proceed</span></li>
       <li class="stat"><b data-count="116" data-prefix="£">£116</b><span>Per month on 5-year 0% finance</span></li>
     </ul>
   </div>
@@ -1474,8 +1358,7 @@ ul,ol{margin:0;padding:0;list-style:none}
     <div class="section-head centre">
       <p class="eyebrow">Your options</p>
       <h2 id="pricing-h">Fixed prices, agreed before you commit to&nbsp;anything</h2>
-      <p class="lede" style="margin-inline:auto">Every plan below includes your free consultation and CBCT scan.
-      You leave your first appointment with a written price — not an estimate.</p>
+      <p class="lede" style="margin-inline:auto">Every plan starts with a free virtual consultation from home. Your CBCT scan is included when you proceed, and you get a written price — not an&nbsp;estimate.</p>
     </div>
 
     <div class="grid grid-3" data-anim="centre-out" style="padding-top:14px">
@@ -1486,10 +1369,10 @@ ul,ol{margin:0;padding:0;list-style:none}
         <p class="price-sub"><strong>From £116 per month</strong> · 5-year 0% finance</p>
         <ul class="ticks">
           <li class="tick"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg><span>£1,500 already taken off</span></li>
-          <li class="tick"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg><span>Free CBCT scan and&nbsp;consultation</span></li>
+          <li class="tick"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg><span>CBCT scan included when you&nbsp;proceed</span></li>
           <li class="tick"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg><span>Fixed bridge, not a removable plate</span></li>
         </ul>
-        <a class="btn btn-primary btn-block" href="#qualifier-card">Check my suitability</a>
+        <a class="btn btn-primary btn-block" href="#booking">Book my virtual consultation</a>
       </article>
 
       <article class="price-card is-featured lift">
@@ -1500,10 +1383,10 @@ ul,ol{margin:0;padding:0;list-style:none}
         <p class="price-sub"><strong>5-year interest-free finance available</strong></p>
         <ul class="ticks">
           <li class="tick"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg><span>Upper and lower planned as one case</span></li>
-          <li class="tick"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg><span>Free CBCT scan and&nbsp;consultation</span></li>
+          <li class="tick"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg><span>CBCT scan included when you&nbsp;proceed</span></li>
           <li class="tick"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg><span>Complimentary concierge&nbsp;<span class="nb">pick-up</span></span></li>
         </ul>
-        <a class="btn btn-primary btn-block" href="#qualifier-card">Check my suitability</a>
+        <a class="btn btn-primary btn-block" href="#booking">Book my virtual consultation</a>
       </article>
 
       <article class="price-card lift">
@@ -1513,10 +1396,10 @@ ul,ol{margin:0;padding:0;list-style:none}
         <p class="price-sub"><strong>From £31.67 per month</strong> ·&nbsp;<span class="nb">interest-free</span></p>
         <ul class="ticks">
           <li class="tick"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg><span>For a single missing tooth</span></li>
-          <li class="tick"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg><span>Free consultation and&nbsp;scan</span></li>
+          <li class="tick"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg><span>Free virtual consultation from&nbsp;home</span></li>
           <li class="tick"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg><span>Includes a <span class="nb">custom-made</span> abutment and zirconia crown</span></li>
         </ul>
-        <a class="btn btn-primary btn-block" href="#qualifier-card">Check my suitability</a>
+        <a class="btn btn-primary btn-block" href="#booking">Book my virtual consultation</a>
       </article>
     </div>
 
@@ -1634,7 +1517,24 @@ ul,ol{margin:0;padding:0;list-style:none}
   </div>
 </section>
 
-
+<script>
+/* Treatment videos: first click loads the .mp4, plays it with sound, and
+   reveals the native controls. If the browser blocks playback the cover
+   comes back so the visitor can try again. */
+(function () {
+  document.querySelectorAll('.tvid-card').forEach(function (card) {
+    var v = card.querySelector('video'), cover = card.querySelector('.tvid-cover');
+    if (!v || !cover) return;
+    cover.addEventListener('click', function () {
+      cover.hidden = true;
+      v.controls = true;                       // native controls appear only on play
+      if (v.preload === 'none') v.preload = 'auto';
+      var pr = v.play();
+      if (pr && pr.catch) pr.catch(function () { cover.hidden = false; });
+    });
+  });
+})();
+</script>
 
 <!-- ========================================================
      7 · REVIEWS — three-column vertical marquee.
@@ -1716,9 +1616,9 @@ ul,ol{margin:0;padding:0;list-style:none}
           <li class="tick"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg>
             <span>Most cases need no bone graft — 3D planning angles the implants to use the bone you already&nbsp;have</span></li>
           <li class="tick"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg>
-            <span>Declined or failed implant elsewhere? Bring the details to your free&nbsp;consultation</span></li>
+            <span>Declined or failed implant elsewhere? Bring the details to your free virtual&nbsp;consultation</span></li>
         </ul>
-        <a class="btn btn-primary" href="#qualifier-card" style="margin-top:var(--s-3)">See if I&rsquo;m suitable</a>
+        <a class="btn btn-primary" href="#booking" style="margin-top:var(--s-3)">See if I&rsquo;m suitable</a>
       </div>
     </div>
   </div>
@@ -1738,31 +1638,31 @@ ul,ol{margin:0;padding:0;list-style:none}
 <section class="section" id="journey" aria-labelledby="journey-h">
   <div class="wrap">
     <div class="section-head centre">
-      <p class="eyebrow">Your visit</p>
-      <h2 id="journey-h">Three steps, and you know exactly where you&nbsp;stand</h2>
+      <p class="eyebrow">Your concierge journey</p>
+      <h2 id="journey-h">Three steps, and the first one is from&nbsp;home</h2>
     </div>
     <ol class="journey" data-anim="step-draw">
       <li class="jstep">
         <span class="num" aria-hidden="true">1</span>
-        <h3>Free consultation and CBCT scan</h3>
-        <p>The scan is painless and over in minutes. It gives Dr Shabeeb an accurate picture of your
-        bone structure — the thing that actually decides what is possible. Worth £250, free on this offer.</p>
+        <h3>Your free virtual consultation</h3>
+        <p>A relaxed video call with our team, at a time that suits you. Talk through your situation, ask
+        every question and understand your options &mdash; without leaving the house, and with no obligation.</p>
       </li>
       <li class="jstep">
         <span class="num" aria-hidden="true">2</span>
-        <h3>Your 3D plan and a fixed price</h3>
-        <p>Your implants are positioned digitally before anything is placed. You leave with your options
-        explained, a written fixed price, and your finance figures. No pressure, no surprise bill.</p>
+        <h3>Concierge <span class="nb">pick-up</span>, scan and a fixed price</h3>
+        <p>When you&rsquo;re ready to proceed, we collect you and bring you to the clinic. Your CBCT scan (worth
+        £250, included) shows Dr Shabeeb your bone structure, and you leave with a 3D plan and a written fixed price.</p>
       </li>
       <li class="jstep">
         <span class="num" aria-hidden="true">3</span>
         <h3>Placement, and a smile that stays put</h3>
         <p>Four to six implants per arch, with your fixed bridge secured to them. Many patients leave with
-        teeth the same day. Concierge <span class="nb">pick-up</span> is available on request.</p>
+        teeth the same day, with finance spread over five years, <span class="nb">interest-free</span>.</p>
       </li>
     </ol>
     <p style="text-align:center;margin-top:var(--s-4)">
-      <a class="btn btn-primary" href="#qualifier-card">Book my free consultation</a>
+      <a class="btn btn-primary" href="#booking">Book my free virtual consultation</a>
     </p>
   </div>
 </section>
@@ -1834,6 +1734,30 @@ ul,ol{margin:0;padding:0;list-style:none}
 
   <div class="gallery" id="gallery-rail" role="region" aria-label="Photographs of the practice, scrollable" tabindex="0">
     <div class="gallery-track">
+        <figure class="gallery-item">
+          <div class="media media-4x3" data-slot="v-g01-smile-reveal.jpg">
+            <img src="assets/img/v-g01-smile-reveal.jpg" width="800" height="600" loading="lazy"
+                 alt="A patient beaming at his new teeth in a Pristine hand mirror">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3" data-slot="v-g02-handshake.jpg">
+            <img src="assets/img/v-g02-handshake.jpg" width="800" height="600" loading="lazy"
+                 alt="The dentist shaking hands with a delighted patient after treatment">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3" data-slot="v-g03-implant-xray.jpg">
+            <img src="assets/img/v-g03-implant-xray.jpg" width="800" height="600" loading="lazy"
+                 alt="The dentist smiling beside a large screen showing a panoramic X-ray of dental implants">
+          </div>
+        </figure>
+        <figure class="gallery-item">
+          <div class="media media-4x3" data-slot="v-g04-plan-walkthrough.jpg">
+            <img src="assets/img/v-g04-plan-walkthrough.jpg" width="800" height="600" loading="lazy"
+                 alt="A team member talking a patient through his Pristine treatment plan in reception">
+          </div>
+        </figure>
         <figure class="gallery-item">
           <div class="media media-4x3" data-slot="g01-implant-plan.jpg">
             <img src="assets/img/g01-implant-plan.jpg" width="800" height="600" loading="lazy"
@@ -1915,31 +1839,30 @@ ul,ol{margin:0;padding:0;list-style:none}
   <div class="wrap">
     <div class="section-head centre">
       <p class="eyebrow">What you get</p>
-      <h2 id="included-h">Everything in your free&nbsp;consultation</h2>
+      <h2 id="included-h">Everything included, from your first&nbsp;call</h2>
     </div>
 
     <div class="grid grid-2" data-anim="mask-rise" style="align-items:start">
       <ul class="ticks card-plain" style="gap:16px">
         <li class="tick"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg>
-          <span><strong>Full CBCT 3D scan</strong> — worth £250, and yours free on this offer</span></li>
+          <span><strong>Free virtual consultation</strong> — a relaxed video call from home, no&nbsp;obligation</span></li>
         <li class="tick"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg>
-          <span><strong>Suitability assessment</strong> with Dr Shabeeb, including bone volume</span></li>
+          <span><strong>Full CBCT 3D scan</strong> — worth £250, included when you&nbsp;proceed</span></li>
         <li class="tick"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg>
           <span><strong>Your options explained</strong> — one arch, both, or something simpler</span></li>
         <li class="tick"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg>
-          <span><strong>A written fixed price</strong> before you leave, not an estimate</span></li>
+          <span><strong>A written fixed price</strong> after your scan, not an estimate</span></li>
         <li class="tick"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg>
           <span><strong>Your finance figures</strong> — 5-year <span class="nb">interest-free</span>, subject to status</span></li>
         <li class="tick"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5.2 5.2L20 6.9"/></svg>
-          <span><strong>Time to think</strong> — nothing is booked on the day unless you want it to be</span></li>
+          <span><strong>No pressure</strong> — nothing is booked unless you want it to&nbsp;be</span></li>
       </ul>
 
       <div class="grid" style="gap:var(--s-3)">
         <div class="card-plain card-photo">
-          <span class="card-photo-bg" aria-hidden="true" style="background-image:url(assets/img/callout-concierge.jpg)"></span>
+          <span class="card-photo-bg" aria-hidden="true" style="background-image:url(assets/img/v-concierge-reception.jpg)"></span>
           <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px;margin-right:6px"><path d="M3 17h2l1.6-5.2A2 2 0 0 1 8.5 10.4h7a2 2 0 0 1 1.9 1.4L19 17h2"/><circle cx="7.5" cy="18.5" r="1.6"/><circle cx="16.5" cy="18.5" r="1.6"/></svg>Concierge <span class="nb">pick-up</span></h3>
-          <p style="margin:0">Getting to us shouldn&rsquo;t be the reason you put this off. A complimentary <span class="nb">pick-up</span>
-          and drop-off service is available on request for consultation and treatment days.</p>
+          <p style="margin:0">Getting to us shouldn&rsquo;t be the reason you put this off. Once you decide to proceed, a complimentary <span class="nb">pick-up</span> and <span class="nb">drop-off</span> service brings you to your scan and treatment&nbsp;days.</p>
         </div>
         <div class="card-plain card-photo">
           <span class="card-photo-bg" aria-hidden="true" style="background-image:url(assets/img/callout-complex.jpg)"></span>
@@ -1993,8 +1916,8 @@ ul,ol{margin:0;padding:0;list-style:none}
           <svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
         </button>
         <div class="faq-a" id="a3" role="region" aria-labelledby="q3"><div>
-          <p>Yes. Complex and previously declined cases are a large part of what we do. The consultation and
-          scan cost you nothing, and you get a straight answer either way — including if the honest answer
+          <p>Yes. Complex and previously declined cases are a large part of what we do. The virtual consultation
+          costs you nothing, and you get a straight answer either way — including if the honest answer
           is that implants are not right for you.</p>
         </div></div>
       </div>
@@ -2006,8 +1929,8 @@ ul,ol{margin:0;padding:0;list-style:none}
         </button>
         <div class="faq-a" id="a4" role="region" aria-labelledby="q4"><div>
           <p>A full arch — one set, upper or lower — starts from £7,000 with the current £1,500 discount applied — around £116 a month
-          on 5-year <span class="nb">interest-free</span> finance, subject to status. Your written fixed price is confirmed at your
-          consultation, once the scan shows how many implants your case needs — and there are no hidden
+          on 5-year <span class="nb">interest-free</span> finance, subject to status. Your written fixed price is confirmed after
+          your CBCT scan, once it shows how many implants your case needs — and there are no hidden
           costs: every fee is in the written plan before treatment begins.</p>
         </div></div>
       </div>
@@ -2048,13 +1971,14 @@ ul,ol{margin:0;padding:0;list-style:none}
 
       <div class="faq-item">
         <button class="faq-q" type="button" aria-expanded="false" aria-controls="a8" id="q8">
-          What happens at the free&nbsp;consultation?
+          How does the free virtual consultation&nbsp;work?
           <svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
         </button>
         <div class="faq-a" id="a8" role="region" aria-labelledby="q8"><div>
-          <p>A CBCT scan, a suitability assessment with Dr Shabeeb, your options explained, and a written
-          fixed price with finance figures before you leave. Nothing is booked on the day unless you want
-          it to be.</p>
+          <p>You choose a time and we call you on video &mdash; on your phone, tablet or computer. Talk through
+          your situation, ask every question and hear your options, all from home. If you decide to proceed,
+          we arrange your CBCT scan at the clinic and a complimentary concierge <span class="nb">pick-up</span>. Nothing is
+          booked unless you want it to&nbsp;be.</p>
         </div></div>
       </div>
 
@@ -2092,9 +2016,10 @@ ul,ol{margin:0;padding:0;list-style:none}
     <div class="grid grid-2" style="align-items:center;gap:var(--s-5)">
       <div>
         <p class="eyebrow">Limited appointments</p>
-        <h2 id="final-h">Find out what&rsquo;s possible — for&nbsp;free</h2>
-        <p class="lede">£1,500 off full arch implants, from £116 a month on 5-year <span class="nb">interest-free</span> finance,
-        and a CBCT scan worth £250 included. The honest, <span class="nb">no-pressure</span> starting point.</p>
+        <h2 id="final-h">Find out what&rsquo;s possible — from&nbsp;home</h2>
+        <p class="lede">Book a free virtual consultation &mdash; no travel required. £1,500 off full arch implants, from £116
+        a month on 5-year <span class="nb">interest-free</span> finance, with your CBCT scan and concierge <span class="nb">pick-up</span>
+        included when you&nbsp;proceed.</p>
 
         <ul class="ticks" style="margin-block:var(--s-3)">
           <li class="tick"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4.4 8-11a8 8 0 1 0-16 0c0 6.6 8 11 8 11Z"/><circle cx="12" cy="11" r="2.6"/></svg>
@@ -2104,7 +2029,7 @@ ul,ol{margin:0;padding:0;list-style:none}
         </ul>
 
         <div style="display:flex;flex-wrap:wrap;gap:12px">
-          <a class="btn btn-primary" href="#qualifier-card">Claim my free consultation</a>
+          <a class="btn btn-primary" href="#booking">Book my free virtual consultation</a>
         </div>
       </div>
 
@@ -2152,7 +2077,7 @@ ul,ol{margin:0;padding:0;list-style:none}
       <p>Prices shown are the current promotional prices for full arch implant treatment and assume four to six
       implants per arch. £1,500 discount applies to full arch treatment booked during this campaign and cannot
       be combined with other offers. Your individual price is confirmed in writing after your CBCT scan.
-      Free consultation and CBCT scan are provided with no obligation to proceed.</p>
+      The virtual consultation is free and carries no obligation to proceed. The CBCT scan (worth £250) is included when you proceed with treatment.</p>
 
       <p>Finance is subject to status, affordability and credit checks. 0% APR representative
       over 60 months. Full written finance details are provided at your consultation.</p>
@@ -2167,27 +2092,9 @@ ul,ol{margin:0;padding:0;list-style:none}
 
 <div class="mobile-bar" id="mobile-bar">
   <a class="btn btn-ghost" href="tel:+447476987708">Call</a>
-  <a class="btn btn-primary" href="#qualifier-card">Free consultation</a>
+  <a class="btn btn-primary" href="#booking">Virtual consultation</a>
 </div>
-</div>
-<script>
-/* Treatment videos: first click loads the .mp4, plays it with sound, and
-   reveals the native controls. If the browser blocks playback the cover
-   comes back so the visitor can try again. */
-(function () {
-  document.querySelectorAll('.tvid-card').forEach(function (card) {
-    var v = card.querySelector('video'), cover = card.querySelector('.tvid-cover');
-    if (!v || !cover) return;
-    cover.addEventListener('click', function () {
-      cover.hidden = true;
-      v.controls = true;                       // native controls appear only on play
-      if (v.preload === 'none') v.preload = 'auto';
-      var pr = v.play();
-      if (pr && pr.catch) pr.catch(function () { cover.hidden = false; });
-    });
-  });
-})();
-</script>
+
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -2197,7 +2104,7 @@ ul,ol{margin:0;padding:0;list-style:none}
     "dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
     "opens":"09:00","closes":"17:30"},
   "name":"Pristine Dental Group",
-  "description":"Full arch dental implants in Kingsbury, London. £1,500 off, from £116 per month on 5-year interest-free finance, with a free consultation and CBCT scan worth £250.",
+  "description":"Free virtual consultation for full arch dental implants in Kingsbury, London. £1,500 off, from £116 per month on 5-year interest-free finance, with a CBCT scan worth £250 and concierge pick-up included when you proceed.",
   "address":{
     "@type":"PostalAddress",
     "streetAddress":"499 Kingsbury Road",
@@ -2219,6 +2126,7 @@ ul,ol{margin:0;padding:0;list-style:none}
   }
 }
 </script>
+
 <script>
 (function () {
   'use strict';
@@ -2503,197 +2411,30 @@ ul,ol{margin:0;padding:0;list-style:none}
   document.getElementById('year').textContent = new Date().getFullYear();
 })();
 </script>
+
+
 <script>
-/* =========================================================
-   P6 · THREE-STEP QUALIFIER
-   ========================================================= */
+/* Free virtual consultation: build the GoHighLevel calendar embed from
+   .cal-slot[data-calendar]. GHL's form_embed.js sizes the iframe to the
+   widget. Until the link is set the labelled slot stands and nothing loads. */
 (function () {
-  'use strict';
-
-  /* ── SET BEFORE PUBLISH ────────────────────────────────────
-     Where the lead is posted. Leave null to keep the form in
-     demonstration mode: it validates, shows the success state
-     and forwards to the thank-you page without sending
-     anything anywhere.                                        */
-  var ENDPOINT = 'https://services.leadconnectorhq.com/hooks/Qh2Etm9DVw9ouOs9EgCL/webhook-trigger/e3afeddb-9706-4e4c-aa8a-713b8e0d0c0c';
-  var THANK_YOU = 'https://dentalimplants.pristinedentalgroup.co.uk/thank-you';
-  /* ──────────────────────────────────────────────────────── */
-
-  var form = document.getElementById('qualifier');
-  if (!form) return;
-
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var steps = Array.prototype.slice.call(form.querySelectorAll('.step'));
-  var fill = document.getElementById('meter-fill');
-  var count = document.getElementById('meter-count');
-  var meter = document.getElementById('meter');
-  var done = document.getElementById('form-done');
-  var current = 0;
-
-  function show(i) {
-    current = i;
-    steps.forEach(function (s, n) { s.hidden = n !== i; });
-    fill.style.width = ((i + 1) / steps.length * 100) + '%';
-    count.textContent = 'Step ' + (i + 1) + ' of ' + steps.length;
+  var slot = document.querySelector('.cal-slot');
+  if (!slot || !slot.dataset.calendar) return;
+  var f = document.createElement('iframe');
+  f.src = slot.dataset.calendar;
+  f.title = 'Book your free virtual consultation';
+  f.setAttribute('scrolling', 'no');
+  f.id = 'pdg-cal-' + Date.now();
+  slot.innerHTML = '';
+  slot.removeAttribute('data-needs');
+  slot.appendChild(f);
+  if (!document.querySelector('script[src*="form_embed.js"]')) {
+    var s = document.createElement('script');
+    s.src = 'https://link.msgsndr.com/js/form_embed.js';
+    s.async = true;
+    document.body.appendChild(s);
   }
-
-  function setError(el, describedBy, message) {
-    var out = document.getElementById(describedBy);
-    if (out) out.textContent = message || '';
-    if (message) {
-      el.setAttribute('aria-invalid', 'true');
-      el.setAttribute('aria-describedby', describedBy);
-    } else {
-      el.removeAttribute('aria-invalid');
-      el.removeAttribute('aria-describedby');
-    }
-  }
-
-  var EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-  var PHONE = /^[0-9+()\s-]{9,}$/;
-
-  function validate(i) {
-    var step = steps[i];
-    var ok = true;
-    var firstBad = null;
-
-    var group = step.querySelector('fieldset');
-    if (group) {
-      var name = group.querySelector('input[type=radio]').name;
-      var picked = form.querySelector('input[name="' + name + '"]:checked');
-      if (!picked) {
-        setError(group, 'err-' + name, 'Please choose one option to continue.');
-        ok = false;
-        firstBad = firstBad || group.querySelector('input[type=radio]');
-      } else {
-        setError(group, 'err-' + name, '');
-      }
-    }
-
-    step.querySelectorAll('input[required]:not([type=radio])').forEach(function (input) {
-      var v = input.value.trim();
-      var msg = '';
-      if (!v) {
-        msg = 'This field is required.';
-      } else if (input.type === 'email' && !EMAIL.test(v)) {
-        msg = 'Please enter a valid email address.';
-      } else if (input.type === 'tel' && !PHONE.test(v)) {
-        msg = 'Please enter a valid phone number.';
-      }
-      setError(input, 'err-' + input.name, msg);
-      if (msg) { ok = false; firstBad = firstBad || input; }
-    });
-
-    if (firstBad) firstBad.focus();
-    return ok;
-  }
-
-  /* Errors clear as soon as the reader starts fixing them. */
-  form.addEventListener('input', function (e) {
-    var t = e.target;
-    if (t.matches('input[required]:not([type=radio])')) setError(t, 'err-' + t.name, '');
-  });
-  form.addEventListener('change', function (e) {
-    if (e.target.type === 'radio') {
-      var fs = e.target.closest('fieldset');
-      if (fs) setError(fs, 'err-' + e.target.name, '');
-    }
-  });
-
-  function next() {
-    if (!validate(current)) return;
-    if (current < steps.length - 1) {
-      show(current + 1);
-      var focusTarget = steps[current].querySelector('input, button');
-      if (focusTarget) focusTarget.focus({ preventScroll: true });
-    }
-  }
-  function back() {
-    if (current > 0) {
-      /* answers are never cleared, so going back and forward
-         leaves every previous choice intact */
-      show(current - 1);
-      var checked = steps[current].querySelector('input:checked');
-      (checked || steps[current].querySelector('input')).focus({ preventScroll: true });
-    }
-  }
-  form.querySelectorAll('[data-next]').forEach(function (b) { b.addEventListener('click', next); });
-  form.querySelectorAll('[data-back]').forEach(function (b) { b.addEventListener('click', back); });
-
-  /* -----------------------------------------------------------
-     Selection auto-advances — ON POINTER INPUT ONLY.
-     Arrow keys move between radios in a group and fire `change`
-     at every stop, so advancing on keyboard selection throws a
-     keyboard user past the question the instant they start
-     reading it. Track pointer intent and check it in `change`.
-     Keyboard users get the Continue button, which is why it
-     stays in all four treatments.
-     ----------------------------------------------------------- */
-  var pointerAt = 0;
-  form.addEventListener('pointerdown', function () { pointerAt = Date.now(); }, true);
-  form.addEventListener('keydown', function () { pointerAt = 0; }, true);
-  form.addEventListener('change', function (e) {
-    if (e.target.type !== 'radio') return;
-    if (Date.now() - pointerAt > 700) return;          // keyboard selection: stay put
-    pointerAt = 0;
-    /* a beat, so the tick is visibly acknowledged rather than swallowed */
-    setTimeout(next, reduced ? 0 : 260);
-  });
-
-  /* Enter advances a step rather than submitting early. */
-  form.addEventListener('keydown', function (e) {
-    if (e.key !== 'Enter') return;
-    if (current < steps.length - 1) {
-      e.preventDefault();
-      next();
-    }
-  });
-
-  function goToThankYou(firstName) {
-    if (!THANK_YOU) return;           /* inline confirmation stands */
-    var url = THANK_YOU;
-    if (firstName) {
-      /* choose the separator from whether the destination already
-         has a query string; do not assume */
-      url += (url.indexOf('?') === -1 ? '?' : '&') + 'name=' + encodeURIComponent(firstName);
-    }
-    window.location.href = url;
-  }
-
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    if (!validate(current)) return;
-
-    var data = {};
-    new FormData(form).forEach(function (v, k) { data[k] = v; });
-
-    /* honeypot: a bot filled the hidden field. Show the same
-       success state and send nothing. */
-    var isBot = !!(data.company && data.company.trim());
-    delete data.company;
-
-    form.hidden = true;
-    meter.hidden = true;
-    done.hidden = false;
-    done.focus();
-    var tick = document.getElementById('done-tick');
-    if (tick && !reduced) tick.classList.add('go');
-
-    if (isBot) return;
-
-    var forward = function () { goToThankYou(data.firstName); };
-
-    if (ENDPOINT) {
-      fetch(ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      }).then(forward, forward);
-    } else {
-      setTimeout(forward, reduced ? 0 : 1400);
-    }
-  });
-
-  show(0);
 })();
 </script>
+</body>
+</html>

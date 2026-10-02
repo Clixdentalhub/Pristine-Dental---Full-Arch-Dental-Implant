@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /* Builds ghl.html — one paste-ready fragment for a GoHighLevel custom-code block.
 
-     node build-ghl.mjs
+     node build-ghl.mjs                              index.html   -> ghl.html
+     node build-ghl.mjs virtual.html ghl-virtual.html  any page    -> its fragment
 
    A GHL page is already a document, so a second <!doctype html>/<html>/<head>/
    <body> cannot nest inside it. This emits the page content only: the font
@@ -25,7 +26,8 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 
-const src = await readFile('index.html', 'utf8');
+const [SRC = 'index.html', OUT = 'ghl.html'] = process.argv.slice(2);
+const src = await readFile(SRC, 'utf8');
 const FONTS = (src.match(/href="(https:\/\/fonts\.googleapis\.com\/css2[^"]+)"/) || [])[1];
 
 let styles = [...src.matchAll(/<style>([\s\S]*?)<\/style>/g)].map((m) => m[1]).join('\n');
@@ -100,12 +102,12 @@ const out = [
   ...scripts,
 ].filter(Boolean).join('\n');
 
-await writeFile('ghl.html', out);
+await writeFile(OUT, out);
 
 const kb = (n) => (Buffer.byteLength(n) / 1024).toFixed(0) + ' KB';
-console.log(`\nghl.html  ${kb(out)}`);
+console.log(`\n${OUT}  ${kb(out)}`);
 console.log(`  hosted images kept   : ${(out.match(/src="https:\/\//g) || []).length}`);
 console.log(`  local images kept    : ${(out.match(/(?:src|poster)="assets\//g) || []).length + (out.match(/url\(assets\//g) || []).length}`);
 console.log(`  missing images cut   : ${stripped}`);
 for (const { id, why } of dropped) console.log(`  section dropped      : #${id} — ${why}`);
-console.log(`\nRun embed-images.py on ghl.html to inline the kept local images.\n`);
+console.log(`\nRun embed-images.py on ${OUT} to inline the kept local images.\n`);
