@@ -3,6 +3,8 @@
 
      node build-ghl.mjs                              index.html   -> ghl.html
      node build-ghl.mjs virtual.html ghl-virtual.html  any page    -> its fragment
+     node build-ghl.mjs aligners.html ghl-aligners.html /thank-you
+                                                     … and where its form redirects
 
    A GHL page is already a document, so a second <!doctype html>/<html>/<head>/
    <body> cannot nest inside it. This emits the page content only: the font
@@ -26,7 +28,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 
-const [SRC = 'index.html', OUT = 'ghl.html'] = process.argv.slice(2);
+const [SRC = 'index.html', OUT = 'ghl.html', THANK_YOU_ARG] = process.argv.slice(2);
 const src = await readFile(SRC, 'utf8');
 const FONTS = (src.match(/href="(https:\/\/fonts\.googleapis\.com\/css2[^"]+)"/) || [])[1];
 
@@ -39,10 +41,12 @@ body = body.replace(/<script[\s\S]*?<\/script>/g, '');
    page tracking settings instead — strip its noscript out of the fragment. */
 body = body.replace(/\s*<!-- Google Tag Manager \(noscript\) -->[\s\S]*?<!-- End Google Tag Manager \(noscript\) -->/g, '');
 /* Inside GHL there is no thank-you.html at a relative path, so redirect the
-   form to the live thank-you page instead. The submit handler appends
-   ?name=<first name> to it. */
-const THANK_YOU_URL = 'https://dentalimplants.pristinedentalgroup.co.uk/thank-you';
-scripts.forEach((s, i) => { scripts[i] = s.replace("var THANK_YOU = 'thank-you.html';", `var THANK_YOU = '${THANK_YOU_URL}';`) });
+   form to the live thank-you page instead (the third argument; the full arch
+   funnel's by default). A root-relative path such as /thank-you resolves on
+   whichever funnel domain the page is published to. The submit handler
+   appends ?name=<first name> to it. */
+const THANK_YOU_URL = THANK_YOU_ARG || 'https://dentalimplants.pristinedentalgroup.co.uk/thank-you';
+scripts.forEach((s, i) => { scripts[i] = s.replace(/var THANK_YOU = '[^']*\.html';/, `var THANK_YOU = '${THANK_YOU_URL}';`) });
 
 
 /* 1 · rescope body → .pdg so the funnel cannot restyle the host page */
@@ -91,7 +95,7 @@ body = body.replace(/\s*poster="(assets\/[^"]*)"/g, (whole, path) => (missing(pa
 body = body.replace(/<source src="(assets\/[^"]*)"[^>]*>/g, (whole, path) => (missing(path) ? '' : whole));
 
 const out = [
-  `<!-- Pristine Dental Group — full arch funnel.`,
+  `<!-- Pristine Dental Group — ${(src.match(/<title>([^|<]*)/) || [, SRC])[1].trim()}.`,
   `     Paste into a GoHighLevel custom-code block. Page content only - the`,
   `     document wrapper is omitted, because the GHL page already provides it. -->`,
   FONTS ? `<style>@import url("${FONTS}");</style>` : '',

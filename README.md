@@ -8,6 +8,8 @@ A two-page lead-generation funnel for the full arch dental implant campaign
 | --- | --- |
 | `index.html` | The funnel page. Self-contained: HTML + CSS + vanilla JS, no framework, no build step, no external JS. |
 | `thank-you.html` | Post-submission confirmation, on the same tokens, header and footer. Permanently `noindex`. |
+| `aligners.html` · `thank-you-aligners.html` | In-person consultation funnel for Pristine Aligners (from £699 or £11.65/month, free 3D scan, smile preview and whitening — the current ad-copy offer). GHL: `ghl-aligners-embedded.html`, `ghl-thank-you-aligners-embedded.html`. |
+| `smile-makeover.html` · `thank-you-smile-makeover.html` | In-person consultation funnel for smile makeovers. No price or "free" claim: the practice has no confirmed smile makeover offer yet. GHL: `ghl-smile-makeover-embedded.html`, `ghl-thank-you-smile-makeover-embedded.html`. |
 | `tests/` | Playwright verification harness — 7 widths, contrast maths, form behaviour, typography line boxes, screenshots. |
 | `build.mjs` | Deployment build: inlines every local image as a data URI and prints what still needs setting. |
 | `sync-head.mjs` | Copies `<head>` from `index.html` into the other documents so the token block cannot drift. |
@@ -28,6 +30,12 @@ node make-preview.mjs preview   # → preview/, for a hosted preview
 `node build-ghl.mjs` writes `ghl.html`: the page content only, with no
 `<!doctype>` / document wrapper, because a GHL page is already a document and a
 second one cannot nest inside it. Paste it into a custom-code block.
+
+Any page builds the same way: `node build-ghl.mjs <page> <out> [thank-you URL]`.
+The aligners and smile makeover fragments are built with `/thank-you`, so in
+each GHL funnel the thank-you step's path must be `/thank-you`. Both pages post
+to the same lead webhook as the full arch funnel, with a `treatment` field
+("Pristine Aligners" / "Smile Makeover") for the GHL workflow to branch on.
 
 Three things it does that matter:
 
