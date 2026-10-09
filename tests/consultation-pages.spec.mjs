@@ -1,9 +1,10 @@
 import { test, expect } from './fixtures.mjs';
 
-/* The aligners and smile makeover pages post to the same lead webhook as the
+/* The in-person, aligners and smile makeover pages post to the same lead webhook as the
    full arch funnel, so each lead must say which treatment it came from, and
    each page must land on its own thank-you page. */
 const CASES = [
+  ['/in-person.html', 'Full Arch — In-Person Consultation', /thank-you-in-person\.html\?name=Jane$/],
   ['/aligners.html', 'Pristine Aligners', /thank-you-aligners\.html\?name=Jane$/],
   ['/smile-makeover.html', 'Smile Makeover', /thank-you-smile-makeover\.html\?name=Jane$/],
 ];

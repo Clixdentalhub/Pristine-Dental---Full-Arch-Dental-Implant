@@ -1,6 +1,7 @@
 export const WIDTHS = [360, 375, 414, 768, 1024, 1280, 1440];
 export const PAGES = ['/index.html', '/thank-you.html', '/virtual.html', '/thank-you-virtual.html',
-  '/aligners.html', '/thank-you-aligners.html', '/smile-makeover.html', '/thank-you-smile-makeover.html'];
+  '/aligners.html', '/thank-you-aligners.html', '/smile-makeover.html', '/thank-you-smile-makeover.html',
+  '/in-person.html', '/thank-you-in-person.html'];
 
 /** WCAG relative luminance, per the spec formula. */
 export function luminance([r, g, b]) {
