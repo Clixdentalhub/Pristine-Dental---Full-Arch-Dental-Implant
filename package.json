@@ -1,0 +1,34 @@
+{
+  "name": "pristine-dental-full-arch-implants",
+  "version": "1.0.0",
+  "description": "Full arch dental implant campaign funnel for Pristine Dental Group",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "preflight": "node preflight.mjs",
+    "embed": "python3 embed-images.py index.html dist.html",
+    "media": "node set-media.mjs",
+    "images": "node optimise-images.mjs",
+    "video": "node optimise-video.mjs",
+    "serve": "node tests/serve.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Clixdentalhub/Pristine-Dental---Full-Arch-Dental-Implant.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Clixdentalhub/Pristine-Dental---Full-Arch-Dental-Implant/issues"
+  },
+  "homepage": "https://github.com/Clixdentalhub/Pristine-Dental---Full-Arch-Dental-Implant#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.62.1"
+  },
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "sharp": "^0.35.4"
+  }
+}
