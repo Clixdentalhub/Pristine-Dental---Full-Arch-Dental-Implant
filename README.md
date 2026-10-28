@@ -56,6 +56,30 @@ Three things it does that matter:
 wrapper it silently kills `position: sticky`, and the harness already proves
 there is no overflow at any of the seven widths.
 
+### Cookie consent
+
+Every funnel page carries a UK GDPR / PECR cookie banner wired to Google
+Consent Mode v2. `node consent.mjs` adds or refreshes it on every page (run it
+after creating a new page); the source is `partials/`.
+
+- **Head** (`partials/consent-head.html`): consent defaults, everything
+  non-essential `denied`, inserted just above GTM. A stored choice is applied
+  here too, so a returning visitor is measured from the first tag.
+- **Banner** (`partials/consent-banner.html`): Reject all / Accept all at equal
+  size, plus Manage preferences (Analytics, Advertising). The choice is kept
+  ~6 months in `localStorage.pdg_consent` and pushed to GTM as a
+  `consent_update` dataLayer event. "Cookie settings" in every footer reopens it.
+- **In GoHighLevel** GTM sits in the funnel's tracking code, outside the
+  custom-code block, so paste `ghl-consent-head.html` into the funnel's
+  Settings → Tracking Code → Head, **above** the GTM snippet (once per funnel).
+  The banner travels inside each page's fragment.
+- **In GTM**: Google tags honour Consent Mode on their own. Give the Meta Pixel
+  (and any other non-Google tag) an additional consent check on `ad_storage`,
+  or fire it from the `consent_update` event with `consent_marketing = granted`.
+
+`tests/consent.spec.mjs` checks every page and the banner's behaviour; the
+other specs start with a stored choice so the banner stays out of their way.
+
 ### Embedding vs hosting
 
 `embed-images.py` turns a page that references local images into one

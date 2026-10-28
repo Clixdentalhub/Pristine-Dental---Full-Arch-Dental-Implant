@@ -3,6 +3,31 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- consent:head -->
+<script>
+/* Google Consent Mode v2 — must run BEFORE Google Tag Manager. Everything
+   non-essential starts denied; the cookie banner updates it. A choice the
+   visitor already made (stored by the banner, valid ~6 months) is applied
+   here too, so returning visitors are measured from the first tag. */
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', {
+  ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied',
+  analytics_storage: 'denied', functionality_storage: 'granted', security_storage: 'granted',
+  wait_for_update: 500
+});
+gtag('set', 'ads_data_redaction', true);
+(function () {
+  try {
+    var c = JSON.parse(localStorage.getItem('pdg_consent') || 'null');
+    if (!c || c.v !== 1 || Date.now() - c.ts > 15552000000) return;
+    var ads = c.marketing ? 'granted' : 'denied';
+    gtag('consent', 'update', { analytics_storage: c.analytics ? 'granted' : 'denied',
+      ad_storage: ads, ad_user_data: ads, ad_personalization: ads });
+  } catch (e) { /* storage blocked: defaults stand */ }
+})();
+</script>
+<!-- /consent:head -->
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -1187,7 +1212,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       Principal dentist: Dr Shabeeb Paktiawal.</p>
       <p>Finance is subject to status, affordability and credit checks. 0% APR representative
       over 60 months. Full written finance details are provided at your consultation.</p>
-      <p style="margin:0">&copy; <span id="year">2026</span> Pristine Dental Group. All rights reserved.</p>
+      <p style="margin:0">&copy; <span id="year">2026</span> Pristine Dental Group. All rights reserved. · <button type="button" class="cc-reopen" data-cc-open>Cookie settings</button></p>
     </div>
   </div>
 </footer>
@@ -1296,5 +1321,145 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 })();
 </script>
 
+<!-- consent:banner -->
+<style>
+/* ============================================================
+   COOKIE CONSENT — UK GDPR / PECR. Reject is exactly as easy as
+   accept: same size, same row. Nothing non-essential runs until
+   the visitor chooses; "Cookie settings" in the footer reopens it.
+   ============================================================ */
+.cc{position:fixed;z-index:200;left:12px;right:12px;bottom:12px;max-width:440px;
+  margin-bottom:env(safe-area-inset-bottom);
+  background:#16130F;color:#E9E3DA;border:1px solid rgba(242,193,78,.34);border-radius:18px;
+  box-shadow:0 34px 90px -30px rgba(0,0,0,.85);padding:20px 20px 16px;
+  font-size:.9rem;line-height:1.55;text-align:left}
+@media (min-width:640px){ .cc{left:24px;right:auto;bottom:24px;padding:24px 24px 18px} }
+.cc[hidden]{display:none}
+.cc-h{display:flex;align-items:center;gap:10px;margin:0 0 6px;
+  font-family:var(--font-head);font-weight:700;font-size:1.06rem;color:#fff;letter-spacing:-.01em}
+.cc-h svg{flex:0 0 auto;color:var(--cta-on-dark)}
+.cc-text{margin:0 0 14px;color:#CFC7BB}
+.cc-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cc-btn{font:inherit;font-weight:700;font-size:.9rem;line-height:1.2;min-height:46px;
+  border-radius:999px;padding:11px 14px;cursor:pointer;border:1.5px solid var(--cta-on-dark);
+  transition:background-color .2s ease,color .2s ease}
+.cc-accept,.cc-save{background:var(--cta-on-dark);color:var(--cta-on-dark-text)}
+.cc-reject{background:transparent;color:var(--cta-on-dark)}
+.cc-reject:hover{background:rgba(242,193,78,.12)}
+.cc-btn:focus-visible,.cc-link:focus-visible,.cc-switch:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.cc-save{grid-column:1 / -1}
+.cc-save[hidden]{display:none}
+.cc-link{display:block;margin:12px auto 0;background:none;border:0;padding:4px;cursor:pointer;
+  font:inherit;font-size:.84rem;color:#CFC7BB;text-decoration:underline;text-underline-offset:3px}
+.cc-link:hover{color:#fff}
+.cc-link[hidden]{display:none}
+.cc-prefs{margin:0 0 14px;border-top:1px solid #2E2820}
+.cc-prefs[hidden]{display:none}
+.cc-row{display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:11px 0;border-bottom:1px solid #2E2820;cursor:pointer}
+.cc-row strong{display:block;color:#fff;font-weight:600}
+.cc-row small{display:block;font-size:.8rem;color:#B5AC9F}
+.cc-on{flex:0 0 auto;font-size:.78rem;font-weight:700;color:var(--cta-on-dark)}
+.cc-switch{appearance:none;-webkit-appearance:none;flex:0 0 auto;position:relative;margin:0;cursor:pointer;
+  width:44px;height:26px;border-radius:999px;background:#3A332A;border:1px solid #55493A;
+  transition:background-color .2s ease}
+.cc-switch::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;
+  background:#E9E3DA;transition:transform .2s ease}
+.cc-switch:checked{background:var(--cta-on-dark);border-color:var(--cta-on-dark)}
+.cc-switch:checked::after{transform:translateX(18px);background:var(--cta-on-dark-text)}
+/* footer link that reopens the banner */
+.cc-reopen{background:none;border:0;padding:0;font:inherit;color:inherit;cursor:pointer;
+  text-decoration:underline;text-underline-offset:3px}
+@media (prefers-reduced-motion:reduce){ .cc-btn,.cc-switch,.cc-switch::after{transition:none} }
+</style>
+<div class="cc" id="cc" role="region" aria-labelledby="cc-h" hidden>
+  <p class="cc-h" id="cc-h"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.5A9 9 0 1 1 11.5 3a3 3 0 0 0 3.5 3.5 3 3 0 0 0 3.5 3.5 3 3 0 0 0 2.5 2.5Z"/><circle cx="8.5" cy="10.5" r="1"/><circle cx="12" cy="15.5" r="1"/><circle cx="16" cy="13" r="1"/></svg>Cookies on this page</p>
+  <p class="cc-text">We use essential cookies to make this page work. With your permission, we&rsquo;d also like to use analytics and advertising cookies to understand how the page is used and to measure our ads. You can change your mind at any&nbsp;time.</p>
+
+  <div class="cc-prefs" id="cc-prefs" hidden>
+    <div class="cc-row"><span><strong>Essential</strong><small>Needed for the page and booking to work</small></span><span class="cc-on">Always on</span></div>
+    <label class="cc-row" for="cc-analytics"><span><strong>Analytics</strong><small>How visitors use this page</small></span><input type="checkbox" class="cc-switch" id="cc-analytics"></label>
+    <label class="cc-row" for="cc-marketing"><span><strong>Advertising</strong><small>Measuring and improving our ads</small></span><input type="checkbox" class="cc-switch" id="cc-marketing"></label>
+  </div>
+
+  <div class="cc-actions">
+    <button type="button" class="cc-btn cc-reject" data-cc="reject">Reject all</button>
+    <button type="button" class="cc-btn cc-accept" data-cc="accept">Accept all</button>
+    <button type="button" class="cc-btn cc-save" data-cc="save" hidden>Save my choices</button>
+  </div>
+  <button type="button" class="cc-link" data-cc="manage" aria-expanded="false" aria-controls="cc-prefs">Manage preferences</button>
+</div>
+<script>
+/* Cookie consent. The choice is stored for ~6 months in localStorage
+   (pdg_consent), pushed to Google Consent Mode, and announced to GTM as a
+   `consent_update` dataLayer event so tags without built-in consent checks
+   (e.g. the Meta Pixel) can be triggered from it. */
+(function () {
+  'use strict';
+  var KEY = 'pdg_consent', MAX_AGE = 15552000000;
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+
+  var box = document.getElementById('cc');
+  if (!box) return;
+  var prefs = document.getElementById('cc-prefs');
+  var an = document.getElementById('cc-analytics');
+  var mk = document.getElementById('cc-marketing');
+  var manage = box.querySelector('[data-cc="manage"]');
+  var save = box.querySelector('[data-cc="save"]');
+
+  function read() {
+    try {
+      var c = JSON.parse(localStorage.getItem(KEY) || 'null');
+      return c && c.v === 1 && Date.now() - c.ts <= MAX_AGE ? c : null;
+    } catch (e) { return null; }
+  }
+  function apply(c) {
+    var ads = c.marketing ? 'granted' : 'denied';
+    gtag('consent', 'update', { analytics_storage: c.analytics ? 'granted' : 'denied',
+      ad_storage: ads, ad_user_data: ads, ad_personalization: ads });
+    window.dataLayer.push({ event: 'consent_update',
+      consent_analytics: c.analytics ? 'granted' : 'denied', consent_marketing: ads });
+  }
+  function showPrefs(on) {
+    prefs.hidden = !on;
+    save.hidden = !on;
+    manage.hidden = on;
+    manage.setAttribute('aria-expanded', on ? 'true' : 'false');
+  }
+  function open(focus) {
+    var c = read();
+    an.checked = !!(c && c.analytics);
+    mk.checked = !!(c && c.marketing);
+    showPrefs(false);
+    box.hidden = false;
+    if (focus) box.querySelector('.cc-reject').focus();
+  }
+  function choose(analytics, marketing) {
+    var c = { v: 1, ts: Date.now(), analytics: analytics, marketing: marketing };
+    try { localStorage.setItem(KEY, JSON.stringify(c)); } catch (e) { /* this visit only */ }
+    apply(c);
+    box.hidden = true;
+  }
+
+  box.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-cc]');
+    if (!b) return;
+    var act = b.getAttribute('data-cc');
+    if (act === 'accept') choose(true, true);
+    else if (act === 'reject') choose(false, false);
+    else if (act === 'save') choose(an.checked, mk.checked);
+    else if (act === 'manage') { showPrefs(true); an.focus(); }
+  });
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-cc-open]')) { e.preventDefault(); open(true); }
+  });
+
+  var saved = read();
+  if (saved) apply(saved);   /* also covers pages where the head snippet is missing */
+  else open(false);
+})();
+</script>
+<!-- /consent:banner -->
 </body>
 </html>

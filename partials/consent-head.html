@@ -1,0 +1,25 @@
+<!-- consent:head -->
+<script>
+/* Google Consent Mode v2 — must run BEFORE Google Tag Manager. Everything
+   non-essential starts denied; the cookie banner updates it. A choice the
+   visitor already made (stored by the banner, valid ~6 months) is applied
+   here too, so returning visitors are measured from the first tag. */
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', {
+  ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied',
+  analytics_storage: 'denied', functionality_storage: 'granted', security_storage: 'granted',
+  wait_for_update: 500
+});
+gtag('set', 'ads_data_redaction', true);
+(function () {
+  try {
+    var c = JSON.parse(localStorage.getItem('pdg_consent') || 'null');
+    if (!c || c.v !== 1 || Date.now() - c.ts > 15552000000) return;
+    var ads = c.marketing ? 'granted' : 'denied';
+    gtag('consent', 'update', { analytics_storage: c.analytics ? 'granted' : 'denied',
+      ad_storage: ads, ad_user_data: ads, ad_personalization: ads });
+  } catch (e) { /* storage blocked: defaults stand */ }
+})();
+</script>
+<!-- /consent:head -->

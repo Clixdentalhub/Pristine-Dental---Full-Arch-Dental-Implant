@@ -20,7 +20,22 @@ if (existsSync(MANIFEST)) {
 }
 
 export const test = base.extend({
-  page: async ({ page }, use) => {
+  /* Every page opens a cookie banner on a first visit. Unless a spec opts out
+     (`test.use({ presetConsent: false })`, as consent.spec does), start each
+     page with a stored "reject all" choice so the banner stays out of the way
+     of the layout, contrast and form checks. */
+  presetConsent: [true, { option: true }],
+
+  page: async ({ page, presetConsent }, use) => {
+    if (presetConsent) {
+      await page.addInitScript(() => {
+        try {
+          if (!localStorage.getItem('pdg_consent')) {
+            localStorage.setItem('pdg_consent', JSON.stringify({ v: 1, ts: Date.now(), analytics: false, marketing: false }));
+          }
+        } catch (e) { /* opaque origin */ }
+      });
+    }
     /* The Google Maps embed is unreachable from CI, and a `load` wait on it
        stalls every test. Fulfil it locally so the iframe still occupies its
        real box without the network round trip. */
